@@ -8,6 +8,7 @@ import ExpensePage from './pages/ExpensePage';
 import CapRatePage from './pages/CapRatePage';
 import IrrPage from './pages/IrrPage';
 import CashFlowPage from './pages/CashFlowPage';
+import ProjectionsPage from './pages/ProjectionsPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/property/analysis" element={<CapRatePage />} />
       <Route path="/property/irr" element={<IrrPage />} />
       <Route path="/property/cashflow" element={<CashFlowPage />} />
+      <Route path="/property/projections" element={<ProjectionsPage />} />
     </Routes>
   );
 }
