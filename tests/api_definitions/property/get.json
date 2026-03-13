@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/properties/:id",
+  "method": "GET",
+  "taskId": "3477fb27-3299-4ab9-a848-a4f0b2f02e3f",
+  "requiresAuth": true,
+  "priority": 11,
+  "description": "Get a property by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "pathParams": {
+    "id": "{{cache:property.create.response.data.property.id}}"
+  },
+  "testCases": [
+    {
+      "name": "Get property by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "endpoint": "/api/properties",
+  "method": "POST",
+  "taskId": "3477fb27-3299-4ab9-a848-a4f0b2f02e3f",
+  "requiresAuth": true,
+  "priority": 10,
+  "description": "Create a new property with address and purchase price",
+  "dependsOn": ["POST /api/auth/register"],
+  "captureResponse": {
+    "property.create.response.data.property.id": "data.property.id",
+    "property.create.response.data.property.address": "data.property.address"
+  },
+  "testCases": [
+    {
+      "name": "Create property",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "address": "{{dynamic:text}}",
+        "purchase_price": "{{static:500000}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}
