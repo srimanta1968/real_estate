@@ -1,0 +1,29 @@
+{
+  "endpoint": "/api/projections",
+  "method": "POST",
+  "taskId": "d3a8157a-a6da-467b-b05c-3f3ea583b525",
+  "requiresAuth": true,
+  "priority": 21,
+  "description": "Create an annual projection record",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "projections.create.response.data.projection.id": "data.projection.id"
+  },
+  "testCases": [
+    {
+      "name": "Create annual projection record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "year": "{{static:1}}",
+        "rental_income": "{{static:36000}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

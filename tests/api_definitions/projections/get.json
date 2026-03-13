@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/projections/:id",
+  "method": "GET",
+  "taskId": "d3a8157a-a6da-467b-b05c-3f3ea583b525",
+  "requiresAuth": true,
+  "priority": 22,
+  "description": "Get an annual projection record by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/projections"],
+  "testCases": [
+    {
+      "name": "Get projection by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "pathParams": {
+        "id": "{{cache:projections.create.response.data.projection.id}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}
