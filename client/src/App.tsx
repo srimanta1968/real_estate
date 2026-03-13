@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import PropertyInfoPage from './pages/PropertyInfoPage';
 import FinancingPage from './pages/FinancingPage';
 import ExpensePage from './pages/ExpensePage';
+import CapRatePage from './pages/CapRatePage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/property/new" element={<PropertyInfoPage />} />
       <Route path="/property/financing" element={<FinancingPage />} />
       <Route path="/property/expenses" element={<ExpensePage />} />
+      <Route path="/property/analysis" element={<CapRatePage />} />
     </Routes>
   );
 }
