@@ -1,0 +1,27 @@
+{
+  "endpoint": "/api/auth/login",
+  "method": "POST",
+  "taskId": "0f0cad38-22b4-4788-8ec4-aa23110afa30",
+  "requiresAuth": false,
+  "description": "User login endpoint - returns JWT token",
+  "priority": 2,
+  "dependsOn": ["POST /api/auth/register"],
+  "captureResponse": {
+    "auth.login.response.data.token": "data.token",
+    "auth.login.response.data.user.id": "data.user.id"
+  },
+  "testCases": [{
+    "name": "Login with registered user",
+    "payload": {
+      "email": "{{cache:auth.register.response.data.email}}",
+      "password": "{{dynamic:password}}"
+    },
+    "expectedStatus": 200,
+    "expectedResponse": {
+      "success": true,
+      "data": {
+        "token": "{{type:string}}"
+      }
+    }
+  }]
+}
