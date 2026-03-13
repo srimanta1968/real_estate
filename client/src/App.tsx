@@ -10,6 +10,7 @@ import IrrPage from './pages/IrrPage';
 import CashFlowPage from './pages/CashFlowPage';
 import ProjectionsPage from './pages/ProjectionsPage';
 import DashboardPage from './pages/DashboardPage';
+import ScenarioPage from './pages/ScenarioPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path="/property/cashflow" element={<CashFlowPage />} />
       <Route path="/property/projections" element={<ProjectionsPage />} />
       <Route path="/property/dashboard" element={<DashboardPage />} />
+      <Route path="/property/scenarios" element={<ScenarioPage />} />
     </Routes>
   );
 }
