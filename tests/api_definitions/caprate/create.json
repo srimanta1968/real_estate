@@ -1,0 +1,28 @@
+{
+  "endpoint": "/api/caprate",
+  "method": "POST",
+  "taskId": "95226c65-3c70-475d-ace7-2204de6c3ed2",
+  "requiresAuth": true,
+  "priority": 15,
+  "description": "Create a cap rate calculation record",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "caprate.create.response.data.capRate.id": "data.capRate.id"
+  },
+  "testCases": [
+    {
+      "name": "Create cap rate record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "cap_rate": "{{static:7.5}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

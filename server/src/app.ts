@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.routes';
 import propertyRoutes from './routes/property.routes';
 import financingRoutes from './routes/financing.routes';
 import expenseRoutes from './routes/expense.routes';
+import capRateRoutes from './routes/caprate.routes';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/financing', financingRoutes);
 app.use('/api/expenses', expenseRoutes);
+app.use('/api/caprate', capRateRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

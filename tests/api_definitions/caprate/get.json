@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/caprate/:id",
+  "method": "GET",
+  "taskId": "95226c65-3c70-475d-ace7-2204de6c3ed2",
+  "requiresAuth": true,
+  "priority": 16,
+  "description": "Get a cap rate record by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/caprate"],
+  "testCases": [
+    {
+      "name": "Get cap rate by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "pathParams": {
+        "id": "{{cache:caprate.create.response.data.capRate.id}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}
