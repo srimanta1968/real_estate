@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PropertyInfoPage from './pages/PropertyInfoPage';
 import FinancingPage from './pages/FinancingPage';
+import ExpensePage from './pages/ExpensePage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/property/new" element={<PropertyInfoPage />} />
       <Route path="/property/financing" element={<FinancingPage />} />
+      <Route path="/property/expenses" element={<ExpensePage />} />
     </Routes>
   );
 }
