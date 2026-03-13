@@ -1,0 +1,29 @@
+{
+  "endpoint": "/api/visualizations",
+  "method": "POST",
+  "taskId": "ea48d376-ad49-4a72-a9a9-d01c44433cfb",
+  "requiresAuth": true,
+  "priority": 23,
+  "description": "Create a financial visualization metric record",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "visualization.create.response.data.visualization.id": "data.visualization.id"
+  },
+  "testCases": [
+    {
+      "name": "Create visualization record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "metric_name": "{{static:Cap Rate}}",
+        "value": "{{static:7.5}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

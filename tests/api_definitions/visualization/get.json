@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/visualizations/:id",
+  "method": "GET",
+  "taskId": "ea48d376-ad49-4a72-a9a9-d01c44433cfb",
+  "requiresAuth": true,
+  "priority": 24,
+  "description": "Get a financial visualization record by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/visualizations"],
+  "testCases": [
+    {
+      "name": "Get visualization by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "pathParams": {
+        "id": "{{cache:visualization.create.response.data.visualization.id}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

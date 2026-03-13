@@ -11,6 +11,7 @@ import capRateRoutes from './routes/caprate.routes';
 import irrRoutes from './routes/irr.routes';
 import cashFlowRoutes from './routes/cashflow.routes';
 import projectionRoutes from './routes/projection.routes';
+import visualizationRoutes from './routes/visualization.routes';
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/api/caprate', capRateRoutes);
 app.use('/api/irr', irrRoutes);
 app.use('/api/cashflow', cashFlowRoutes);
 app.use('/api/projections', projectionRoutes);
+app.use('/api/visualizations', visualizationRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
