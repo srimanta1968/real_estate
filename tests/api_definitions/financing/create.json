@@ -1,0 +1,28 @@
+{
+  "endpoint": "/api/financing",
+  "method": "POST",
+  "taskId": "c0b33665-3562-43b1-ac71-3cc774007b16",
+  "requiresAuth": true,
+  "priority": 12,
+  "description": "Create a financing record with loan amount",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "financing.create.response.data.financing.id": "data.financing.id"
+  },
+  "testCases": [
+    {
+      "name": "Create financing record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "loan_amount": "{{static:400000}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}
