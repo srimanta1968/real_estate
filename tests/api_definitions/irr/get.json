@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/irr/:id",
+  "method": "GET",
+  "taskId": "ac28cb59-4e24-4409-be1c-aa1e9fe588c6",
+  "requiresAuth": true,
+  "priority": 18,
+  "description": "Get an IRR record by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/irr"],
+  "testCases": [
+    {
+      "name": "Get IRR by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "pathParams": {
+        "id": "{{cache:irr.create.response.data.irr.id}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

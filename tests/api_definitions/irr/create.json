@@ -1,0 +1,28 @@
+{
+  "endpoint": "/api/irr",
+  "method": "POST",
+  "taskId": "ac28cb59-4e24-4409-be1c-aa1e9fe588c6",
+  "requiresAuth": true,
+  "priority": 17,
+  "description": "Create an IRR calculation record",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "irr.create.response.data.irr.id": "data.irr.id"
+  },
+  "testCases": [
+    {
+      "name": "Create IRR record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "irr": "{{static:12.5}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}
