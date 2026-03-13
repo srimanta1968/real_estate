@@ -9,6 +9,7 @@ import financingRoutes from './routes/financing.routes';
 import expenseRoutes from './routes/expense.routes';
 import capRateRoutes from './routes/caprate.routes';
 import irrRoutes from './routes/irr.routes';
+import cashFlowRoutes from './routes/cashflow.routes';
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use('/api/financing', financingRoutes);
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/caprate', capRateRoutes);
 app.use('/api/irr', irrRoutes);
+app.use('/api/cashflow', cashFlowRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

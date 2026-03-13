@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/cashflow/:id",
+  "method": "GET",
+  "taskId": "ff524d43-69f6-4095-8e58-a17ee3f34a85",
+  "requiresAuth": true,
+  "priority": 20,
+  "description": "Get a cash flow record by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/cashflow"],
+  "testCases": [
+    {
+      "name": "Get cash flow by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "pathParams": {
+        "id": "{{cache:cashflow.create.response.data.cashFlow.id}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

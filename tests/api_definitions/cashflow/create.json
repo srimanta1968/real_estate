@@ -1,0 +1,28 @@
+{
+  "endpoint": "/api/cashflow",
+  "method": "POST",
+  "taskId": "ff524d43-69f6-4095-8e58-a17ee3f34a85",
+  "requiresAuth": true,
+  "priority": 19,
+  "description": "Create a cash flow analysis record",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "cashflow.create.response.data.cashFlow.id": "data.cashFlow.id"
+  },
+  "testCases": [
+    {
+      "name": "Create cash flow record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "cash_flow": "{{static:2500}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}
