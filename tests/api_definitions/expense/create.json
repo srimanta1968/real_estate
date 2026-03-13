@@ -1,0 +1,28 @@
+{
+  "endpoint": "/api/expenses",
+  "method": "POST",
+  "taskId": "5ed2e3c0-8e32-4a73-a14e-881dbf02d073",
+  "requiresAuth": true,
+  "priority": 13,
+  "description": "Create an expense record with property tax",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "expense.create.response.data.expense.id": "data.expense.id"
+  },
+  "testCases": [
+    {
+      "name": "Create expense record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "property_tax": "{{static:5000}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

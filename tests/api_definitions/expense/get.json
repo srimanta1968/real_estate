@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/expenses/:id",
+  "method": "GET",
+  "taskId": "5ed2e3c0-8e32-4a73-a14e-881dbf02d073",
+  "requiresAuth": true,
+  "priority": 14,
+  "description": "Get an expense record by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/expenses"],
+  "testCases": [
+    {
+      "name": "Get expense by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "pathParams": {
+        "id": "{{cache:expense.create.response.data.expense.id}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

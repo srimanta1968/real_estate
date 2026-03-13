@@ -6,6 +6,7 @@ import { config } from './config/env';
 import authRoutes from './routes/auth.routes';
 import propertyRoutes from './routes/property.routes';
 import financingRoutes from './routes/financing.routes';
+import expenseRoutes from './routes/expense.routes';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/financing', financingRoutes);
+app.use('/api/expenses', expenseRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
