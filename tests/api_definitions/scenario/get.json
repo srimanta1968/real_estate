@@ -1,0 +1,24 @@
+{
+  "endpoint": "/api/scenarios/:id",
+  "method": "GET",
+  "taskId": "2eed298b-e2b9-4b45-b955-3a94ba44b729",
+  "requiresAuth": true,
+  "priority": 26,
+  "description": "Get a scenario comparison record by ID",
+  "dependsOn": ["POST /api/auth/register", "POST /api/scenarios"],
+  "testCases": [
+    {
+      "name": "Get scenario by ID",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "pathParams": {
+        "id": "{{cache:scenario.create.response.data.scenario.id}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}

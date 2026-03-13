@@ -1,0 +1,29 @@
+{
+  "endpoint": "/api/scenarios",
+  "method": "POST",
+  "taskId": "2eed298b-e2b9-4b45-b955-3a94ba44b729",
+  "requiresAuth": true,
+  "priority": 25,
+  "description": "Create a scenario comparison record",
+  "dependsOn": ["POST /api/auth/register", "POST /api/properties"],
+  "captureResponse": {
+    "scenario.create.response.data.scenario.id": "data.scenario.id"
+  },
+  "testCases": [
+    {
+      "name": "Create scenario comparison record",
+      "headers": {
+        "Authorization": "Bearer {{cache:auth.register.response.data.token}}"
+      },
+      "payload": {
+        "property_id": "{{cache:property.create.response.data.property.id}}",
+        "scenario_type": "{{static:optimistic}}",
+        "comparison_value": "{{static:150000}}"
+      },
+      "expectedStatus": 201,
+      "expectedResponse": {
+        "success": true
+      }
+    }
+  ]
+}
