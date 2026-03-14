@@ -1,26 +1,26 @@
 {
-  "last_scan": "2026-03-13T05:28:41.248235Z",
+  "last_scan": "2026-03-14T01:30:36.414742Z",
   "scanned_files": {
     "client/package-lock.json": {
-      "hash": "a21589235dceedfcfe605f3a8e3c61e4a85ec84e0f9ac806a34e2d00fb79d484",
+      "hash": "3a85a5a685078b9db0a77c72a8db33591b8ab0bccce6a38a766ead4dc3de6355",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T03:55:09.415369Z",
-      "linesOfCode": 3206
+      "timestamp": "2026-03-14T01:30:14.296892Z",
+      "linesOfCode": 3429
     },
     "client/package.json": {
-      "hash": "8570aa471c67ac897b10bf6e985d62837bc3a0bb2bb69f7afe195b02b911976e",
+      "hash": "d32304c554d47172787ab6661e596947e44a1757ae78903850726de546a3047d",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T03:55:09.440999Z",
-      "linesOfCode": 29
+      "timestamp": "2026-03-14T01:30:14.318353Z",
+      "linesOfCode": 32
     },
     "client/src/App.tsx": {
-      "hash": "2e9fadea6ccf3c0257ef7997d16e00a45bd8c14b77fb524569a332b026feb13b",
+      "hash": "f1fabba4a7295c7bf96f69fa98e157baf52ed31817716b895b761417f66831f2",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T04:40:48.359319Z",
-      "linesOfCode": 32
+      "timestamp": "2026-03-14T01:30:14.348218Z",
+      "linesOfCode": 39
     },
     "client/src/components/property/PropertyInfoForm.tsx": {
       "hash": "c699b20f1d5161b9f2fb9fb5fdefbeca18cc7ae75440785800961d62e4c78523",
@@ -44,11 +44,11 @@
       "linesOfCode": 135
     },
     "client/src/pages/LoginPage.tsx": {
-      "hash": "e9bab91ae80a9376c8bc6bc0cc115efd8df767f1949b9d3cf497c97230edad57",
+      "hash": "4c9b8ce295b974603ed171e4c93984aa3d2809ade140682b7efb1c4e80a32acc",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T03:55:11.156707Z",
-      "linesOfCode": 73
+      "timestamp": "2026-03-14T01:30:16.920467Z",
+      "linesOfCode": 114
     },
     "client/src/pages/PropertyInfoPage.tsx": {
       "hash": "5e2ec83841c9d46f46fdc1f3dcf9a204a2d96ad0ee8a6f7dad1c2e311a8c1ea1",
@@ -58,11 +58,11 @@
       "linesOfCode": 46
     },
     "client/src/pages/RegisterPage.tsx": {
-      "hash": "5a96894f92fef0ab0731c80140102ef96074f06de01410a12079d13e760292d8",
+      "hash": "2c94b3b310d0afb0324c0a2dde36629478c30d02cb54398435569ce2aec97888",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T03:55:11.930718Z",
-      "linesOfCode": 119
+      "timestamp": "2026-03-14T01:30:17.286076Z",
+      "linesOfCode": 160
     },
     "client/src/services/api.ts": {
       "hash": "d952d42617f4ebb9e7f32036e6aa63da792a6f5168f6d28bc06ce82c12224b67",
@@ -140,7 +140,7 @@
       "linesOfCode": 34
     },
     "server/src/app.ts": {
-      "hash": "2b93dd5cce1d1cf3a5f3b220f172a5a222bede29fa3f8b67cf02e43d9aee033c",
+      "hash": "c184f6a921acef0e2f7e0dbb403f1f79c4591111bdb960562b8331abc118a37e",
       "compliance": 95,
       "violations": [
         {
@@ -156,8 +156,8 @@
           "filePath": "server/src/app.ts"
         }
       ],
-      "timestamp": "2026-03-13T05:28:32.674936Z",
-      "linesOfCode": 52
+      "timestamp": "2026-03-14T01:30:18.666227Z",
+      "linesOfCode": 56
     },
     "server/src/controllers/auth.controller.ts": {
       "hash": "35060677de0e47bd2a42c951647231202dd6b09403534ae0901f59b53a550152",
@@ -174,9 +174,21 @@
       "linesOfCode": 28
     },
     "server/src/routes/auth.routes.ts": {
-      "hash": "24823e03f7e5ef15c20c17f5f392f448f62adf00284e448c55afeead9d9d88de",
-      "compliance": 85,
+      "hash": "a75e638f7951d26eab5cb20e66902863d2e37210c4d1e9a42f96ee40bb9cf493",
+      "compliance": 80,
       "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/auth.routes.ts"
+        },
         {
           "line": 0,
           "severity": "minor",
@@ -190,11 +202,11 @@
           "filePath": "server/src/routes/auth.routes.ts"
         }
       ],
-      "timestamp": "2026-03-13T03:55:12.540550Z",
-      "linesOfCode": 20
+      "timestamp": "2026-03-14T01:30:18.817841Z",
+      "linesOfCode": 16
     },
     "server/src/services/auth.service.ts": {
-      "hash": "f980073b1c6e753acfcc6a7ba0012b1b349cecd3f0582e94932e3b4793b6f784",
+      "hash": "5706fae48b7a7f99c0e65786cf3491d6b2c5f228ba0659552a0a4cd69f938158",
       "compliance": 75,
       "violations": [
         {
@@ -210,8 +222,8 @@
           "filePath": "server/src/services/auth.service.ts"
         }
       ],
-      "timestamp": "2026-03-13T03:55:12.573886Z",
-      "linesOfCode": 135
+      "timestamp": "2026-03-14T01:30:22.711997Z",
+      "linesOfCode": 202
     },
     "server/src/services/data.service.ts": {
       "hash": "144aa6ec0ce35a23cb6438f8f33cbe539a9d17323c489e593915a5a0fddaa097",
@@ -358,11 +370,11 @@
       "linesOfCode": 23
     },
     "client/src/components/cashflow/CashFlowDisplay.tsx": {
-      "hash": "2475c2549a85d96764c22c37298af00ebbedda680c754f9ab0260ca41cf45b18",
+      "hash": "d5d377e94c37b2be7fe9fa73a13fe9ed1063ef9468c1597b672d2bed6e6a0fe9",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T04:29:25.737366Z",
-      "linesOfCode": 93
+      "timestamp": "2026-03-14T01:30:15.385471Z",
+      "linesOfCode": 96
     },
     "client/src/pages/CashFlowPage.tsx": {
       "hash": "fd5e15a4b6b5edd19d2175e237070dcde5b9de27487ed7a68303dd18d4875db7",
@@ -421,18 +433,18 @@
       "linesOfCode": 19
     },
     "client/src/components/scenario/ScenarioComparison.tsx": {
-      "hash": "88b269ef049cea832f4c6d065eb1ab28800e9babdca85743c391f6eeeed06cdf",
+      "hash": "aa550b97050bef97124b9429cbd638be0de2a6a86e7337a0688570ae572f424c",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T04:40:48.799957Z",
-      "linesOfCode": 232
+      "timestamp": "2026-03-14T01:30:15.794103Z",
+      "linesOfCode": 236
     },
     "client/src/pages/ScenarioPage.tsx": {
-      "hash": "e2d4b9e9b1c163b90dccc66dca306f9e684290e205624f992ceb16219238976b",
+      "hash": "c0aead9324b381f1c690a5c5d26f6e02e24de6e37a54ef12d5c31e184ff351c3",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T04:40:49.151879Z",
-      "linesOfCode": 109
+      "timestamp": "2026-03-14T01:30:17.637217Z",
+      "linesOfCode": 189
     },
     "client/src/types/scenario.ts": {
       "hash": "8174230e2f4a2f865acf8360f427ab32b92184b38cc06068c4eee1a1389d1322",
@@ -865,7 +877,490 @@
       "violations": [],
       "timestamp": "2026-03-13T05:28:32.796768Z",
       "linesOfCode": 24
+    },
+    ".claude/config/claude-config.json": {
+      "hash": "d33c45ad1f213afa7a78b2aa618a9c1d3dda636f61f438561218ff9a54be734f",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.659254Z",
+      "linesOfCode": 30
+    },
+    ".claude/settings.local.json": {
+      "hash": "18cc2644282cae2dd0bb50f004975fc2edb3f18f79a3c284cb04d4807ff948e9",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.699686Z",
+      "linesOfCode": 27
+    },
+    ".mcp-cache/pre_commit_cache.json": {
+      "hash": "bc8711ba6dd6bdce828ba686d4346b4cc26c831deac4c0ef8f3186191dc8a74b",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.815813Z",
+      "linesOfCode": 871
+    },
+    ".mcp-cache/violations_latest.json": {
+      "hash": "6e2bb79cd435d0ce0646e6931081f71fd20233e112512f78d040599a403625e4",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.836540Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_035514.json": {
+      "hash": "29f7d45413b4374c2d5afaced030f591b854b5fbc784b8277341b03d22cb9ff4",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.860276Z",
+      "linesOfCode": 75
+    },
+    ".mcp-cache/violations_report_20260313_042113.json": {
+      "hash": "f2a71f71b37312e858a7107b90f14a0f045dd1c0ffc7daf24da086d74578eea9",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.885061Z",
+      "linesOfCode": 25
+    },
+    ".mcp-cache/violations_report_20260313_042430.json": {
+      "hash": "0352832709711b056e0af08bff549a85b870181b7f2c1e840b1a9567824129da",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.910139Z",
+      "linesOfCode": 25
+    },
+    ".mcp-cache/violations_report_20260313_044456.json": {
+      "hash": "851709bb6c15a0d0a45a9dc7db860464587741a9e9658e22ffb858674da553c1",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.942193Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_045431.json": {
+      "hash": "95922e004f68b3b4f3ada4e9e6eff38ba30acb3b28bef8abb5cc33d19a096271",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.965467Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_050346.json": {
+      "hash": "c3a505ec0a1ad7785459b00ad86710cd0c482c777a2c7c78ea3e3e0ddf23082d",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:13.986473Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_050604.json": {
+      "hash": "5a0f46fb2694bc93b9316fad672493da142f592306904e4fad4b052ddc580ca0",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:14.010909Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_050811.json": {
+      "hash": "ce9e1008b9cd7e072d55745faac37cc95e5c156df7d8fbabf658d8adc1e1e8c9",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:14.036317Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_051019.json": {
+      "hash": "cba7328be1db6ebd31221dc3ad1d63af2afb2598a2a7ab72afefa8d7da86c11e",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:14.062525Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_051256.json": {
+      "hash": "f3ab87ac7aea089bebf3ee600c7fcd49527868ebbfac2f7f077736b4b89fcd22",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:14.087429Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_052431.json": {
+      "hash": "5365dc3fff0804f34a5a9770108eee58bf513ab77de1a3ee8a3a31a25a17dea6",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:14.112468Z",
+      "linesOfCode": 35
+    },
+    ".mcp-cache/violations_report_20260313_052841.json": {
+      "hash": "6e2bb79cd435d0ce0646e6931081f71fd20233e112512f78d040599a403625e4",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:14.138337Z",
+      "linesOfCode": 35
+    },
+    "claude_desktop_config.json": {
+      "hash": "4ff5429dacabe7573b8ff137ac1fafd895f13399a52c1fe08cc79447fad2554e",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:14.230881Z",
+      "linesOfCode": 14
+    },
+    "client/src/components/auth/AuthModal.tsx": {
+      "hash": "5fa27dd3900f4a2fed677bf9a576884c8e21107968d3fd1e29fd7fc5c071bd38",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:15.013032Z",
+      "linesOfCode": 236
+    },
+    "client/src/context/AuthContext.tsx": {
+      "hash": "b948361d49ccfe352c09e0334d1899e4221915f2f8597d7619d4cf289d341b95",
+      "compliance": 97,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-07",
+          "description": "Missing JSDoc comments for exported functions",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "client/src/context/AuthContext.tsx"
+        }
+      ],
+      "timestamp": "2026-03-14T01:30:16.167345Z",
+      "linesOfCode": 56
+    },
+    "client/src/pages/AuthCallbackPage.tsx": {
+      "hash": "9a9c4b50985551320952bde418156df1469d9e65c9192347631978511e697048",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:16.551273Z",
+      "linesOfCode": 59
+    },
+    "client/src/pages/UserDashboardPage.tsx": {
+      "hash": "bf39b97bf2ab3e8b36d95199ace5be62f9f8837ca0699385901c783f42209ae7",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.018770Z",
+      "linesOfCode": 176
+    },
+    "client/src/utils/exportPdf.ts": {
+      "hash": "5e90f7b1712ea95ab40c7aaabdd7df4fed2b138fbfc5c7647ff03bc9e63733c5",
+      "compliance": 97,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-07",
+          "description": "Missing JSDoc comments for exported functions",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "client/src/utils/exportPdf.ts"
+        }
+      ],
+      "timestamp": "2026-03-14T01:30:18.438198Z",
+      "linesOfCode": 503
+    },
+    "client/tsconfig.json": {
+      "hash": "63a85d1d826a750adf97d8b069f1331cf3c978afc7573d0a15a36929f2fa09b1",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.479565Z",
+      "linesOfCode": 26
+    },
+    "mcp-server/mcp-bridge.js": {
+      "hash": "1332858fd1695a6a81b01adfd566a97fb904b52d2d81f6903901b3340d5515ca",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.556822Z",
+      "linesOfCode": 1065
+    },
+    "mcp-server/mcp-config.json": {
+      "hash": "acaee0ef5365cfc6420b526b57d6b79a6ff622c74c62754a832e9cccad5e8471",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.569445Z",
+      "linesOfCode": 19
+    },
+    "mcp-server/templates/test-config.json": {
+      "hash": "c0f49357d57e2a54073b73b12fe9169e0d182bc771cba820a19128a83b2ac196",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.621931Z",
+      "linesOfCode": 166
+    },
+    "package-lock.json": {
+      "hash": "70aa94c05c64ffe0a9a973e93747f7948076156ecaef927570a5dd3acda524c5",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.635258Z",
+      "linesOfCode": 304
+    },
+    "package.json": {
+      "hash": "0a38d523716fe498efa90ae661285acb9376a7480ac4e79c69b68342e6b7c748",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.645165Z",
+      "linesOfCode": 15
+    },
+    "server/src/config/database.ts": {
+      "hash": "644b3f6711886fe65e6a70372ddaa4d52fd0f0ee38cd365a0d4cc0c43c88c59d",
+      "compliance": 95,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/config/database.ts"
+        }
+      ],
+      "timestamp": "2026-03-14T01:30:18.687989Z",
+      "linesOfCode": 13
+    },
+    "server/src/config/env.ts": {
+      "hash": "fb5c9a6b6b1166b7bf37d1155213a32e2cc7163824b1b3fdf5b1f5300c34f162",
+      "compliance": 95,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/config/env.ts"
+        }
+      ],
+      "timestamp": "2026-03-14T01:30:18.704375Z",
+      "linesOfCode": 43
+    },
+    "server/src/controllers/oauth.controller.ts": {
+      "hash": "eff6596e6ddbbeacebddc3d0c8ad1e30c54657d8562ed85ff271d523d120295c",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.727371Z",
+      "linesOfCode": 148
+    },
+    "server/src/controllers/pdf.controller.ts": {
+      "hash": "7f738eeabd85b1c7aa6df76651f0af8fc2d221428a322d31ad5a4491db84df44",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.755877Z",
+      "linesOfCode": 65
+    },
+    "server/src/controllers/savedProperty.controller.ts": {
+      "hash": "f4ada3ab0d4d54eee2c008866f892a1362bac8ca3bba0d5e3abdc029760f422b",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:18.779898Z",
+      "linesOfCode": 86
+    },
+    "server/src/routes/pdf.routes.ts": {
+      "hash": "d6d72b2bca69c1d0dcd5433d40dfee5e362aa2e728564e859567a302602447f8",
+      "compliance": 80,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/pdf.routes.ts"
+        },
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-02",
+          "description": "API JSON definition not found - create it first",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/pdf.routes.ts"
+        }
+      ],
+      "timestamp": "2026-03-14T01:30:20.950118Z",
+      "linesOfCode": 11
+    },
+    "server/src/routes/savedProperty.routes.ts": {
+      "hash": "3c68e07acbbdbe771595b2b3a82ad405dbb96316941220c0c92e87f2b74f8622",
+      "compliance": 80,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/savedProperty.routes.ts"
+        },
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-02",
+          "description": "API JSON definition not found - create it first",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/savedProperty.routes.ts"
+        }
+      ],
+      "timestamp": "2026-03-14T01:30:21.679537Z",
+      "linesOfCode": 14
+    },
+    "server/src/services/pdf.service.ts": {
+      "hash": "21a2ca87877ebc3893abd6876dc1680274a0f7260ff35375e7d43b3c461edeb4",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.732221Z",
+      "linesOfCode": 59
+    },
+    "server/src/services/savedProperty.service.ts": {
+      "hash": "8c13d3f66279a76e637e4d7e09308d7d67345791571bd5d009c721c4ea102355",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.748920Z",
+      "linesOfCode": 71
+    },
+    "server/tsconfig.json": {
+      "hash": "82d914bd90b38071fee09cc7db97080d40112fd86c0a7def34c8ce56ace02f74",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.792481Z",
+      "linesOfCode": 30
+    },
+    "tests/api_definitions/auth/google-oauth-callback.json": {
+      "hash": "985f8d7be4617576cc82474f12694f7efa87008d2137212d5f7d84af640fe381",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.814022Z",
+      "linesOfCode": 15
+    },
+    "tests/api_definitions/auth/google-oauth.json": {
+      "hash": "d1de2f5039c3cc61c382e686e124be46b1436bc6f12116283af3d9a0c5ec8fea",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.832644Z",
+      "linesOfCode": 15
+    },
+    "tests/api_definitions/auth/linkedin-oauth-callback.json": {
+      "hash": "0b21f6e7f301ebc29fd6845b28721a451127833e400c83859d21ec09852a1953",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.848685Z",
+      "linesOfCode": 15
+    },
+    "tests/api_definitions/auth/linkedin-oauth.json": {
+      "hash": "e636b6b84730bf425c90f29b00cde89d20df49a93ffa0096e3ab04ab8b9f7d17",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.862119Z",
+      "linesOfCode": 15
+    },
+    "tests/api_definitions/pdf/download-count.json": {
+      "hash": "85b43f1dbd642a9533c6f8e70c2d588193061a2c963bd3cf82b6534a17dcdd3b",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.874827Z",
+      "linesOfCode": 14
+    },
+    "tests/api_definitions/pdf/track-download.json": {
+      "hash": "8c287c164b114a855aca0ec1c4ffe43fbd531f0b20ddae8fdbf768e2a725c3bb",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.888100Z",
+      "linesOfCode": 20
+    },
+    "tests/api_definitions/saved-properties/get-config.json": {
+      "hash": "19ae3c6e2d7dec567f630dcb07939dc4d40cc730bb2d1c9a7c7279d07ef618d2",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.904280Z",
+      "linesOfCode": 17
+    },
+    "tests/api_definitions/saved-properties/my-properties.json": {
+      "hash": "23574fee6223e3d07e90ebd16cc28c328f5bf5a0de4c863bf1d5a651d2dcfcdf",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.919647Z",
+      "linesOfCode": 14
+    },
+    "tests/api_definitions/saved-properties/save.json": {
+      "hash": "bfe75cd3a913ee9ebfcb427f89d45130482a8b682760c583fd0e25e142767a9e",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.936119Z",
+      "linesOfCode": 22
+    },
+    "tests/config/test-config.json": {
+      "hash": "f4f05308c984b4a2b00c8d85afe70ff2ca228d5895fabad32ee805ae24b52216",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:30:22.954884Z",
+      "linesOfCode": 186
     }
   },
-  "registered_apis": {}
+  "registered_apis": {
+    "POST:/api/auth/register": {
+      "filePath": "server/src/routes/auth.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414757Z"
+    },
+    "POST:/api/auth/login": {
+      "filePath": "server/src/routes/auth.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414763Z"
+    },
+    "GET:/api/auth/google": {
+      "filePath": "server/src/routes/auth.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414765Z"
+    },
+    "GET:/api/auth/google/callback": {
+      "filePath": "server/src/routes/auth.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414768Z"
+    },
+    "GET:/api/auth/linkedin": {
+      "filePath": "server/src/routes/auth.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414770Z"
+    },
+    "GET:/api/auth/linkedin/callback": {
+      "filePath": "server/src/routes/auth.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414773Z"
+    },
+    "POST:/track-download": {
+      "filePath": "server/src/routes/pdf.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414775Z"
+    },
+    "GET:/download-count": {
+      "filePath": "server/src/routes/pdf.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414779Z"
+    },
+    "POST:/save": {
+      "filePath": "server/src/routes/savedProperty.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414781Z"
+    },
+    "GET:/my-properties": {
+      "filePath": "server/src/routes/savedProperty.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414784Z"
+    },
+    "GET:/:id/config": {
+      "filePath": "server/src/routes/savedProperty.routes.ts",
+      "timestamp": "2026-03-14T01:30:36.414786Z"
+    }
+  }
 }

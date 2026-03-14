@@ -1,0 +1,37 @@
+{
+  "last_test_run": "2026-03-14T01:30:54.628359",
+  "tested_apis": {
+    "POST:/api/auth/register": {
+      "lastTested": "2026-03-14T01:30:54.628370",
+      "fileHash": null
+    },
+    "POST:/api/auth/login": {
+      "lastTested": "2026-03-14T01:30:54.628373",
+      "fileHash": null
+    },
+    "POST:/api/pdf/track-download": {
+      "lastTested": "2026-03-14T01:30:54.628375",
+      "fileHash": null
+    },
+    "GET:/api/pdf/download-count": {
+      "lastTested": "2026-03-14T01:30:54.628377",
+      "fileHash": null
+    },
+    "GET:/api/auth/google/callback": {
+      "lastTested": "2026-03-14T01:30:54.628378",
+      "fileHash": null
+    },
+    "GET:/api/auth/linkedin/callback": {
+      "lastTested": "2026-03-14T01:30:54.628380",
+      "fileHash": null
+    },
+    "GET:/api/auth/google": {
+      "lastTested": "2026-03-14T01:30:54.628382",
+      "fileHash": null
+    },
+    "GET:/api/auth/linkedin": {
+      "lastTested": "2026-03-14T01:30:54.628383",
+      "fileHash": null
+    }
+  }
+}
