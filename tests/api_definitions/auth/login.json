@@ -14,7 +14,7 @@
     "name": "Login with registered user",
     "payload": {
       "email": "{{cache:auth.register.response.data.email}}",
-      "password": "{{dynamic:password}}"
+      "password": "{{cache:auth.register.request.password}}"
     },
     "expectedStatus": 200,
     "expectedResponse": {

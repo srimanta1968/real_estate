@@ -1,5 +1,5 @@
 {
-  "last_scan": "2026-03-14T01:30:36.414742Z",
+  "last_scan": "2026-03-14T01:33:24.264122Z",
   "scanned_files": {
     "client/package-lock.json": {
       "hash": "3a85a5a685078b9db0a77c72a8db33591b8ab0bccce6a38a766ead4dc3de6355",
@@ -893,18 +893,18 @@
       "linesOfCode": 27
     },
     ".mcp-cache/pre_commit_cache.json": {
-      "hash": "bc8711ba6dd6bdce828ba686d4346b4cc26c831deac4c0ef8f3186191dc8a74b",
+      "hash": "c9bff28ecbf0fc98012624e5caa0dca261dccfa5eb20579e746077793ac180bf",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:30:13.815813Z",
-      "linesOfCode": 871
+      "timestamp": "2026-03-14T01:33:12.565053Z",
+      "linesOfCode": 1366
     },
     ".mcp-cache/violations_latest.json": {
-      "hash": "6e2bb79cd435d0ce0646e6931081f71fd20233e112512f78d040599a403625e4",
+      "hash": "912a1e56530442dd03071c84c2064f3e48f51d2809293f2cca7dd922bdc1065a",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:30:13.836540Z",
-      "linesOfCode": 35
+      "timestamp": "2026-03-14T01:33:12.576500Z",
+      "linesOfCode": 129
     },
     ".mcp-cache/violations_report_20260313_035514.json": {
       "hash": "29f7d45413b4374c2d5afaced030f591b854b5fbc784b8277341b03d22cb9ff4",
@@ -1315,6 +1315,20 @@
       "violations": [],
       "timestamp": "2026-03-14T01:30:22.954884Z",
       "linesOfCode": 186
+    },
+    ".mcp-cache/api_test_cache.json": {
+      "hash": "28361ada163b94dc8d146d746460f85590f66a89aa931f4b345678d8d09013ea",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:33:12.536421Z",
+      "linesOfCode": 37
+    },
+    ".mcp-cache/violations_report_20260314_013036.json": {
+      "hash": "912a1e56530442dd03071c84c2064f3e48f51d2809293f2cca7dd922bdc1065a",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-14T01:33:12.591323Z",
+      "linesOfCode": 129
     }
   },
   "registered_apis": {

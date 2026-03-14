@@ -1,0 +1,1007 @@
+  routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'irr',
+[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] IrrService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] IrrController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'cash_flow',
+[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] CashFlowService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] CashFlowController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] json
+[server] json
+[server] DataService insertOne error: {
+[server]   table: 'annual_projections',
+[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] ProjectionService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] ProjectionController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'financial_visualization',
+[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] VisualizationService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] VisualizationController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'scenario_comparison',
+[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] ScenarioService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] ScenarioController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] json
+[server] json
+[server] json
+[server] json
+[server] json
+[server] json
+[server] json
+[server] json
+[server] json
+[server] json
+[server] DataService insertOne error: {
+[server]   table: 'financing_info',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\financing.service.ts:25:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\financing.controller.ts:15:25) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] FinancingService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\financing.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\financing.controller.ts:15:25) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] FinancingController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\financing.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\financing.controller.ts:15:25) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'expense_info',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\expense.service.ts:25:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\expense.controller.ts:15:23) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] ExpenseService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\expense.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\expense.controller.ts:15:23) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] ExpenseController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\expense.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\expense.controller.ts:15:23) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'cap_rate',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\caprate.service.ts:25:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\caprate.controller.ts:15:23) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] CapRateService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\caprate.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\caprate.controller.ts:15:23) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] CapRateController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\caprate.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\caprate.controller.ts:15:23) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'irr',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] IrrService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] IrrController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'cash_flow',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] CashFlowService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] CashFlowController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] json
+[server] json
+[server] DataService insertOne error: {
+[server]   table: 'annual_projections',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] ProjectionService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] ProjectionController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'financial_visualization',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] VisualizationService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] VisualizationController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'scenario_comparison',
+[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
+[server]       at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
+[server]     length: 174,
+[server]     severity: 'ERROR',
+[server]     code: '22P02',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: undefined,
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'numutils.c',
+[server]     line: '232',
+[server]     routine: 'pg_strtoint32'
+[server]   }
+[server] }
+[server] json
+[server] ScenarioService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] ScenarioController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
+[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
+[server]   length: 174,
+[server]   severity: 'ERROR',
+[server]   code: '22P02',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: undefined,
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'numutils.c',
+[server]   line: '232',
+[server]   routine: 'pg_strtoint32'
+[server] }
+[server] json
+[server] json
+[server] json

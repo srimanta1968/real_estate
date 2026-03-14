@@ -17,7 +17,8 @@
       "mcp__projexlight__projexlight_complete_task",
       "mcp__projexlight__projexlight_submit_feature_validation",
       "Bash(docker-compose ps:*)",
-      "mcp__projexlight__projexlight_create_task"
+      "mcp__projexlight__projexlight_create_task",
+      "mcp__projexlight__projexlight_clear_test_failures"
     ]
   },
   "enableAllProjectMcpServers": true,

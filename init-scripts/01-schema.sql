@@ -47,7 +47,7 @@ COMMENT ON TABLE property_info IS 'Schema: Real Estate Deal Evaluator Schema - E
 
 CREATE TABLE IF NOT EXISTS financing_info (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   loan_amount DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -57,7 +57,7 @@ COMMENT ON TABLE financing_info IS 'Schema: Real Estate Deal Evaluator Schema - 
 
 CREATE TABLE IF NOT EXISTS expense_info (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   property_tax DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -67,7 +67,7 @@ COMMENT ON TABLE expense_info IS 'Schema: Real Estate Deal Evaluator Schema - En
 
 CREATE TABLE IF NOT EXISTS cap_rate (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   cap_rate DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -77,7 +77,7 @@ COMMENT ON TABLE cap_rate IS 'Schema: Real Estate Deal Evaluator Schema - Entity
 
 CREATE TABLE IF NOT EXISTS irr (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   irr DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -87,7 +87,7 @@ COMMENT ON TABLE irr IS 'Schema: Real Estate Deal Evaluator Schema - Entity: Irr
 
 CREATE TABLE IF NOT EXISTS cash_flow (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   cash_flow DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -97,7 +97,7 @@ COMMENT ON TABLE cash_flow IS 'Schema: Real Estate Deal Evaluator Schema - Entit
 
 CREATE TABLE IF NOT EXISTS annual_projections (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   year INTEGER,
   rental_income DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -108,7 +108,7 @@ COMMENT ON TABLE annual_projections IS 'Schema: Real Estate Deal Evaluator Schem
 
 CREATE TABLE IF NOT EXISTS financial_visualization (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   metric_name VARCHAR(255),
   value DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -119,7 +119,7 @@ COMMENT ON TABLE financial_visualization IS 'Schema: Real Estate Deal Evaluator 
 
 CREATE TABLE IF NOT EXISTS scenario_comparison (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  property_id INTEGER,
+  property_id UUID,
   scenario_type VARCHAR(255),
   comparison_value DECIMAL(10,2),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
