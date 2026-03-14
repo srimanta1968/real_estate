@@ -1,18 +1,20 @@
 {
-  "reportType": "api_test_failures",
-  "source": "pre-push",
-  "timestamp": "2026-03-14T01:41:58Z",
-  "priority": "immediate",
-  "blocking": false,
-  "description": "API tests failed during pre-push validation. These should be fixed before pushing.",
+  "timestamp": "2026-03-14T01:41:52.090592Z",
+  "triggeredBy": "git_push",
   "summary": {
-    "total": 28,
-    "passed": 22,
-    "failed": 1,
-    "skipped": 5,
-    "duration_ms": 909
+    "totalAPIs": 28,
+    "totalDiscovered": 28,
+    "newAPIs": 0,
+    "modifiedAPIs": 0,
+    "passedAPIs": 22,
+    "failedAPIs": 1,
+    "skippedAPIs": 5,
+    "duplicateAPIs": 0,
+    "blockingConflicts": 0,
+    "duplicateWarnings": 0,
+    "testDurationMs": 909
   },
-  "failed_tests": [
+  "failures": [
     {
       "apiId": null,
       "endpoint": "/api/auth/login",
@@ -121,7 +123,7 @@
       "parameters": {}
     }
   ],
-  "skipped_tests": [
+  "skippedTests": [
     {
       "endpoint": "/api/properties/:id",
       "method": "GET",
@@ -344,15 +346,5 @@
       "testAssertions": [],
       "parameters": {}
     }
-  ],
-  "llm_prompt": "Please analyze and fix the 1 failed API test(s). For each failure: 1) Read the error message to understand what went wrong, 2) Check the API implementation in the route file, 3) Verify test data in api_definitions is valid, 4) Fix the API code or test data as needed. Also check .projexlight/feedback/ for detailed error information.",
-  "investigation_paths": [
-    "C:/Users/srima/real_estate/.projexlight/feedback/",
-    "C:/Users/srima/real_estate/.projexlight/reports/",
-    "C:/Users/srima/real_estate/tests/api_definitions/"
-  ],
-  "commands": {
-    "view_logs": "docker logs projexlight-mcp",
-    "rerun_tests": "curl -X POST http://localhost:8766/api/test -H 'Content-Type: application/json' -d '{\"project_root\": \"/workspace\", \"api_test_mode\": \"full\"}'"
-  }
+  ]
 }
