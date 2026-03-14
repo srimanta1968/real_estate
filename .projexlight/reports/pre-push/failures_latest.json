@@ -1,7 +1,7 @@
 {
   "reportType": "api_test_failures",
   "source": "pre-push",
-  "timestamp": "2026-03-14T01:41:58Z",
+  "timestamp": "2026-03-14T01:56:09Z",
   "priority": "immediate",
   "blocking": false,
   "description": "API tests failed during pre-push validation. These should be fixed before pushing.",
@@ -10,7 +10,7 @@
     "passed": 22,
     "failed": 1,
     "skipped": 5,
-    "duration_ms": 909
+    "duration_ms": 1037
   },
   "failed_tests": [
     {
@@ -19,9 +19,9 @@
       "method": "POST",
       "status": "failed",
       "statusCode": 401,
-      "responseTimeMs": 64,
+      "responseTimeMs": 74,
       "requestBody": {
-        "email": "testuser_512480@example.com",
+        "email": "testuser_364579@example.com",
         "password": "TestPassword123!"
       },
       "responseBody": "{\n  \"success\": false,\n  \"error\": \"Invalid email or password\"\n}",
@@ -34,9 +34,9 @@
       "requestHeaders": {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMTgxZjEyMS0xNWFiLTQ2MWMtYTM3Mi1lYTg1ZjZmN2NmM2UiLCJlbWFpbCI6InRlc3R1c2VyXzUxMjQ4MEBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUyNTEyLCJleHAiOjE3NzM1Mzg5MTJ9.nuK7kAfMFTtByOLtTHPBvCsGb4PK7vOXyoGdtoUD2Z0"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWMzMTMwNi1mY2RhLTQyMWEtODczYi1iMzE0Mjk1NThhMTQiLCJlbWFpbCI6InRlc3R1c2VyXzM2NDU3OUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUzMzY0LCJleHAiOjE3NzM1Mzk3NjR9.h1O13iomDQtf8lFn8MDf2odF56fseK_RoLFTknkgch0"
       },
-      "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMTgxZjEyMS0xNWFiLTQ2MWMtYTM3Mi1lYTg1ZjZmN2NmM2UiLCJlbWFpbCI6InRlc3R1c2VyXzUxMjQ4MEBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUyNTEyLCJleHAiOjE3NzM1Mzg5MTJ9.nuK7kAfMFTtByOLtTHPBvCsGb4PK7vOXyoGdtoUD2Z0 \\\n  -d '{\n  \"email\": \"testuser_512480@example.com\",\n  \"password\": \"TestPassword123!\"\n}' \\\n  \"http://localhost:3000/api/auth/login\"",
+      "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWMzMTMwNi1mY2RhLTQyMWEtODczYi1iMzE0Mjk1NThhMTQiLCJlbWFpbCI6InRlc3R1c2VyXzM2NDU3OUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUzMzY0LCJleHAiOjE3NzM1Mzk3NjR9.h1O13iomDQtf8lFn8MDf2odF56fseK_RoLFTknkgch0 \\\n  -d '{\n  \"email\": \"testuser_364579@example.com\",\n  \"password\": \"TestPassword123!\"\n}' \\\n  \"http://localhost:3000/api/auth/login\"",
       "constraintInfo": null,
       "testability": "auto",
       "setupScript": null,
@@ -62,7 +62,7 @@
       "requestBodyTemplate": null,
       "responseSchema": null,
       "sampleInput": {
-        "email": "testuser_512480@example.com",
+        "email": "testuser_364579@example.com",
         "password": "TestPassword123!"
       },
       "sampleOutput": "{\n  \"success\": false,\n  \"error\": \"Invalid email or password\"\n}",

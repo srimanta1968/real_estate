@@ -1,29 +1,27 @@
 {
-  "timestamp": "2026-03-14T01:41:52.090592Z",
-  "triggeredBy": "git_push",
+  "reportType": "api_test_failures",
+  "source": "pre-push",
+  "timestamp": "2026-03-14T01:56:09Z",
+  "priority": "immediate",
+  "blocking": false,
+  "description": "API tests failed during pre-push validation. These should be fixed before pushing.",
   "summary": {
-    "totalAPIs": 28,
-    "totalDiscovered": 28,
-    "newAPIs": 0,
-    "modifiedAPIs": 0,
-    "passedAPIs": 22,
-    "failedAPIs": 1,
-    "skippedAPIs": 5,
-    "duplicateAPIs": 0,
-    "blockingConflicts": 0,
-    "duplicateWarnings": 0,
-    "testDurationMs": 909
+    "total": 28,
+    "passed": 22,
+    "failed": 1,
+    "skipped": 5,
+    "duration_ms": 1037
   },
-  "failures": [
+  "failed_tests": [
     {
       "apiId": null,
       "endpoint": "/api/auth/login",
       "method": "POST",
       "status": "failed",
       "statusCode": 401,
-      "responseTimeMs": 64,
+      "responseTimeMs": 74,
       "requestBody": {
-        "email": "testuser_512480@example.com",
+        "email": "testuser_364579@example.com",
         "password": "TestPassword123!"
       },
       "responseBody": "{\n  \"success\": false,\n  \"error\": \"Invalid email or password\"\n}",
@@ -36,9 +34,9 @@
       "requestHeaders": {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMTgxZjEyMS0xNWFiLTQ2MWMtYTM3Mi1lYTg1ZjZmN2NmM2UiLCJlbWFpbCI6InRlc3R1c2VyXzUxMjQ4MEBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUyNTEyLCJleHAiOjE3NzM1Mzg5MTJ9.nuK7kAfMFTtByOLtTHPBvCsGb4PK7vOXyoGdtoUD2Z0"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWMzMTMwNi1mY2RhLTQyMWEtODczYi1iMzE0Mjk1NThhMTQiLCJlbWFpbCI6InRlc3R1c2VyXzM2NDU3OUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUzMzY0LCJleHAiOjE3NzM1Mzk3NjR9.h1O13iomDQtf8lFn8MDf2odF56fseK_RoLFTknkgch0"
       },
-      "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMTgxZjEyMS0xNWFiLTQ2MWMtYTM3Mi1lYTg1ZjZmN2NmM2UiLCJlbWFpbCI6InRlc3R1c2VyXzUxMjQ4MEBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUyNTEyLCJleHAiOjE3NzM1Mzg5MTJ9.nuK7kAfMFTtByOLtTHPBvCsGb4PK7vOXyoGdtoUD2Z0 \\\n  -d '{\n  \"email\": \"testuser_512480@example.com\",\n  \"password\": \"TestPassword123!\"\n}' \\\n  \"http://localhost:3000/api/auth/login\"",
+      "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWMzMTMwNi1mY2RhLTQyMWEtODczYi1iMzE0Mjk1NThhMTQiLCJlbWFpbCI6InRlc3R1c2VyXzM2NDU3OUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzczNDUzMzY0LCJleHAiOjE3NzM1Mzk3NjR9.h1O13iomDQtf8lFn8MDf2odF56fseK_RoLFTknkgch0 \\\n  -d '{\n  \"email\": \"testuser_364579@example.com\",\n  \"password\": \"TestPassword123!\"\n}' \\\n  \"http://localhost:3000/api/auth/login\"",
       "constraintInfo": null,
       "testability": "auto",
       "setupScript": null,
@@ -64,7 +62,7 @@
       "requestBodyTemplate": null,
       "responseSchema": null,
       "sampleInput": {
-        "email": "testuser_512480@example.com",
+        "email": "testuser_364579@example.com",
         "password": "TestPassword123!"
       },
       "sampleOutput": "{\n  \"success\": false,\n  \"error\": \"Invalid email or password\"\n}",
@@ -123,7 +121,7 @@
       "parameters": {}
     }
   ],
-  "skippedTests": [
+  "skipped_tests": [
     {
       "endpoint": "/api/properties/:id",
       "method": "GET",
@@ -346,5 +344,15 @@
       "testAssertions": [],
       "parameters": {}
     }
-  ]
+  ],
+  "llm_prompt": "Please analyze and fix the 1 failed API test(s). For each failure: 1) Read the error message to understand what went wrong, 2) Check the API implementation in the route file, 3) Verify test data in api_definitions is valid, 4) Fix the API code or test data as needed. Also check .projexlight/feedback/ for detailed error information.",
+  "investigation_paths": [
+    "C:/Users/srima/real_estate/.projexlight/feedback/",
+    "C:/Users/srima/real_estate/.projexlight/reports/",
+    "C:/Users/srima/real_estate/tests/api_definitions/"
+  ],
+  "commands": {
+    "view_logs": "docker logs projexlight-mcp",
+    "rerun_tests": "curl -X POST http://localhost:8766/api/test -H 'Content-Type: application/json' -d '{\"project_root\": \"/workspace\", \"api_test_mode\": \"full\"}'"
+  }
 }

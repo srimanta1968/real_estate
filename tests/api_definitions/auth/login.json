@@ -14,7 +14,7 @@
     "name": "Login with registered user",
     "payload": {
       "email": "{{cache:auth.register.response.data.email}}",
-      "password": "{{cache:auth.register.request.password}}"
+      "password": "TestPass123!"
     },
     "expectedStatus": 200,
     "expectedResponse": {
