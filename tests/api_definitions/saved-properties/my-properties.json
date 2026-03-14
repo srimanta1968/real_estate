@@ -1,0 +1,14 @@
+{
+  "endpoint": "/api/saved-properties/my-properties",
+  "method": "GET",
+  "taskId": "b3cadab7-5a88-48a0-9d67-fa3310fe7b64",
+  "requiresAuth": true,
+  "priority": 21,
+  "dependsOn": ["POST /api/auth/register"],
+  "testCases": [{
+    "name": "List user saved properties",
+    "headers": {"Authorization": "Bearer {{cache:auth.register.response.data.token}}"},
+    "expectedStatus": 200,
+    "expectedResponse": {"success": true}
+  }]
+}

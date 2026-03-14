@@ -1,0 +1,20 @@
+{
+  "endpoint": "/api/pdf/track-download",
+  "method": "POST",
+  "taskId": "4c222c16-7dae-49ad-97c1-d66da97053ee",
+  "requiresAuth": true,
+  "priority": 20,
+  "dependsOn": ["POST /api/auth/register"],
+  "captureResponse": {
+    "pdf.trackDownload.response.data.download.id": "data.download.id"
+  },
+  "testCases": [{
+    "name": "Track PDF download",
+    "headers": {"Authorization": "Bearer {{cache:auth.register.response.data.token}}"},
+    "payload": {
+      "property_address": "{{dynamic:text}}"
+    },
+    "expectedStatus": 201,
+    "expectedResponse": {"success": true}
+  }]
+}

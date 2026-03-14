@@ -35,16 +35,19 @@ export default function CashFlowDisplay({ monthly, annual, downPayment }: CashFl
   function LineItem({ label, monthly: m, annual: a, isSubtract, isBold, isTotal }: LineItemProps) {
     const textClass = isBold ? 'font-semibold text-gray-900' : 'text-gray-600';
     const borderClass = isTotal ? 'border-t-2 border-gray-300 pt-2' : '';
-    const valueColor = isSubtract ? 'text-red-600' : (isBold || isTotal) ? 'text-gray-900 font-semibold' : 'text-gray-700';
+    const isNegativeM = isSubtract || (!isSubtract && isBold && m < 0);
+    const isNegativeA = isSubtract || (!isSubtract && isBold && a < 0);
+    const valueColorM = (isSubtract || isNegativeM) ? 'text-red-600' : (isBold || isTotal) ? 'text-gray-900 font-semibold' : 'text-gray-700';
+    const valueColorA = (isSubtract || isNegativeA) ? 'text-red-600' : (isBold || isTotal) ? 'text-gray-900 font-semibold' : 'text-gray-700';
 
     return (
       <div className={`grid grid-cols-3 gap-4 py-1 ${borderClass}`}>
         <span className={textClass}>{label}</span>
-        <span className={`text-right ${valueColor}`}>
-          {isSubtract ? '-' : ''}{fmtDetailed(Math.abs(m))}
+        <span className={`text-right ${valueColorM}`}>
+          {isNegativeM ? '-' : ''}{fmtDetailed(Math.abs(m))}
         </span>
-        <span className={`text-right ${valueColor}`}>
-          {isSubtract ? '-' : ''}{fmt(Math.abs(a))}
+        <span className={`text-right ${valueColorA}`}>
+          {isNegativeA ? '-' : ''}{fmt(Math.abs(a))}
         </span>
       </div>
     );

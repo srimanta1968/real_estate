@@ -1,0 +1,22 @@
+{
+  "endpoint": "/api/saved-properties/save",
+  "method": "POST",
+  "taskId": "b3cadab7-5a88-48a0-9d67-fa3310fe7b64",
+  "requiresAuth": true,
+  "priority": 20,
+  "dependsOn": ["POST /api/auth/register"],
+  "captureResponse": {
+    "savedProperties.save.response.data.property.id": "data.property.id"
+  },
+  "testCases": [{
+    "name": "Save property configuration",
+    "headers": {"Authorization": "Bearer {{cache:auth.register.response.data.token}}"},
+    "payload": {
+      "property_data": {"address": "{{dynamic:text}}", "purchase_price": "{{static:500000}}"},
+      "financing_data": {"loan_amount": "{{static:400000}}", "interest_rate": "{{static:6.5}}"},
+      "expense_data": {"property_tax": "{{static:12000}}", "monthly_rental_income": "{{static:3500}}"}
+    },
+    "expectedStatus": 201,
+    "expectedResponse": {"success": true}
+  }]
+}

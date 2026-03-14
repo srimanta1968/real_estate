@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl --version 2>&1 | head -1)",
+      "mcp__projexlight__projexlight_get_rules",
+      "mcp__projexlight__projexlight_init_session",
+      "mcp__projexlight__projexlight_self_check",
+      "mcp__projexlight__projexlight_get_instruction",
+      "Bash(cd /c/Users/srima/real_estate/server && npm install pg bcryptjs jsonwebtoken && npm install -D @types/pg @types/bcryptjs @types/jsonwebtoken)",
+      "Bash(cd /c/Users/srima/real_estate/client && npm install axios && npm install -D tailwindcss @tailwindcss/vite)",
+      "Bash(cd /c/Users/srima/real_estate/server && npx tsc --noEmit 2>&1 | head -30)",
+      "Bash(npx tsc:*)",
+      "Bash(node -e \"console.log\\(require\\('jsonwebtoken/package.json'\\).version\\)\")",
+      "mcp__projexlight__projexlight_validate",
+      "Bash(git commit:*)",
+      "mcp__projexlight__projexlight_get_pending_violations",
+      "mcp__projexlight__projexlight_complete_task",
+      "mcp__projexlight__projexlight_submit_feature_validation",
+      "Bash(docker-compose ps:*)",
+      "mcp__projexlight__projexlight_create_task"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "projexlight"
+  ]
+}

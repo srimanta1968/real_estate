@@ -1,0 +1,27 @@
+{
+  "9e8b9182-6e7a-4bf9-8f07-e782c6f6ac85": {
+    "projectId": "9e8b9182-6e7a-4bf9-8f07-e782c6f6ac85",
+    "projectName": "real_estate",
+    "projectPath": "/c/Users/srima/real_estate",
+    "workspacePath": "/c/Users/srima/real_estate",
+    "containerPath": "/projects/additional1",
+    "databaseName": "real_estate_deal_evaluator_db",
+    "databaseType": "postgresql",
+    "databaseConfig": {
+      "enabled": true,
+      "type": "postgresql",
+      "host": "host.docker.internal",
+      "port": 5432,
+      "database": "real_estate_deal_evaluator_db",
+      "username": "postgres",
+      "password": "postgres"
+    },
+    "apiKey": "hBOLjE6hlaRJTtEkm+LZS7hKcWbW2jDk5rFnXr/J9oPByKQjKhI3K8gqdZZ2cLAIzdQDwm2+fVam65QJo2DEy63gFgN+aW++M1eQf8F0FF0A4W+g3HxOCIDCy8zM+gKNmgFKSQZigfMakpVeZ+Cl47sCpjbCqQrjzhyA0ZeqqFtLgh4cEQTykyJfRoI5ZXkeXipabKgJgn1hHQIh1w==",
+    "sprintId": "693170cd-c22d-4f54-a75d-d85bb94fb547",
+    "registeredAt": "2026-03-13T03:22:34.642078Z",
+    "lastSeen": "2026-03-13T03:22:34.642086Z",
+    "status": "active",
+    "isOwner": false,
+    "schemaSyncEnabled": true
+  }
+}

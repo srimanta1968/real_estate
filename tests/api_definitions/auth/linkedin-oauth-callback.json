@@ -1,0 +1,15 @@
+{
+  "endpoint": "/api/auth/linkedin/callback",
+  "method": "GET",
+  "taskId": "a32b79ff-515a-4850-824a-94499a37aae6",
+  "requiresAuth": false,
+  "description": "LinkedIn OAuth2 callback - exchanges code for user profile, creates/finds user, returns JWT via redirect",
+  "testability": "manual",
+  "skipReason": "OAuth callback requires valid authorization code from LinkedIn",
+  "testCases": [
+    {
+      "name": "Process LinkedIn OAuth callback",
+      "expectedStatus": 302
+    }
+  ]
+}

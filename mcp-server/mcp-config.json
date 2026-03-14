@@ -1,0 +1,19 @@
+{
+  "projectId": "9e8b9182-6e7a-4bf9-8f07-e782c6f6ac85",
+  "sprintId": "693170cd-c22d-4f54-a75d-d85bb94fb547",
+  "poolIndex": 1,
+  "encryptedPlatformApiKey": "hBOLjE6hlaRJTtEkm+LZS7hKcWbW2jDk5rFnXr/J9oPByKQjKhI3K8gqdZZ2cLAIzdQDwm2+fVam65QJo2DEy63gFgN+aW++M1eQf8F0FF0A4W+g3HxOCIDCy8zM+gKNmgFKSQZigfMakpVeZ+Cl47sCpjbCqQrjzhyA0ZeqqFtLgh4cEQTykyJfRoI5ZXkeXipabKgJgn1hHQIh1w==",
+  "encryptedLLMConfig": "kwU0cdAD8U7CV5OScO9HgxVhMNnRa+YnS7mRt6CKQlb9k8cBWu7khj7PqQ9q9KmrpCXAGwIVGRHAbZqSVHpmATDA5Uey4e2dNQ4E3HzNYMyQRz6CEfiK8VQsQ/u5SDiW31/A2HEQTbo2C4N48I9GzaQDoFZQWGh7fzIEquGrI1ffr7rpEaTjyKG4oW4SDM4gmxSi9YG8DG0TW2GF96i7lOxHrAWcI9sFdGDomJcXN2FdHn5DitY4QAcfupufxvpH3M3RzqUwRrAOJfqsFlOS/1zJi0gU4rL4CxoTwEo+3ILM1DjTM5+Yac3L9fXYfFcNkiGm66yZGXwLax34RL0DA5U3CoqzfiUu2DJwOzauaeCIxLKF1yNZ47FTPVQC/EPLwTm8ahWcONS4oaXeUv1qSD/GndoCPJjFLxYj9jv0fz+/sdrTgiI/Zk7+Q4sNthITlyo/fjpgjvkgA3thgC8TDxiD0U63sckcvTgSO2SGz+W46aw2L9XLKCX/HzamYxYp0PbBy7xzE+VBR2lZyfbRO03AVBjrhwkZ8Kp8T+R18pjPVxUtf6E1",
+  "configVersion": "1.0.0",
+  "expiresAt": "2026-04-12T00:22:37.171Z",
+  "databaseConfig": {
+    "enabled": true,
+    "type": "postgresql",
+    "host": "host.docker.internal",
+    "port": 5432,
+    "database": "real_estate_deal_evaluator_db",
+    "username": "postgres",
+    "password": "postgres"
+  },
+  "enforceCustomStandards": true
+}

@@ -1,0 +1,17 @@
+{
+  "endpoint": "/api/saved-properties/:id/config",
+  "method": "GET",
+  "taskId": "b3cadab7-5a88-48a0-9d67-fa3310fe7b64",
+  "requiresAuth": true,
+  "priority": 22,
+  "dependsOn": ["POST /api/auth/register", "POST /api/saved-properties/save"],
+  "testCases": [{
+    "name": "Get saved property config by ID",
+    "headers": {"Authorization": "Bearer {{cache:auth.register.response.data.token}}"},
+    "pathParams": {
+      "id": "{{cache:savedProperties.save.response.data.property.id}}"
+    },
+    "expectedStatus": 200,
+    "expectedResponse": {"success": true}
+  }]
+}

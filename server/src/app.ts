@@ -13,6 +13,8 @@ import cashFlowRoutes from './routes/cashflow.routes';
 import projectionRoutes from './routes/projection.routes';
 import visualizationRoutes from './routes/visualization.routes';
 import scenarioRoutes from './routes/scenario.routes';
+import pdfRoutes from './routes/pdf.routes';
+import savedPropertyRoutes from './routes/savedProperty.routes';
 
 const app = express();
 
@@ -48,6 +50,8 @@ app.use('/api/cashflow', cashFlowRoutes);
 app.use('/api/projections', projectionRoutes);
 app.use('/api/visualizations', visualizationRoutes);
 app.use('/api/scenarios', scenarioRoutes);
+app.use('/api/pdf', pdfRoutes);
+app.use('/api/saved-properties', savedPropertyRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

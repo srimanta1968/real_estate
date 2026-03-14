@@ -1,0 +1,15 @@
+{
+  "endpoint": "/api/auth/linkedin",
+  "method": "GET",
+  "taskId": "a32b79ff-515a-4850-824a-94499a37aae6",
+  "requiresAuth": false,
+  "description": "Initiate LinkedIn OAuth2 login flow - redirects to LinkedIn consent screen",
+  "testability": "manual",
+  "skipReason": "OAuth redirect flow requires browser interaction and external LinkedIn service",
+  "testCases": [
+    {
+      "name": "Redirect to LinkedIn OAuth",
+      "expectedStatus": 302
+    }
+  ]
+}

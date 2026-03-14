@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { Scenario, ScenarioInput } from '../../types/scenario';
 
 interface ScenarioComparisonProps {
@@ -8,6 +8,7 @@ interface ScenarioComparisonProps {
   annualMaintenance: number;
   managementFeePct: number;
   loanTerm: number;
+  onDataChange?: (scenarios: ScenarioInput[], results: Scenario[]) => void;
 }
 
 function calculateScenario(
@@ -59,7 +60,7 @@ function calculateScenario(
   };
 }
 
-export default function ScenarioComparison({ baseScenario, annualPropertyTax, annualInsurance, annualMaintenance, managementFeePct, loanTerm }: ScenarioComparisonProps) {
+export default function ScenarioComparison({ baseScenario, annualPropertyTax, annualInsurance, annualMaintenance, managementFeePct, loanTerm, onDataChange }: ScenarioComparisonProps) {
   const [scenarios, setScenarios] = useState<ScenarioInput[]>([
     { ...baseScenario, name: 'Base Case' },
     { ...baseScenario, name: 'Optimistic', monthlyRent: String(Math.round(parseFloat(baseScenario.monthlyRent) * 1.1)) },
@@ -67,6 +68,10 @@ export default function ScenarioComparison({ baseScenario, annualPropertyTax, an
   ]);
 
   const [results, setResults] = useState<Scenario[]>([]);
+
+  useEffect(() => {
+    onDataChange?.(scenarios, results);
+  }, [scenarios, results]);
 
   function handleInputChange(index: number, field: keyof ScenarioInput, value: string) {
     setScenarios((prev) => {

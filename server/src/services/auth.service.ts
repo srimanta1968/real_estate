@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/env';
@@ -14,9 +15,19 @@ interface UserRecord {
   role: string;
   is_active: boolean;
   email_verified: boolean;
+  oauth_provider: string | null;
+  oauth_provider_id: string | null;
   last_login: string | null;
   created_at: string;
   updated_at: string;
+}
+
+interface OAuthProfile {
+  provider: 'google' | 'linkedin';
+  providerId: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 interface RegisterInput {
@@ -135,6 +146,74 @@ export const AuthService = {
         throw error;
       }
       console.error('AuthService login error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Find or create a user from OAuth profile. Returns user + JWT token.
+   */
+  async findOrCreateOAuthUser(profile: OAuthProfile): Promise<LoginResult> {
+    try {
+      // Check if user exists with this OAuth provider + ID
+      let user = await DataService.findOne<UserRecord>(
+        'SELECT * FROM users WHERE oauth_provider = $1 AND oauth_provider_id = $2',
+        [profile.provider, profile.providerId]
+      );
+
+      if (!user) {
+        // Check if user exists with same email
+        user = await DataService.findOne<UserRecord>(
+          'SELECT * FROM users WHERE email = $1',
+          [profile.email]
+        );
+
+        if (user) {
+          // Link existing account to OAuth provider
+          const updated = await DataService.update<UserRecord>(
+            'users',
+            { oauth_provider: profile.provider, oauth_provider_id: profile.providerId },
+            'id = $1',
+            [user.id]
+          );
+          user = updated[0];
+        } else {
+          // Create new user (no password needed for OAuth)
+          const randomHash = await bcrypt.hash(crypto.randomUUID(), 4);
+          user = await DataService.insertOne<UserRecord>('users', {
+            email: profile.email,
+            password_hash: randomHash,
+            first_name: profile.firstName || null,
+            last_name: profile.lastName || null,
+            oauth_provider: profile.provider,
+            oauth_provider_id: profile.providerId,
+            email_verified: true,
+          });
+        }
+      }
+
+      if (!user.is_active) {
+        throw new Error('Account is deactivated');
+      }
+
+      await DataService.query(
+        'UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = $1',
+        [user.id]
+      );
+
+      const token = jwt.sign(
+        { userId: user.id, email: user.email, role: user.role },
+        config.jwt.secret,
+        { expiresIn: 24 * 60 * 60 }
+      );
+
+      const { password_hash: _, ...userWithoutPassword } = user;
+      return { user: userWithoutPassword, token };
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Account is deactivated') {
+        throw error;
+      }
+      console.error('AuthService OAuth error:', error);
       throw error;
     }
   },

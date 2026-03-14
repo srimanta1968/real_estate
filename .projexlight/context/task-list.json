@@ -1,0 +1,134 @@
+{
+  "sprintId": "693170cd-c22d-4f54-a75d-d85bb94fb547",
+  "sprintName": "Quick Prototype Sprint",
+  "totalTasks": 18,
+  "tasks": [
+    {
+      "taskId": "0f0cad38-22b4-4788-8ec4-aa23110afa30",
+      "taskNumber": 1,
+      "title": "Create Property Info Input UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "65860aa6-1bb3-4b34-8726-41c61bc43040",
+      "taskNumber": 2,
+      "title": "Create Financing Input UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "1436f1fb-33bf-418a-8b1f-1b92f7eeb883",
+      "taskNumber": 3,
+      "title": "Create Expense Input UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "0a264634-16c0-4c49-aced-f915cb0bc710",
+      "taskNumber": 4,
+      "title": "Create Cap Rate Calculation UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "52c9c9b4-5b69-46f1-b792-229e7d68cc8d",
+      "taskNumber": 5,
+      "title": "Create IRR Calculation UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "054f653a-29f1-4088-8215-a1786181a039",
+      "taskNumber": 6,
+      "title": "Create Cash Flow Analysis UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "4c6731d1-5892-47eb-ab30-226546633f95",
+      "taskNumber": 7,
+      "title": "Create Annual Projection Generation UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "d3627c7f-b2a3-4a80-bd5f-076978feea46",
+      "taskNumber": 8,
+      "title": "Create Visualization of Financial Metrics UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "835381d4-7f60-4cf9-8e8a-644378dc4de4",
+      "taskNumber": 9,
+      "title": "Create Scenario Comparison Charts UI components",
+      "status": "not_started",
+      "taskType": "frontend"
+    },
+    {
+      "taskId": "3477fb27-3299-4ab9-a848-a4f0b2f02e3f",
+      "taskNumber": 10,
+      "title": "Implement Address Input Field",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "c0b33665-3562-43b1-ac71-3cc774007b16",
+      "taskNumber": 11,
+      "title": "Create Loan Amount Input Field",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "5ed2e3c0-8e32-4a73-a14e-881dbf02d073",
+      "taskNumber": 12,
+      "title": "Implement Expense Input Fields",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "95226c65-3c70-475d-ace7-2204de6c3ed2",
+      "taskNumber": 13,
+      "title": "Implement Cap Rate Calculation Logic",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "ac28cb59-4e24-4409-be1c-aa1e9fe588c6",
+      "taskNumber": 14,
+      "title": "Implement IRR Calculation Logic",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "ff524d43-69f6-4095-8e58-a17ee3f34a85",
+      "taskNumber": 15,
+      "title": "Implement Cash Flow Analysis Logic",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "d3a8157a-a6da-467b-b05c-3f3ea583b525",
+      "taskNumber": 16,
+      "title": "Implement Annual Projection Logic",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "ea48d376-ad49-4a72-a9a9-d01c44433cfb",
+      "taskNumber": 17,
+      "title": "Develop Visualization Components",
+      "status": "not_started",
+      "taskType": "development"
+    },
+    {
+      "taskId": "2eed298b-e2b9-4b45-b955-3a94ba44b729",
+      "taskNumber": 18,
+      "title": "Implement Scenario Comparison Logic",
+      "status": "not_started",
+      "taskType": "development"
+    }
+  ],
+  "note": "Detailed instructions are delivered via MCP API. Call projexlight_get_instruction with taskId."
+}

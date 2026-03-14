@@ -1,0 +1,15 @@
+{
+  "endpoint": "/api/auth/google",
+  "method": "GET",
+  "taskId": "a32b79ff-515a-4850-824a-94499a37aae6",
+  "requiresAuth": false,
+  "description": "Initiate Google OAuth2 login flow - redirects to Google consent screen",
+  "testability": "manual",
+  "skipReason": "OAuth redirect flow requires browser interaction and external Google service",
+  "testCases": [
+    {
+      "name": "Redirect to Google OAuth",
+      "expectedStatus": 302
+    }
+  ]
+}
