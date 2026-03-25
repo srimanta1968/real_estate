@@ -1,0 +1,30 @@
+{
+  "endpoint": "/api/search",
+  "method": "GET",
+  "taskId": "14fcaa9c-73bb-49f2-add5-de9676258237",
+  "requiresAuth": false,
+  "priority": 30,
+  "dependsOn": [],
+  "testCases": [
+    {
+      "name": "Search properties with listedWithin date filter",
+      "queryParams": {
+        "city": "{{static:Austin}}",
+        "state": "{{static:TX}}",
+        "listedWithin": "{{static:30}}"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "success": true,
+        "data": {
+          "results": [],
+          "total": 0,
+          "page": 1,
+          "totalPages": 1
+        }
+      }
+    }
+  ],
+  "testability": "automated",
+  "notes": "Extends existing search endpoint with listedWithin query parameter (5/10/30/90 days)"
+}
