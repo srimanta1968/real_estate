@@ -453,22 +453,34 @@ async function handleOpenSites() {
   });
 }
 
-// Universal scraper function - injected into any search results page
+// Universal scraper function - injected into any search results page via executeScript
 function scrapeAnySearchPage() {
   const listings = [];
-  const seen = new Set();
+  const seenUrls = new Set();
+  const seenAddresses = new Set();
+  const hostname = window.location.hostname;
 
-  // Collect ALL links on the page that look like property detail links
+  // Determine what link patterns to look for based on the site
+  const linkPatterns = [];
+  if (hostname.includes('loopnet')) linkPatterns.push('/Listing/');
+  else if (hostname.includes('zillow')) linkPatterns.push('/homedetails/');
+  else if (hostname.includes('realtor.com')) linkPatterns.push('/realestateandhomes-detail/');
+  else if (hostname.includes('crexi')) linkPatterns.push('/properties/');
+  else if (hostname.includes('redfin')) linkPatterns.push('/home/');
+  // Fallback: try all patterns
+  if (linkPatterns.length === 0) linkPatterns.push('/Listing/', '/homedetails/', '/realestateandhomes-detail/', '/properties/');
+
+  const isCommercial = hostname.includes('loopnet') || hostname.includes('crexi') || hostname.includes('commercialcafe');
+
+  // Find all matching links
   const allLinks = document.querySelectorAll('a[href]');
   const propertyLinks = [];
 
   for (const link of allLinks) {
-    const href = link.href;
-    if (!href) continue;
-    // Match common property detail URL patterns
-    if (href.match(/\/Listing\/|\/homedetails\/|\/realestateandhomes-detail\/|\/property\/\d/i)) {
-      if (!seen.has(href)) {
-        seen.add(href);
+    const href = link.href || '';
+    if (linkPatterns.some(p => href.includes(p))) {
+      if (!seenUrls.has(href)) {
+        seenUrls.add(href);
         propertyLinks.push(link);
       }
     }
@@ -477,68 +489,112 @@ function scrapeAnySearchPage() {
   for (let idx = 0; idx < propertyLinks.length; idx++) {
     const link = propertyLinks[idx];
     try {
-      // Find closest card container
-      let container = link.closest('article, li, [class*="card" i], [class*="placard" i], [class*="result" i], [role="listitem"]');
-      if (!container) {
-        container = link.parentElement;
-        for (let i = 0; i < 3; i++) {
-          if (container && container.parentElement && container.parentElement.textContent.length < 2000) {
-            container = container.parentElement;
-          } else break;
-        }
-      }
-      if (!container) continue;
+      // Strategy: walk UP from the link to find the best card container
+      // A good card container has: multiple lines of text, price ($), and is < 1500 chars
+      let bestContainer = null;
+      let el = link.parentElement;
 
-      const text = container.textContent || '';
-      if (text.length > 2000) continue; // Too big = not a card
+      for (let level = 0; level < 8 && el; level++) {
+        const text = el.textContent || '';
+        const len = text.length;
 
-      const listing = {
-        id: `scraped-${idx}-${Date.now()}`,
-        source_url: link.href,
-        property_type: 'Commercial',
-      };
+        // Too small: keep going up
+        if (len < 30) { el = el.parentElement; continue; }
 
-      // Address from headings in container
-      const headings = container.querySelectorAll('h1, h2, h3, h4, h5, a[class*="title" i], [class*="name" i], [class*="address" i]');
-      for (const h of headings) {
-        const t = h.textContent.trim();
-        if (t.length > 3 && t.length < 120 && !t.includes('$') && !/commercial real estate|for sale|auctions|properties for/i.test(t)) {
-          listing.address = t;
+        // Sweet spot: has dollar sign or SF, and reasonable length
+        if (len > 50 && len < 1500 && (text.includes('$') || /\d+\s*SF/i.test(text))) {
+          bestContainer = el;
           break;
         }
+
+        // Decent size but no price - still use it if it's not too big
+        if (len > 30 && len < 800 && !bestContainer) {
+          bestContainer = el;
+        }
+
+        // Too big: stop
+        if (len > 1500) break;
+
+        el = el.parentElement;
       }
+
+      if (!bestContainer) continue;
+
+      const text = bestContainer.textContent || '';
+      const listing = {
+        id: `scraped-${idx}-${Date.now()}`,
+        source: hostname,
+        source_url: link.href,
+        property_type: isCommercial ? 'Commercial' : 'Residential',
+      };
+
+      // ADDRESS: Try multiple strategies
+      // 1. The link's own text (on LoopNet, the link IS the property name)
+      const linkText = link.textContent.trim();
+      if (linkText.length > 5 && linkText.length < 150 && !linkText.includes('$') &&
+          !/commercial real estate|for sale|auctions|view|detail|more info|properties for/i.test(linkText)) {
+        listing.address = linkText;
+      }
+
+      // 2. Look for actual address patterns in the card text (123 Main St style)
       if (!listing.address) {
-        const linkText = link.textContent.trim();
-        if (linkText.length > 3 && linkText.length < 120 && !/view|more|detail/i.test(linkText)) {
-          listing.address = linkText;
+        const addrMatch = text.match(/(\d+\s+[A-Z][a-zA-Z\s]+(?:St|Ave|Blvd|Dr|Rd|Ln|Way|Ct|Pl|Hwy|Pike|Circle|Cir)\.?(?:\s*#?\s*\d*)?)/);
+        if (addrMatch) listing.address = addrMatch[1].trim();
+      }
+
+      // 3. Headings in the container
+      if (!listing.address) {
+        const headings = bestContainer.querySelectorAll('h1, h2, h3, h4, h5');
+        for (const h of headings) {
+          const t = h.textContent.trim();
+          if (t.length > 5 && t.length < 150 && !t.includes('$') &&
+              !/commercial real estate|for sale|auctions|properties for/i.test(t)) {
+            listing.address = t;
+            break;
+          }
         }
       }
+
+      // 4. Title attribute on the link
+      if (!listing.address && link.title && link.title.length > 5) {
+        listing.address = link.title.trim();
+      }
+
       if (!listing.address) continue;
 
-      // Price
-      const prices = text.match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/g);
-      if (prices && prices.length > 0) {
-        // Take the first price in the card
-        const m = prices[0].match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/);
-        if (m) {
-          let price = parseFloat(m[1].replace(/,/g, ''));
-          if (m[2] === 'M') price *= 1000000;
-          else if (m[2] === 'K') price *= 1000;
-          if (price > 0 && price < 5000000000) listing.price = price;
+      // Dedup by address
+      const addrKey = listing.address.toLowerCase();
+      if (seenAddresses.has(addrKey)) continue;
+      seenAddresses.add(addrKey);
+
+      // PRICE
+      const priceMatches = text.match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/g);
+      if (priceMatches) {
+        for (const pm of priceMatches) {
+          const m = pm.match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/);
+          if (m) {
+            let price = parseFloat(m[1].replace(/,/g, ''));
+            if (m[2] === 'M') price *= 1000000;
+            else if (m[2] === 'K') price *= 1000;
+            if (price > 1000 && price < 5000000000) {
+              listing.price = price;
+              break;
+            }
+          }
         }
       }
 
-      // Sqft
+      // SQFT
       const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\.?\s*ft|sqft)/i);
       if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
 
-      // Beds/baths (residential)
+      // BEDS/BATHS
       const bedsMatch = text.match(/(\d+)\s*(?:bd|bed|bds|bedroom)/i);
       const bathsMatch = text.match(/(\d+\.?\d*)\s*(?:ba|bath)/i);
-      if (bedsMatch) listing.beds = parseInt(bedsMatch[1]);
-      if (bathsMatch) listing.baths = parseFloat(bathsMatch[1]);
+      if (bedsMatch) { listing.beds = parseInt(bedsMatch[1]); listing.property_type = 'Residential'; }
+      if (bathsMatch) { listing.baths = parseFloat(bathsMatch[1]); listing.property_type = 'Residential'; }
 
-      // Location
+      // LOCATION
       const locMatch = text.match(/([A-Z][a-zA-Z\s]+?),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
       if (locMatch) {
         listing.city = locMatch[1].trim();
@@ -546,10 +602,9 @@ function scrapeAnySearchPage() {
         if (locMatch[3]) listing.zip = locMatch[3];
       }
 
-      // Detect residential vs commercial
-      if (listing.beds || listing.baths || link.href.match(/homedetails|realestateandhomes/)) {
-        listing.property_type = 'Residential';
-      }
+      // CAP RATE (commercial)
+      const capMatch = text.match(/([\d.]+)\s*%\s*(?:cap)/i);
+      if (capMatch) listing.cap_rate = parseFloat(capMatch[1]);
 
       listings.push(listing);
     } catch (err) {}
