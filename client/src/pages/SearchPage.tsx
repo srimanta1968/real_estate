@@ -171,12 +171,13 @@ export default function SearchPage() {
   const handleSearchOnSites = () => {
     if (!city && !state && !zip) return;
 
-    // Clear previous external results
+    // Clear previous external results (localStorage + tell extension to clear chrome.storage)
     localStorage.removeItem('siteSearchResults');
     localStorage.removeItem('siteSearchResultsTimestamp');
     setSiteResults([]);
     setSiteSearching(true);
     setSiteSearchStatus('Opening sites and extracting listings...');
+    window.postMessage({ type: 'DEALEVAL_CLEAR_SITE_RESULTS' }, '*');
 
     const sites = getSitesForType(propertyType);
     sites.forEach(site => {

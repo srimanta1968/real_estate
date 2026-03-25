@@ -1,57 +1,74 @@
 // LoopNet search results page scraper
-// Uses robust approach: finds all listing links, then extracts data from parent containers
 console.log('DealEval: LoopNet search scraper LOADED on', window.location.href);
 (function () {
+  let alreadySent = false;
+
   function scrapeSearchResults() {
     const listings = [];
     const seen = new Set();
 
-    // Strategy 1: Find all links to listing detail pages
+    // Find all links to listing detail pages
     const allLinks = document.querySelectorAll('a[href*="/Listing/"]');
+    console.log(`DealEval: Found ${allLinks.length} listing links on LoopNet`);
 
-    allLinks.forEach((link, idx) => {
+    allLinks.forEach((link) => {
       try {
         const href = link.href;
-        if (seen.has(href)) return;
+        if (!href || seen.has(href)) return;
         seen.add(href);
 
-        // Walk up to find the card container (max 6 levels up)
-        let container = link;
-        for (let i = 0; i < 6; i++) {
-          if (container.parentElement) container = container.parentElement;
+        // Find the closest card-like container — walk up but stop at something reasonable
+        let container = link.closest('article, [class*="placard"], [class*="card"], [class*="Card"], li, [role="listitem"]');
+        if (!container) {
+          // Walk up max 4 levels but stop if element is too large (>5000 chars of text)
+          container = link.parentElement;
+          for (let i = 0; i < 3; i++) {
+            if (container.parentElement && container.parentElement.textContent.length < 3000) {
+              container = container.parentElement;
+            } else {
+              break;
+            }
+          }
         }
 
+        // Skip if container text is too long (likely a page section, not a card)
         const text = container.textContent || '';
+        if (text.length > 3000) return;
+
         const listing = {
-          id: `loopnet-${idx}-${Date.now()}`,
+          id: `loopnet-${listings.length}-${Date.now()}`,
           source: 'loopnet.com',
           source_url: href,
           property_type: 'Commercial',
         };
 
-        // Address: usually the link text itself or a heading nearby
-        const headings = container.querySelectorAll('h1, h2, h3, h4, [class*="title"], [class*="Title"], [class*="name"], [class*="Name"]');
+        // Address: first heading-like element in the container
+        const headings = container.querySelectorAll('h1, h2, h3, h4, h5, [class*="title" i], [class*="name" i]');
         for (const h of headings) {
           const t = h.textContent.trim();
-          if (t.length > 5 && t.length < 200 && !t.includes('$') && !t.match(/^\d+%/)) {
+          // Must look like an address/name, not a page title or category
+          if (t.length > 3 && t.length < 150 && !t.includes('$') && !t.match(/commercial real estate/i) && !t.match(/for sale/i)) {
             listing.address = t;
             break;
           }
         }
+        // Fallback: use link text if it looks like an address
         if (!listing.address) {
-          // Try the link text
           const linkText = link.textContent.trim();
-          if (linkText.length > 5 && linkText.length < 200) listing.address = linkText;
+          if (linkText.length > 3 && linkText.length < 150 && !linkText.match(/view|detail|more/i)) {
+            listing.address = linkText;
+          }
         }
+        if (!listing.address) return; // Skip if no address
 
-        // Price: look for dollar amounts
-        const priceMatch = text.match(/\$([\d,]+(?:\.\d+)?)\s*(?:M|K)?/);
+        // Price: look for dollar amount within this card only
+        const priceMatch = text.match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/);
         if (priceMatch) {
           let price = parseFloat(priceMatch[1].replace(/,/g, ''));
-          // Handle $1.5M format
-          if (text.match(/\$[\d,.]+M/)) price *= 1000000;
-          if (text.match(/\$[\d,.]+K/)) price *= 1000;
-          listing.price = price;
+          if (priceMatch[2] === 'M') price *= 1000000;
+          else if (priceMatch[2] === 'K') price *= 1000;
+          // Sanity check: skip prices over $10B
+          if (price < 10000000000) listing.price = price;
         }
 
         // Sqft
@@ -59,96 +76,45 @@ console.log('DealEval: LoopNet search scraper LOADED on', window.location.href);
         if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
 
         // Cap rate
-        const capMatch = text.match(/([\d.]+)\s*%\s*(?:cap|CAP)/i);
+        const capMatch = text.match(/([\d.]+)\s*%\s*(?:cap)/i);
         if (capMatch) listing.cap_rate = parseFloat(capMatch[1]);
 
-        // Location: look for city, state pattern
-        const locMatch = text.match(/([A-Z][a-z]+(?:\s[A-Z][a-z]+)*),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
+        // Location: city, STATE ZIP pattern
+        const locMatch = text.match(/([A-Z][a-zA-Z\s]+?),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
         if (locMatch) {
-          listing.city = locMatch[1];
+          listing.city = locMatch[1].trim();
           listing.state = locMatch[2];
           if (locMatch[3]) listing.zip = locMatch[3];
         }
 
-        if (listing.address || listing.price) {
-          listings.push(listing);
-        }
+        listings.push(listing);
       } catch (err) {
-        console.error('DealEval: LoopNet scrape error:', err);
+        console.error('DealEval: LoopNet card scrape error:', err);
       }
     });
 
-    // Strategy 2: If no links found, try extracting from any card-like elements
-    if (listings.length === 0) {
-      const cards = document.querySelectorAll('article, [class*="card"], [class*="Card"], [class*="placard"], [class*="result"]');
-      cards.forEach((card, idx) => {
-        try {
-          const text = card.textContent || '';
-          const link = card.querySelector('a[href]');
-          const href = link?.href || '';
-
-          if (seen.has(href) || (!text.includes('$') && !text.match(/SF|sq ft/i))) return;
-          if (href) seen.add(href);
-
-          const listing = {
-            id: `loopnet-card-${idx}-${Date.now()}`,
-            source: 'loopnet.com',
-            source_url: href,
-            property_type: 'Commercial',
-          };
-
-          const heading = card.querySelector('h1, h2, h3, h4');
-          if (heading) listing.address = heading.textContent.trim();
-
-          const priceMatch = text.match(/\$([\d,]+(?:\.\d+)?)\s*(?:M|K)?/);
-          if (priceMatch) {
-            let price = parseFloat(priceMatch[1].replace(/,/g, ''));
-            if (text.match(/\$[\d,.]+M/)) price *= 1000000;
-            if (text.match(/\$[\d,.]+K/)) price *= 1000;
-            listing.price = price;
-          }
-
-          const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\.?\s*ft)/i);
-          if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
-
-          const locMatch = text.match(/([A-Z][a-z]+(?:\s[A-Z][a-z]+)*),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
-          if (locMatch) {
-            listing.city = locMatch[1];
-            listing.state = locMatch[2];
-            if (locMatch[3]) listing.zip = locMatch[3];
-          }
-
-          if (listing.address || listing.price) {
-            listings.push(listing);
-          }
-        } catch (err) {}
-      });
-    }
-
-    console.log(`DealEval: Scraped ${listings.length} listings from LoopNet`);
+    console.log(`DealEval: Extracted ${listings.length} unique listings from LoopNet`);
     return listings;
   }
 
   function scrapeAndSend() {
     const results = scrapeSearchResults();
-    if (results.length > 0) {
+    if (results.length > 0 && !alreadySent) {
+      alreadySent = true;
       chrome.runtime.sendMessage({
         type: 'SEARCH_RESULTS_SCRAPED',
         data: results,
         source: 'loopnet.com',
         pageUrl: window.location.href,
       }).catch(err => console.error('DealEval: Message send error:', err));
-    } else {
-      console.log('DealEval: No listings found on LoopNet page, will retry...');
     }
   }
 
-  // LoopNet is a SPA - content loads dynamically, need longer delays
+  // Retry with increasing delays for SPA loading
   function startScraping() {
-    // Try multiple times with increasing delays
     setTimeout(scrapeAndSend, 3000);
-    setTimeout(scrapeAndSend, 6000);
-    setTimeout(scrapeAndSend, 10000);
+    setTimeout(scrapeAndSend, 7000);
+    setTimeout(scrapeAndSend, 12000);
   }
 
   if (document.readyState === 'complete') {
@@ -156,13 +122,6 @@ console.log('DealEval: LoopNet search scraper LOADED on', window.location.href);
   } else {
     window.addEventListener('load', startScraping);
   }
-
-  // Re-scrape on scroll (infinite scroll / pagination)
-  let scrollTimeout;
-  window.addEventListener('scroll', () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(scrapeAndSend, 3000);
-  });
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === 'SCRAPE_SEARCH') {

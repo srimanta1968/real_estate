@@ -1,151 +1,108 @@
 // Crexi search results page scraper
-// Robust approach: finds listing links and extracts surrounding data
 console.log('DealEval: Crexi search scraper LOADED on', window.location.href);
 (function () {
+  let alreadySent = false;
+
   function scrapeSearchResults() {
     const listings = [];
     const seen = new Set();
 
-    // Strategy 1: Find all links to property detail pages
     const allLinks = document.querySelectorAll('a[href*="/properties/"], a[href*="/property/"]');
+    console.log(`DealEval: Found ${allLinks.length} property links on Crexi`);
 
-    allLinks.forEach((link, idx) => {
+    allLinks.forEach((link) => {
       try {
         const href = link.href;
-        // Skip if already seen or if it's a filter/nav link
-        if (seen.has(href) || href.includes('?') && !href.includes('/properties/')) return;
+        // Skip query-only links and already seen
+        if (!href || seen.has(href) || href.endsWith('/properties') || href.endsWith('/properties/')) return;
         seen.add(href);
 
-        // Walk up to find card container
-        let container = link;
-        for (let i = 0; i < 6; i++) {
-          if (container.parentElement) container = container.parentElement;
+        let container = link.closest('article, [class*="card"], [class*="Card"], [class*="listing"], li, [role="listitem"]');
+        if (!container) {
+          container = link.parentElement;
+          for (let i = 0; i < 3; i++) {
+            if (container.parentElement && container.parentElement.textContent.length < 3000) {
+              container = container.parentElement;
+            } else {
+              break;
+            }
+          }
         }
 
         const text = container.textContent || '';
+        if (text.length > 3000) return;
+
         const listing = {
-          id: `crexi-${idx}-${Date.now()}`,
+          id: `crexi-${listings.length}-${Date.now()}`,
           source: 'crexi.com',
           source_url: href.startsWith('http') ? href : `https://www.crexi.com${href}`,
           property_type: 'Commercial',
         };
 
-        // Address from headings
-        const headings = container.querySelectorAll('h1, h2, h3, h4, [class*="title"], [class*="Title"], [class*="address"], [class*="Address"]');
+        const headings = container.querySelectorAll('h1, h2, h3, h4, h5, [class*="title" i], [class*="name" i], [class*="address" i]');
         for (const h of headings) {
           const t = h.textContent.trim();
-          if (t.length > 5 && t.length < 200 && !t.includes('$') && !t.match(/^\d+%/)) {
+          if (t.length > 3 && t.length < 150 && !t.includes('$') && !t.match(/commercial|for sale|properties/i)) {
             listing.address = t;
             break;
           }
         }
         if (!listing.address) {
           const linkText = link.textContent.trim();
-          if (linkText.length > 5 && linkText.length < 200) listing.address = linkText;
+          if (linkText.length > 3 && linkText.length < 150 && !linkText.match(/view|detail|more|properties/i)) {
+            listing.address = linkText;
+          }
         }
+        if (!listing.address) return;
 
-        // Price
-        const priceMatch = text.match(/\$([\d,]+(?:\.\d+)?)\s*(?:M|K)?/);
+        const priceMatch = text.match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/);
         if (priceMatch) {
           let price = parseFloat(priceMatch[1].replace(/,/g, ''));
-          if (text.match(/\$[\d,.]+M/)) price *= 1000000;
-          if (text.match(/\$[\d,.]+K/)) price *= 1000;
-          listing.price = price;
+          if (priceMatch[2] === 'M') price *= 1000000;
+          else if (priceMatch[2] === 'K') price *= 1000;
+          if (price < 10000000000) listing.price = price;
         }
 
-        // Sqft
         const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\.?\s*ft|sqft)/i);
         if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
 
-        // Cap rate
-        const capMatch = text.match(/([\d.]+)\s*%\s*(?:cap|CAP)/i);
+        const capMatch = text.match(/([\d.]+)\s*%\s*(?:cap)/i);
         if (capMatch) listing.cap_rate = parseFloat(capMatch[1]);
 
-        // Location
-        const locMatch = text.match(/([A-Z][a-z]+(?:\s[A-Z][a-z]+)*),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
+        const locMatch = text.match(/([A-Z][a-zA-Z\s]+?),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
         if (locMatch) {
-          listing.city = locMatch[1];
+          listing.city = locMatch[1].trim();
           listing.state = locMatch[2];
           if (locMatch[3]) listing.zip = locMatch[3];
         }
 
-        if (listing.address || listing.price) {
-          listings.push(listing);
-        }
+        listings.push(listing);
       } catch (err) {
-        console.error('DealEval: Crexi scrape error:', err);
+        console.error('DealEval: Crexi card scrape error:', err);
       }
     });
 
-    // Strategy 2: Fallback - look for card-like containers
-    if (listings.length === 0) {
-      const cards = document.querySelectorAll('article, [class*="card"], [class*="Card"], [class*="listing"], [class*="Listing"], [class*="result"]');
-      cards.forEach((card, idx) => {
-        try {
-          const text = card.textContent || '';
-          const link = card.querySelector('a[href]');
-          const href = link?.href || '';
-
-          if (seen.has(href) || (!text.includes('$') && !text.match(/SF|sq ft/i))) return;
-          if (href) seen.add(href);
-
-          const listing = {
-            id: `crexi-card-${idx}-${Date.now()}`,
-            source: 'crexi.com',
-            source_url: href,
-            property_type: 'Commercial',
-          };
-
-          const heading = card.querySelector('h1, h2, h3, h4');
-          if (heading) listing.address = heading.textContent.trim();
-
-          const priceMatch = text.match(/\$([\d,]+(?:\.\d+)?)\s*(?:M|K)?/);
-          if (priceMatch) {
-            let price = parseFloat(priceMatch[1].replace(/,/g, ''));
-            if (text.match(/\$[\d,.]+M/)) price *= 1000000;
-            if (text.match(/\$[\d,.]+K/)) price *= 1000;
-            listing.price = price;
-          }
-
-          const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\.?\s*ft)/i);
-          if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
-
-          const locMatch = text.match(/([A-Z][a-z]+(?:\s[A-Z][a-z]+)*),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
-          if (locMatch) {
-            listing.city = locMatch[1];
-            listing.state = locMatch[2];
-            if (locMatch[3]) listing.zip = locMatch[3];
-          }
-
-          if (listing.address || listing.price) {
-            listings.push(listing);
-          }
-        } catch (err) {}
-      });
-    }
-
-    console.log(`DealEval: Scraped ${listings.length} listings from Crexi`);
+    console.log(`DealEval: Extracted ${listings.length} unique listings from Crexi`);
     return listings;
   }
 
   function scrapeAndSend() {
     const results = scrapeSearchResults();
-    if (results.length > 0) {
+    if (results.length > 0 && !alreadySent) {
+      alreadySent = true;
       chrome.runtime.sendMessage({
         type: 'SEARCH_RESULTS_SCRAPED',
         data: results,
         source: 'crexi.com',
         pageUrl: window.location.href,
       }).catch(err => console.error('DealEval: Message send error:', err));
-    } else {
-      console.log('DealEval: No listings found on Crexi page, will retry...');
     }
   }
 
   function startScraping() {
     setTimeout(scrapeAndSend, 3000);
-    setTimeout(scrapeAndSend, 6000);
-    setTimeout(scrapeAndSend, 10000);
+    setTimeout(scrapeAndSend, 7000);
+    setTimeout(scrapeAndSend, 12000);
   }
 
   if (document.readyState === 'complete') {
@@ -153,12 +110,6 @@ console.log('DealEval: Crexi search scraper LOADED on', window.location.href);
   } else {
     window.addEventListener('load', startScraping);
   }
-
-  let scrollTimeout;
-  window.addEventListener('scroll', () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(scrapeAndSend, 3000);
-  });
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === 'SCRAPE_SEARCH') {
