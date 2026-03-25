@@ -53,17 +53,22 @@
     },
     {
       "matches": ["https://www.zillow.com/homes/*"],
-      "js": ["src/content/fallback.js"],
+      "js": ["src/content/zillow-search.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["https://www.realtor.com/realestateandhomes-search/*"],
-      "js": ["src/content/fallback.js"],
+      "js": ["src/content/realtor-search.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["https://www.loopnet.com/search/*"],
-      "js": ["src/content/fallback.js"],
+      "js": ["src/content/loopnet-search.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.crexi.com/properties?*"],
+      "js": ["src/content/crexi-search.js"],
       "run_at": "document_idle"
     },
     {
@@ -74,6 +79,11 @@
     {
       "matches": ["https://www.commercialcafe.com/*"],
       "js": ["src/content/fallback.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["http://localhost:*/*"],
+      "js": ["src/content/dealeval-bridge.js"],
       "run_at": "document_idle"
     }
   ],

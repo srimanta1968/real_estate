@@ -48,4 +48,45 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
     return true;
   }
+
+  // Handle search results scraped from site search pages
+  if (message.type === 'SEARCH_RESULTS_SCRAPED') {
+    const newResults = message.data || [];
+    const source = message.source || 'unknown';
+
+    // Merge with existing stored results
+    chrome.storage.local.get(['siteSearchResults'], (stored) => {
+      const existing = stored.siteSearchResults || [];
+      const seen = new Set(existing.map(r => r.source_url || r.address));
+      const merged = [...existing];
+
+      for (const r of newResults) {
+        const key = r.source_url || r.address;
+        if (key && !seen.has(key)) {
+          seen.add(key);
+          merged.push(r);
+        }
+      }
+
+      chrome.storage.local.set({ siteSearchResults: merged });
+
+      // Update badge with count
+      chrome.action.setBadgeText({ text: String(merged.length) });
+      chrome.action.setBadgeBackgroundColor({ color: '#10b981' });
+
+      // Forward results to any open DealEval tabs
+      chrome.tabs.query({ url: 'http://localhost:*/*' }, (tabs) => {
+        for (const tab of tabs) {
+          chrome.tabs.sendMessage(tab.id, {
+            type: 'SITE_SEARCH_RESULTS',
+            data: merged,
+            source: source,
+          }).catch(() => {});
+        }
+      });
+    });
+
+    sendResponse({ success: true });
+    return true;
+  }
 });

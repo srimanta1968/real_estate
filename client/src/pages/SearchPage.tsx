@@ -74,9 +74,53 @@ export default function SearchPage() {
   const [listedWithin, setListedWithin] = useState(searchParams.get('listedWithin') || '');
 
   const [results, setResults] = useState<SearchResponse | null>(null);
+  const [siteResults, setSiteResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
+
+  // Listen for external site search results from Chrome extension via localStorage
+  useEffect(() => {
+    const loadSiteResults = () => {
+      try {
+        const stored = localStorage.getItem('siteSearchResults');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setSiteResults(parsed.map((r: Record<string, unknown>, i: number) => ({
+              id: (r.id as string) || `site-${i}`,
+              address: (r.address as string) || '',
+              city: (r.city as string) || '',
+              state: (r.state as string) || '',
+              zip: (r.zip as string) || '',
+              price: Number(r.price) || 0,
+              beds: r.beds != null ? Number(r.beds) : null,
+              baths: r.baths != null ? Number(r.baths) : null,
+              sqft: r.sqft != null ? Number(r.sqft) : null,
+              property_type: (r.property_type as string) || null,
+              listing_status: null,
+              year_built: r.year_built != null ? Number(r.year_built) : null,
+              lot_size: null,
+              tax_amount: null,
+            })));
+          }
+        }
+      } catch {}
+    };
+
+    loadSiteResults();
+
+    // Listen for custom event from extension bridge
+    const handler = () => loadSiteResults();
+    window.addEventListener('dealeval-site-results', handler);
+    // Also poll every 3 seconds in case event is missed
+    const interval = setInterval(loadSiteResults, 3000);
+
+    return () => {
+      window.removeEventListener('dealeval-site-results', handler);
+      clearInterval(interval);
+    };
+  }, []);
 
   const handleSearch = async (p = 1) => {
     if (!city && !state && !zip) {
@@ -367,6 +411,81 @@ export default function SearchPage() {
                 </button>
               </div>
             )}
+          </div>
+        )}
+
+        {/* External Site Results from Chrome Extension */}
+        {siteResults.length > 0 && (
+          <div className="mt-8">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">External Site Results</h2>
+                <p className="text-sm text-gray-500">
+                  {siteResults.length} {siteResults.length === 1 ? 'listing' : 'listings'} scraped from external sites via DealEval extension
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  localStorage.removeItem('siteSearchResults');
+                  localStorage.removeItem('siteSearchResultsTimestamp');
+                  setSiteResults([]);
+                }}
+                className="text-sm text-red-500 hover:text-red-700 font-medium"
+              >
+                Clear Results
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {siteResults.map(result => (
+                <div key={result.id} className="bg-white rounded-xl shadow-sm border border-emerald-200 overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 px-5 py-3 flex items-center justify-between">
+                    <h3 className="text-white font-semibold truncate text-sm" title={result.address}>
+                      {result.address || 'Unknown Address'}
+                    </h3>
+                    {result.property_type && (
+                      <span className="text-xs bg-white/20 text-white px-2 py-0.5 rounded-full">
+                        {result.property_type}
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-5">
+                    {result.price > 0 && (
+                      <p className="text-2xl font-bold text-gray-900 mb-3">{fmt(result.price)}</p>
+                    )}
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      {result.beds !== null && (
+                        <div className="text-center">
+                          <p className="text-sm font-semibold text-gray-900">{result.beds}</p>
+                          <p className="text-xs text-gray-400">Beds</p>
+                        </div>
+                      )}
+                      {result.baths !== null && (
+                        <div className="text-center">
+                          <p className="text-sm font-semibold text-gray-900">{result.baths}</p>
+                          <p className="text-xs text-gray-400">Baths</p>
+                        </div>
+                      )}
+                      {result.sqft !== null && (
+                        <div className="text-center">
+                          <p className="text-sm font-semibold text-gray-900">{result.sqft.toLocaleString()}</p>
+                          <p className="text-xs text-gray-400">Sqft</p>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-gray-400 mb-4">
+                      {result.city && <span>{result.city}{result.state ? `, ${result.state}` : ''} {result.zip || ''}</span>}
+                    </div>
+                    <button
+                      onClick={() => handleEvaluate(result)}
+                      className="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors"
+                    >
+                      Evaluate Property
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
