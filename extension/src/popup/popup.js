@@ -295,7 +295,7 @@ function updateSiteCheckboxes() {
   ).join('');
 }
 
-function handleOpenSites() {
+async function handleOpenSites() {
   const city = document.getElementById('search-city').value;
   const state = document.getElementById('search-state').value;
   const zip = document.getElementById('search-zip').value;
@@ -304,6 +304,10 @@ function handleOpenSites() {
     alert('Enter at least a city/state or zip code');
     return;
   }
+
+  const btn = document.getElementById('open-sites-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Opening sites...';
 
   const propertyType = document.getElementById('search-type').value;
   const minPrice = document.getElementById('search-min-price').value;
@@ -319,18 +323,239 @@ function handleOpenSites() {
   const urlsToOpen = allUrls.filter(u => selectedSites.includes(u.name));
 
   if (urlsToOpen.length === 0) {
+    btn.disabled = false;
+    btn.textContent = 'Open Search on Selected Sites';
     alert('Select at least one site');
     return;
   }
 
-  urlsToOpen.forEach(u => {
-    chrome.tabs.create({ url: u.url, active: false });
-  });
+  // Clear previous results
+  await chrome.storage.local.remove(['siteSearchResults']);
 
-  // Save search params for reuse
+  // Open each site in a new tab and track tab IDs
+  const tabIds = [];
+  for (const u of urlsToOpen) {
+    const tab = await chrome.tabs.create({ url: u.url, active: false });
+    tabIds.push({ id: tab.id, source: u.hostname });
+  }
+
+  btn.innerHTML = '<span class="spinner"></span> Waiting for pages to load...';
+
+  // Wait for pages to load, then scrape each tab
+  setTimeout(async () => {
+    btn.innerHTML = '<span class="spinner"></span> Scraping listings...';
+    const allResults = [];
+
+    for (const { id: tabId, source } of tabIds) {
+      try {
+        const results = await chrome.scripting.executeScript({
+          target: { tabId },
+          func: scrapeAnySearchPage,
+        });
+        const data = results[0]?.result;
+        if (data && data.length > 0) {
+          // Tag each result with source
+          data.forEach(r => { r.source = source; });
+          allResults.push(...data);
+        }
+      } catch (err) {
+        console.error(`DealEval: Failed to scrape tab ${tabId}:`, err);
+      }
+    }
+
+    // Deduplicate by address
+    const seen = new Set();
+    const unique = [];
+    for (const r of allResults) {
+      const key = (r.address || '').toLowerCase().trim();
+      if (!key || key.length < 4 || seen.has(key)) continue;
+      if (/commercial real estate|for sale|properties for|auctions/i.test(key)) continue;
+      seen.add(key);
+      unique.push(r);
+    }
+
+    // Store results and notify background to forward to DealEval
+    if (unique.length > 0) {
+      await chrome.storage.local.set({ siteSearchResults: unique });
+      chrome.runtime.sendMessage({
+        type: 'SEARCH_RESULTS_SCRAPED',
+        data: unique,
+        source: 'multi-site',
+      });
+      btn.textContent = `Found ${unique.length} listings!`;
+      btn.style.background = '#ecfdf5';
+      btn.style.color = '#065f46';
+      btn.style.borderColor = '#a7f3d0';
+    } else {
+      btn.textContent = 'No listings found - try again';
+      btn.style.background = '#fffbeb';
+      btn.style.color = '#92400e';
+      // Retry once more after another delay
+      setTimeout(async () => {
+        btn.innerHTML = '<span class="spinner"></span> Retrying...';
+        const retryResults = [];
+        for (const { id: tabId, source } of tabIds) {
+          try {
+            const results = await chrome.scripting.executeScript({
+              target: { tabId },
+              func: scrapeAnySearchPage,
+            });
+            const data = results[0]?.result;
+            if (data && data.length > 0) {
+              data.forEach(r => { r.source = source; });
+              retryResults.push(...data);
+            }
+          } catch (err) {}
+        }
+        const retrySeen = new Set();
+        const retryUnique = [];
+        for (const r of retryResults) {
+          const key = (r.address || '').toLowerCase().trim();
+          if (!key || key.length < 4 || retrySeen.has(key)) continue;
+          if (/commercial real estate|for sale|properties for|auctions/i.test(key)) continue;
+          retrySeen.add(key);
+          retryUnique.push(r);
+        }
+        if (retryUnique.length > 0) {
+          await chrome.storage.local.set({ siteSearchResults: retryUnique });
+          chrome.runtime.sendMessage({
+            type: 'SEARCH_RESULTS_SCRAPED',
+            data: retryUnique,
+            source: 'multi-site',
+          });
+          btn.textContent = `Found ${retryUnique.length} listings!`;
+          btn.style.background = '#ecfdf5';
+          btn.style.color = '#065f46';
+        } else {
+          btn.textContent = 'No listings extracted';
+        }
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = 'Open Search on Selected Sites';
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 3000);
+      }, 8000);
+    }
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = 'Open Search on Selected Sites';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 5000);
+  }, 8000); // Wait 8s for pages to load
+
   chrome.storage.local.set({
     lastSearch: { city, state, zip, propertyType, minPrice, maxPrice, listedWithin },
   });
+}
+
+// Universal scraper function - injected into any search results page
+function scrapeAnySearchPage() {
+  const listings = [];
+  const seen = new Set();
+
+  // Collect ALL links on the page that look like property detail links
+  const allLinks = document.querySelectorAll('a[href]');
+  const propertyLinks = [];
+
+  for (const link of allLinks) {
+    const href = link.href;
+    if (!href) continue;
+    // Match common property detail URL patterns
+    if (href.match(/\/Listing\/|\/homedetails\/|\/realestateandhomes-detail\/|\/property\/\d/i)) {
+      if (!seen.has(href)) {
+        seen.add(href);
+        propertyLinks.push(link);
+      }
+    }
+  }
+
+  for (let idx = 0; idx < propertyLinks.length; idx++) {
+    const link = propertyLinks[idx];
+    try {
+      // Find closest card container
+      let container = link.closest('article, li, [class*="card" i], [class*="placard" i], [class*="result" i], [role="listitem"]');
+      if (!container) {
+        container = link.parentElement;
+        for (let i = 0; i < 3; i++) {
+          if (container && container.parentElement && container.parentElement.textContent.length < 2000) {
+            container = container.parentElement;
+          } else break;
+        }
+      }
+      if (!container) continue;
+
+      const text = container.textContent || '';
+      if (text.length > 2000) continue; // Too big = not a card
+
+      const listing = {
+        id: `scraped-${idx}-${Date.now()}`,
+        source_url: link.href,
+        property_type: 'Commercial',
+      };
+
+      // Address from headings in container
+      const headings = container.querySelectorAll('h1, h2, h3, h4, h5, a[class*="title" i], [class*="name" i], [class*="address" i]');
+      for (const h of headings) {
+        const t = h.textContent.trim();
+        if (t.length > 3 && t.length < 120 && !t.includes('$') && !/commercial real estate|for sale|auctions|properties for/i.test(t)) {
+          listing.address = t;
+          break;
+        }
+      }
+      if (!listing.address) {
+        const linkText = link.textContent.trim();
+        if (linkText.length > 3 && linkText.length < 120 && !/view|more|detail/i.test(linkText)) {
+          listing.address = linkText;
+        }
+      }
+      if (!listing.address) continue;
+
+      // Price
+      const prices = text.match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/g);
+      if (prices && prices.length > 0) {
+        // Take the first price in the card
+        const m = prices[0].match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/);
+        if (m) {
+          let price = parseFloat(m[1].replace(/,/g, ''));
+          if (m[2] === 'M') price *= 1000000;
+          else if (m[2] === 'K') price *= 1000;
+          if (price > 0 && price < 5000000000) listing.price = price;
+        }
+      }
+
+      // Sqft
+      const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\.?\s*ft|sqft)/i);
+      if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
+
+      // Beds/baths (residential)
+      const bedsMatch = text.match(/(\d+)\s*(?:bd|bed|bds|bedroom)/i);
+      const bathsMatch = text.match(/(\d+\.?\d*)\s*(?:ba|bath)/i);
+      if (bedsMatch) listing.beds = parseInt(bedsMatch[1]);
+      if (bathsMatch) listing.baths = parseFloat(bathsMatch[1]);
+
+      // Location
+      const locMatch = text.match(/([A-Z][a-zA-Z\s]+?),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
+      if (locMatch) {
+        listing.city = locMatch[1].trim();
+        listing.state = locMatch[2];
+        if (locMatch[3]) listing.zip = locMatch[3];
+      }
+
+      // Detect residential vs commercial
+      if (listing.beds || listing.baths || link.href.match(/homedetails|realestateandhomes/)) {
+        listing.property_type = 'Residential';
+      }
+
+      listings.push(listing);
+    } catch (err) {}
+  }
+
+  return listings;
 }
 
 async function handleLogout() {
