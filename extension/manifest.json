@@ -5,6 +5,7 @@
   "description": "Extract property data from NLS/MLS listing sites and send to DealEval for instant investment analysis.",
   "permissions": [
     "activeTab",
+    "tabs",
     "storage",
     "notifications"
   ],
@@ -27,8 +28,7 @@
     }
   },
   "background": {
-    "service_worker": "src/background/service-worker.js",
-    "type": "module"
+    "service_worker": "src/background/service-worker.js"
   },
   "content_scripts": [
     {

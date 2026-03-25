@@ -2,42 +2,52 @@
 (function () {
   function scrapeSearchResults() {
     const listings = [];
+    const seen = new Set();
 
-    const cards = document.querySelectorAll(
-      'article[data-test="property-card"], [class*="ListItem"], .property-card-data, li[class*="StyledPropertyCard"]'
-    );
+    // Find all links to listing detail pages
+    const allLinks = document.querySelectorAll('a[href*="/homedetails/"]');
 
-    cards.forEach((card, idx) => {
+    allLinks.forEach((link, idx) => {
       try {
+        const href = link.href;
+        if (seen.has(href)) return;
+        seen.add(href);
+
+        let container = link;
+        for (let i = 0; i < 6; i++) {
+          if (container.parentElement) container = container.parentElement;
+        }
+
+        const text = container.textContent || '';
         const listing = {
-          id: `zillow-search-${idx}-${Date.now()}`,
+          id: `zillow-${idx}-${Date.now()}`,
           source: 'zillow.com',
-          source_url: '',
+          source_url: href,
+          property_type: 'Residential',
         };
 
-        const link = card.querySelector('a[href*="/homedetails/"], a[data-test="property-card-link"]');
-        if (link) listing.source_url = link.href.startsWith('http') ? link.href : `https://www.zillow.com${link.href}`;
-
-        const addrEl = card.querySelector('[data-test="property-card-addr"], address, [class*="StyledPropertyCardDataAddress"]');
-        if (addrEl) {
-          const fullAddr = addrEl.textContent.trim();
-          listing.address = fullAddr;
-          const parts = fullAddr.split(',').map(s => s.trim());
-          if (parts.length >= 3) {
-            listing.city = parts[parts.length - 2];
-            const stateZip = parts[parts.length - 1].split(/\s+/);
-            listing.state = stateZip[0];
-            if (stateZip[1]) listing.zip = stateZip[1];
+        // Address
+        const addrEls = container.querySelectorAll('address, [data-test="property-card-addr"], h2, h3, [class*="address"], [class*="Address"]');
+        for (const el of addrEls) {
+          const t = el.textContent.trim();
+          if (t.length > 5 && t.length < 200 && !t.includes('$')) {
+            listing.address = t;
+            const parts = t.split(',').map(s => s.trim());
+            if (parts.length >= 2) {
+              listing.city = parts[parts.length - 2] || '';
+              const stateZip = (parts[parts.length - 1] || '').split(/\s+/);
+              listing.state = stateZip[0] || '';
+              if (stateZip[1]) listing.zip = stateZip[1];
+            }
+            break;
           }
         }
 
-        const priceEl = card.querySelector('[data-test="property-card-price"], [class*="Price"], .list-card-price');
-        if (priceEl) {
-          const priceText = priceEl.textContent.replace(/[^0-9.]/g, '');
-          if (priceText) listing.price = parseFloat(priceText);
-        }
+        // Price
+        const priceMatch = text.match(/\$([\d,]+)/);
+        if (priceMatch) listing.price = parseFloat(priceMatch[1].replace(/,/g, ''));
 
-        const text = card.textContent;
+        // Beds/baths/sqft
         const bedsMatch = text.match(/(\d+)\s*(?:bd|bed|bds)/i);
         const bathsMatch = text.match(/(\d+\.?\d*)\s*(?:ba|bath)/i);
         const sqftMatch = text.match(/([\d,]+)\s*(?:sqft|sq\s*ft)/i);
@@ -46,16 +56,15 @@
         if (bathsMatch) listing.baths = parseFloat(bathsMatch[1]);
         if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
 
-        listing.property_type = 'Residential';
-
         if (listing.address || listing.price) {
           listings.push(listing);
         }
       } catch (err) {
-        console.error('DealEval: Error scraping Zillow card:', err);
+        console.error('DealEval: Zillow scrape error:', err);
       }
     });
 
+    console.log(`DealEval: Scraped ${listings.length} listings from Zillow`);
     return listings;
   }
 
@@ -67,14 +76,20 @@
         data: results,
         source: 'zillow.com',
         pageUrl: window.location.href,
-      });
+      }).catch(err => console.error('DealEval: Message send error:', err));
     }
   }
 
+  function startScraping() {
+    setTimeout(scrapeAndSend, 3000);
+    setTimeout(scrapeAndSend, 6000);
+    setTimeout(scrapeAndSend, 10000);
+  }
+
   if (document.readyState === 'complete') {
-    setTimeout(scrapeAndSend, 2000);
+    startScraping();
   } else {
-    window.addEventListener('load', () => setTimeout(scrapeAndSend, 2000));
+    window.addEventListener('load', startScraping);
   }
 
   let scrollTimeout;

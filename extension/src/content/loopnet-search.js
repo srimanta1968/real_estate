@@ -1,82 +1,133 @@
 // LoopNet search results page scraper
-// Extracts listing cards from search results and sends to background worker
+// Uses robust approach: finds all listing links, then extracts data from parent containers
 (function () {
   function scrapeSearchResults() {
     const listings = [];
+    const seen = new Set();
 
-    // LoopNet listing cards use various selectors
-    const cards = document.querySelectorAll(
-      'article.placard, .placard-pseudo-link, [class*="ListingCard"], .listing-card'
-    );
+    // Strategy 1: Find all links to listing detail pages
+    const allLinks = document.querySelectorAll('a[href*="/Listing/"]');
 
-    cards.forEach((card, idx) => {
+    allLinks.forEach((link, idx) => {
       try {
-        const listing = {
-          id: `loopnet-search-${idx}-${Date.now()}`,
-          source: 'loopnet.com',
-          source_url: '',
-        };
+        const href = link.href;
+        if (seen.has(href)) return;
+        seen.add(href);
 
-        // Link to detail page
-        const link = card.querySelector('a[href*="/Listing/"], a[href*="/listing/"]');
-        if (link) listing.source_url = link.href;
-
-        // Address / title
-        const titleEl = card.querySelector(
-          '.placard-header-title, [class*="ListingTitle"], .listing-title, h2, h3'
-        );
-        if (titleEl) listing.address = titleEl.textContent.trim();
-
-        // Location
-        const locEl = card.querySelector(
-          '.placard-header-subtitle, [class*="ListingSubtitle"], .listing-location'
-        );
-        if (locEl) {
-          const parts = locEl.textContent.trim().split(',').map(s => s.trim());
-          if (parts.length >= 2) {
-            listing.city = parts[0];
-            const stateZip = parts[parts.length - 1].trim().split(/\s+/);
-            listing.state = stateZip[0];
-            if (stateZip[1]) listing.zip = stateZip[1];
-          }
+        // Walk up to find the card container (max 6 levels up)
+        let container = link;
+        for (let i = 0; i < 6; i++) {
+          if (container.parentElement) container = container.parentElement;
         }
 
-        // Price
-        const priceEl = card.querySelector(
-          '.placard-header-price, [class*="Price"], .listing-price, .price'
-        );
-        if (priceEl) {
-          const priceText = priceEl.textContent.replace(/[^0-9.]/g, '');
-          if (priceText) listing.price = parseFloat(priceText);
+        const text = container.textContent || '';
+        const listing = {
+          id: `loopnet-${idx}-${Date.now()}`,
+          source: 'loopnet.com',
+          source_url: href,
+          property_type: 'Commercial',
+        };
+
+        // Address: usually the link text itself or a heading nearby
+        const headings = container.querySelectorAll('h1, h2, h3, h4, [class*="title"], [class*="Title"], [class*="name"], [class*="Name"]');
+        for (const h of headings) {
+          const t = h.textContent.trim();
+          if (t.length > 5 && t.length < 200 && !t.includes('$') && !t.match(/^\d+%/)) {
+            listing.address = t;
+            break;
+          }
+        }
+        if (!listing.address) {
+          // Try the link text
+          const linkText = link.textContent.trim();
+          if (linkText.length > 5 && linkText.length < 200) listing.address = linkText;
+        }
+
+        // Price: look for dollar amounts
+        const priceMatch = text.match(/\$([\d,]+(?:\.\d+)?)\s*(?:M|K)?/);
+        if (priceMatch) {
+          let price = parseFloat(priceMatch[1].replace(/,/g, ''));
+          // Handle $1.5M format
+          if (text.match(/\$[\d,.]+M/)) price *= 1000000;
+          if (text.match(/\$[\d,.]+K/)) price *= 1000;
+          listing.price = price;
         }
 
         // Sqft
-        const text = card.textContent;
-        const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\s*ft|sqft)/i);
+        const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\.?\s*ft|sqft)/i);
         if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
 
         // Cap rate
-        const capMatch = text.match(/([\d.]+)%\s*(?:cap|CAP)/i);
+        const capMatch = text.match(/([\d.]+)\s*%\s*(?:cap|CAP)/i);
         if (capMatch) listing.cap_rate = parseFloat(capMatch[1]);
 
-        // Property type
-        const typeEl = card.querySelector('[class*="PropertyType"], [class*="property-type"]');
-        if (typeEl) listing.property_type = typeEl.textContent.trim();
-        if (!listing.property_type) listing.property_type = 'Commercial';
+        // Location: look for city, state pattern
+        const locMatch = text.match(/([A-Z][a-z]+(?:\s[A-Z][a-z]+)*),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
+        if (locMatch) {
+          listing.city = locMatch[1];
+          listing.state = locMatch[2];
+          if (locMatch[3]) listing.zip = locMatch[3];
+        }
 
-        // Only add if we have at least address or price
         if (listing.address || listing.price) {
           listings.push(listing);
         }
       } catch (err) {
-        console.error('DealEval: Error scraping LoopNet card:', err);
+        console.error('DealEval: LoopNet scrape error:', err);
       }
     });
 
+    // Strategy 2: If no links found, try extracting from any card-like elements
+    if (listings.length === 0) {
+      const cards = document.querySelectorAll('article, [class*="card"], [class*="Card"], [class*="placard"], [class*="result"]');
+      cards.forEach((card, idx) => {
+        try {
+          const text = card.textContent || '';
+          const link = card.querySelector('a[href]');
+          const href = link?.href || '';
+
+          if (seen.has(href) || (!text.includes('$') && !text.match(/SF|sq ft/i))) return;
+          if (href) seen.add(href);
+
+          const listing = {
+            id: `loopnet-card-${idx}-${Date.now()}`,
+            source: 'loopnet.com',
+            source_url: href,
+            property_type: 'Commercial',
+          };
+
+          const heading = card.querySelector('h1, h2, h3, h4');
+          if (heading) listing.address = heading.textContent.trim();
+
+          const priceMatch = text.match(/\$([\d,]+(?:\.\d+)?)\s*(?:M|K)?/);
+          if (priceMatch) {
+            let price = parseFloat(priceMatch[1].replace(/,/g, ''));
+            if (text.match(/\$[\d,.]+M/)) price *= 1000000;
+            if (text.match(/\$[\d,.]+K/)) price *= 1000;
+            listing.price = price;
+          }
+
+          const sqftMatch = text.match(/([\d,]+)\s*(?:SF|sq\.?\s*ft)/i);
+          if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
+
+          const locMatch = text.match(/([A-Z][a-z]+(?:\s[A-Z][a-z]+)*),\s*([A-Z]{2})(?:\s+(\d{5}))?/);
+          if (locMatch) {
+            listing.city = locMatch[1];
+            listing.state = locMatch[2];
+            if (locMatch[3]) listing.zip = locMatch[3];
+          }
+
+          if (listing.address || listing.price) {
+            listings.push(listing);
+          }
+        } catch (err) {}
+      });
+    }
+
+    console.log(`DealEval: Scraped ${listings.length} listings from LoopNet`);
     return listings;
   }
 
-  // Scrape and send to background
   function scrapeAndSend() {
     const results = scrapeSearchResults();
     if (results.length > 0) {
@@ -85,29 +136,36 @@
         data: results,
         source: 'loopnet.com',
         pageUrl: window.location.href,
-      });
+      }).catch(err => console.error('DealEval: Message send error:', err));
+    } else {
+      console.log('DealEval: No listings found on LoopNet page, will retry...');
     }
   }
 
-  // Wait for page to fully load, then scrape
-  if (document.readyState === 'complete') {
-    setTimeout(scrapeAndSend, 2000);
-  } else {
-    window.addEventListener('load', () => setTimeout(scrapeAndSend, 2000));
+  // LoopNet is a SPA - content loads dynamically, need longer delays
+  function startScraping() {
+    // Try multiple times with increasing delays
+    setTimeout(scrapeAndSend, 3000);
+    setTimeout(scrapeAndSend, 6000);
+    setTimeout(scrapeAndSend, 10000);
   }
 
-  // Also scrape when user scrolls (infinite scroll)
+  if (document.readyState === 'complete') {
+    startScraping();
+  } else {
+    window.addEventListener('load', startScraping);
+  }
+
+  // Re-scrape on scroll (infinite scroll / pagination)
   let scrollTimeout;
   window.addEventListener('scroll', () => {
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(scrapeAndSend, 3000);
   });
 
-  // Listen for manual trigger from popup
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === 'SCRAPE_SEARCH') {
-      const results = scrapeSearchResults();
-      sendResponse({ results });
+      sendResponse({ results: scrapeSearchResults() });
     }
   });
 })();
