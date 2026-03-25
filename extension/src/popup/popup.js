@@ -348,14 +348,15 @@ async function handleOpenSites() {
 
     for (const { id: tabId, source } of tabIds) {
       try {
+        // Use site-specific scraper for LoopNet, universal for others
+        const scraperFunc = source.includes('loopnet') ? scrapeLoopNet : scrapeAnySearchPage;
         const results = await chrome.scripting.executeScript({
           target: { tabId },
-          func: scrapeAnySearchPage,
+          func: scraperFunc,
         });
         const data = results[0]?.result;
         if (data && data.length > 0) {
-          // Tag each result with source
-          data.forEach(r => { r.source = source; });
+          data.forEach(r => { if (!r.source) r.source = source; });
           allResults.push(...data);
         }
       } catch (err) {
@@ -396,13 +397,14 @@ async function handleOpenSites() {
         const retryResults = [];
         for (const { id: tabId, source } of tabIds) {
           try {
+            const scraperFunc = source.includes('loopnet') ? scrapeLoopNet : scrapeAnySearchPage;
             const results = await chrome.scripting.executeScript({
               target: { tabId },
-              func: scrapeAnySearchPage,
+              func: scraperFunc,
             });
             const data = results[0]?.result;
             if (data && data.length > 0) {
-              data.forEach(r => { r.source = source; });
+              data.forEach(r => { if (!r.source) r.source = source; });
               retryResults.push(...data);
             }
           } catch (err) {}
@@ -451,6 +453,92 @@ async function handleOpenSites() {
   chrome.storage.local.set({
     lastSearch: { city, state, zip, propertyType, minPrice, maxPrice, listedWithin },
   });
+}
+
+// LoopNet-specific scraper - uses GTM data attributes on article.placard elements
+function scrapeLoopNet() {
+  const listings = [];
+  const articles = document.querySelectorAll('article.placard');
+
+  articles.forEach((article, idx) => {
+    try {
+      const listing = {
+        id: `loopnet-${idx}-${Date.now()}`,
+        source: 'loopnet.com',
+        property_type: 'Commercial',
+      };
+
+      // GTM data attributes have all the structured data
+      listing.city = article.getAttribute('gtm-listing-city') || '';
+      listing.state = article.getAttribute('gtm-listing-state') || '';
+      listing.zip = article.getAttribute('gtm-listing-zip') || '';
+
+      // Property type from GTM
+      const gtmPropType = article.getAttribute('gtm-listing-property-type-name');
+      if (gtmPropType) listing.property_type = gtmPropType;
+
+      // Listing URL from data attribute
+      const dataId = article.getAttribute('data-id');
+      const firstLink = article.querySelector('a[href*="/Listing/"]');
+      listing.source_url = firstLink ? firstLink.href : '';
+
+      // Address from header left h4 (street address)
+      const addrEl = article.querySelector('.header-left h4 a, a.left-h4');
+      if (addrEl) listing.address = addrEl.textContent.trim();
+
+      // Property name/subtitle from header left h6
+      const nameEl = article.querySelector('.header-left h6 a, a.left-h6');
+      const propName = nameEl ? nameEl.textContent.trim() : '';
+
+      // If no street address, use property name
+      if (!listing.address && propName) listing.address = propName;
+      // Append property name to address if different
+      if (listing.address && propName && propName !== listing.address) {
+        listing.address = `${listing.address} - ${propName}`;
+      }
+
+      // Size + type from header right h4 (e.g. "20,747 SF Office")
+      const sizeEl = article.querySelector('.header-right h4 a, a.right-h4');
+      if (sizeEl) {
+        const sizeText = sizeEl.textContent.trim();
+        const sqftMatch = sizeText.match(/([\d,]+)\s*SF/i);
+        if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
+      }
+
+      // Location from header right h6 (e.g. "Berkeley, CA 94704")
+      const locEl = article.querySelector('.header-right h6 a, a.right-h6');
+      if (locEl && !listing.city) {
+        const locText = locEl.textContent.trim();
+        const locMatch = locText.match(/([A-Za-z\s]+),\s*([A-Z]{2})\s*(\d{5})?/);
+        if (locMatch) {
+          listing.city = locMatch[1].trim();
+          listing.state = locMatch[2];
+          if (locMatch[3]) listing.zip = locMatch[3];
+        }
+      }
+
+      // Price from placard-info section
+      const infoText = article.querySelector('.placard-info')?.textContent || '';
+      const priceMatch = infoText.match(/\$\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/);
+      if (priceMatch) {
+        let price = parseFloat(priceMatch[1].replace(/,/g, ''));
+        if (priceMatch[2] === 'M') price *= 1000000;
+        else if (priceMatch[2] === 'K') price *= 1000;
+        if (price > 1000 && price < 5000000000) listing.price = price;
+      }
+
+      // Cap rate
+      const capMatch = infoText.match(/([\d.]+)\s*%\s*(?:cap)/i);
+      if (capMatch) listing.cap_rate = parseFloat(capMatch[1]);
+
+      // Only add if we have an address
+      if (listing.address && listing.address.length > 3) {
+        listings.push(listing);
+      }
+    } catch (err) {}
+  });
+
+  return listings;
 }
 
 // Universal scraper function - injected into any search results page via executeScript
