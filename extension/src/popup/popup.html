@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DealEval</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 360px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; }
+    .header { background: linear-gradient(135deg, #4f46e5, #6366f1); padding: 16px 20px; color: white; }
+    .header h1 { font-size: 18px; font-weight: 700; }
+    .header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+    .content { padding: 16px 20px; }
+    .status { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; }
+    .status.success { background: #ecfdf5; color: #065f46; }
+    .status.warning { background: #fffbeb; color: #92400e; }
+    .status.error { background: #fef2f2; color: #991b1b; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot.green { background: #10b981; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.red { background: #ef4444; }
+    .btn { width: 100%; padding: 10px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: #4f46e5; color: white; }
+    .btn-primary:hover { background: #4338ca; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-secondary { background: white; color: #374151; border: 1px solid #d1d5db; margin-top: 8px; }
+    .btn-secondary:hover { background: #f9fafb; }
+    .login-form { display: flex; flex-direction: column; gap: 8px; }
+    .login-form input { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; }
+    .login-form input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79,70,229,0.1); }
+    .extracted { background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-top: 12px; }
+    .extracted h3 { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 8px; }
+    .extracted .row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
+    .extracted .label { color: #6b7280; }
+    .extracted .value { color: #111827; font-weight: 500; }
+    .footer { padding: 12px 20px; border-top: 1px solid #e5e7eb; text-align: center; }
+    .footer a { color: #4f46e5; text-decoration: none; font-size: 12px; font-weight: 500; }
+    .footer a:hover { text-decoration: underline; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>DealEval</h1>
+    <p>Property Data Extractor</p>
+  </div>
+
+  <div class="content">
+    <!-- Auth Section -->
+    <div id="auth-section" style="display:none">
+      <div class="status warning">
+        <span class="dot yellow"></span>
+        Sign in to extract property data
+      </div>
+      <div class="login-form">
+        <input type="email" id="login-email" placeholder="Email address" />
+        <input type="password" id="login-password" placeholder="Password" />
+        <button class="btn btn-primary" id="login-btn">Sign In</button>
+      </div>
+    </div>
+
+    <!-- Logged In Section -->
+    <div id="main-section" style="display:none">
+      <!-- Mode Tabs -->
+      <div style="display:flex;gap:0;margin-bottom:12px;border-bottom:2px solid #e5e7eb;">
+        <button id="tab-extract" class="tab-btn active" style="flex:1;padding:8px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid #4f46e5;margin-bottom:-2px;color:#4f46e5;">Extract</button>
+        <button id="tab-search" class="tab-btn" style="flex:1;padding:8px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;color:#6b7280;">Search Sites</button>
+      </div>
+
+      <!-- Extract Mode -->
+      <div id="extract-mode">
+        <div class="status success" id="status-bar">
+          <span class="dot green"></span>
+          <span id="status-text">Ready to extract</span>
+        </div>
+
+        <button class="btn btn-primary" id="extract-btn">
+          Extract This Property
+        </button>
+
+        <div id="extracted-data" style="display:none" class="extracted">
+          <h3>Extracted Data</h3>
+          <div id="extracted-fields"></div>
+        </div>
+
+        <button class="btn btn-secondary" id="send-btn" style="display:none">
+          Send to DealEval
+        </button>
+      </div>
+
+      <!-- Search Mode -->
+      <div id="search-mode" style="display:none">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <select id="search-type" style="padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;">
+            <option value="">Any Type</option>
+            <option value="Single Family">Single Family</option>
+            <option value="Multi Family">Multi Family</option>
+            <option value="Condo">Condo</option>
+            <option value="Townhouse">Townhouse</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Land">Land</option>
+          </select>
+          <div style="display:flex;gap:6px;">
+            <input type="text" id="search-city" placeholder="City" style="flex:2;padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;" />
+            <select id="search-state" style="flex:1;padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;">
+              <option value="">ST</option>
+              <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
+            </select>
+          </div>
+          <input type="text" id="search-zip" placeholder="Zip Code (optional)" style="padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;" />
+          <div style="display:flex;gap:6px;">
+            <input type="number" id="search-min-price" placeholder="Min $" style="flex:1;padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;" />
+            <input type="number" id="search-max-price" placeholder="Max $" style="flex:1;padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;" />
+          </div>
+          <select id="search-listed-within" style="padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;">
+            <option value="">Any Time</option>
+            <option value="5">Last 5 Days</option>
+            <option value="10">Last 10 Days</option>
+            <option value="30">Last 30 Days</option>
+            <option value="90">Last 90 Days</option>
+          </select>
+        </div>
+
+        <div id="site-checkboxes" style="margin-top:10px;padding:10px;background:#f9fafb;border-radius:8px;">
+          <p style="font-size:11px;font-weight:600;color:#374151;margin-bottom:6px;">Sites to search:</p>
+          <div id="site-list" style="display:flex;flex-wrap:wrap;gap:4px 12px;"></div>
+        </div>
+
+        <button class="btn btn-primary" id="open-sites-btn" style="margin-top:10px;">
+          Open Search on Selected Sites
+        </button>
+      </div>
+
+      <button class="btn btn-secondary" id="logout-btn">Sign Out</button>
+    </div>
+
+    <!-- Unsupported Site -->
+    <div id="unsupported-section" style="display:none">
+      <div class="status error">
+        <span class="dot red"></span>
+        This site is not supported for auto-extraction
+      </div>
+      <p style="font-size:12px;color:#6b7280;margin-top:8px;">
+        Supported: Realtor.com, Zillow, LoopNet, Crexi
+      </p>
+      <button class="btn btn-secondary" id="manual-btn">Enter Data Manually</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a id="dashboard-link" href="#" target="_blank">Open DealEval Dashboard</a>
+  </div>
+
+  <script src="../lib/site-search-urls.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
