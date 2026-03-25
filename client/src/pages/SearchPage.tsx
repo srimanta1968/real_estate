@@ -42,19 +42,84 @@ const LISTED_WITHIN_OPTIONS = [
 ];
 const US_STATES = ['','AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
 
-const SITE_MAP: Record<string, { name: string; buildUrl: (p: { city: string; state: string; zip: string }) => string }[]> = {
+interface SearchFilters { city: string; state: string; zip: string; propertyType: string; minPrice: string; maxPrice: string; listedWithin: string }
+interface SiteConfig { name: string; buildUrl: (p: SearchFilters) => string }
+
+const SITE_MAP: Record<string, SiteConfig[]> = {
   residential: [
-    { name: 'Zillow', buildUrl: (p) => `https://www.zillow.com/homes/${p.city ? p.city + '-' : ''}${p.state}_rb/` },
-    { name: 'Realtor.com', buildUrl: (p) => `https://www.realtor.com/realestateandhomes-search/${p.city ? p.city.replace(/\s+/g, '-') + '_' : ''}${p.state}` },
-    { name: 'Redfin', buildUrl: (p) => `https://www.redfin.com/zipcode/${p.zip || ''}` },
+    {
+      name: 'Zillow',
+      buildUrl: (p) => {
+        const loc = p.zip || [p.city, p.state].filter(Boolean).join('-');
+        let url = `https://www.zillow.com/homes/${encodeURIComponent(loc)}_rb/`;
+        const fs: Record<string, unknown> = { sortSelection: { value: 'days' }, isAllHomes: { value: true } };
+        const tm: Record<string, string> = { 'Single Family': 'Houses', 'Multi Family': 'Multi-family', 'Condo': 'Condos', 'Townhouse': 'Townhomes' };
+        if (p.propertyType && tm[p.propertyType]) fs.homeType = { value: [tm[p.propertyType]] };
+        if (p.minPrice || p.maxPrice) { fs.price = {}; if (p.minPrice) (fs.price as Record<string, number>).min = Number(p.minPrice); if (p.maxPrice) (fs.price as Record<string, number>).max = Number(p.maxPrice); }
+        if (p.listedWithin) { const dm: Record<string, string> = { '5': '7', '10': '14', '30': '30', '90': '90' }; fs.doz = { value: dm[p.listedWithin] || p.listedWithin }; }
+        return `${url}?searchQueryState=${encodeURIComponent(JSON.stringify({ filterState: fs }))}`;
+      },
+    },
+    {
+      name: 'Realtor.com',
+      buildUrl: (p) => {
+        let url = 'https://www.realtor.com/realestateandhomes-search/' + (p.zip || [p.city ? p.city.replace(/\s+/g, '-') : '', p.state].filter(Boolean).join('_'));
+        const tm: Record<string, string> = { 'Single Family': 'type-single-family-home', 'Multi Family': 'type-multi-family-home', 'Condo': 'type-condo', 'Townhouse': 'type-townhome', 'Land': 'type-land' };
+        if (p.propertyType && tm[p.propertyType]) url += `/${tm[p.propertyType]}`;
+        if (p.minPrice || p.maxPrice) url += `/price-${p.minPrice || 'na'}-${p.maxPrice || 'na'}`;
+        if (p.listedWithin) url += `/age-${p.listedWithin}d`;
+        return url;
+      },
+    },
+    {
+      name: 'Redfin',
+      buildUrl: (p) => {
+        const base = p.zip ? `https://www.redfin.com/zipcode/${p.zip}` : `https://www.redfin.com/city/${p.state}/${(p.city || '').replace(/\s+/g, '-')}`;
+        const f: string[] = [];
+        const tm: Record<string, string> = { 'Single Family': 'property-type=1', 'Condo': 'property-type=2', 'Townhouse': 'property-type=3', 'Multi Family': 'property-type=4', 'Land': 'property-type=6' };
+        if (p.propertyType && tm[p.propertyType]) f.push(tm[p.propertyType]);
+        if (p.minPrice) f.push(`min-price=${p.minPrice}`);
+        if (p.maxPrice) f.push(`max-price=${p.maxPrice}`);
+        if (p.listedWithin) { const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' }; f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`); }
+        return f.length > 0 ? `${base}/filter/${f.join(',')}` : base;
+      },
+    },
   ],
   commercial: [
-    { name: 'LoopNet', buildUrl: (p) => `https://www.loopnet.com/search/commercial-real-estate/${p.city ? p.city.toLowerCase() + '-' : ''}${p.state ? p.state.toLowerCase() : ''}/for-sale/` },
-    { name: 'Crexi', buildUrl: (p) => { const params = new URLSearchParams(); if (p.city) params.set('city', p.city); if (p.state) params.set('state', p.state); return `https://www.crexi.com/properties?${params.toString()}`; } },
+    {
+      name: 'LoopNet',
+      buildUrl: (p) => {
+        const tm: Record<string, string> = { 'Commercial': 'commercial-real-estate', 'Office': 'office-space', 'Retail': 'retail-space', 'Industrial': 'industrial-space', 'Multi Family': 'multifamily-housing', 'Land': 'land' };
+        const cat = tm[p.propertyType] || 'commercial-real-estate';
+        const loc = p.zip || [p.city, p.state].filter(Boolean).join('-').toLowerCase().replace(/\s+/g, '-');
+        let url = `https://www.loopnet.com/search/${cat}/${loc}/for-sale/`;
+        const q = new URLSearchParams();
+        if (p.minPrice) q.set('PriceMin', p.minPrice);
+        if (p.maxPrice) q.set('PriceMax', p.maxPrice);
+        if (p.listedWithin) { const dm: Record<string, string> = { '5': '1', '10': '2', '30': '3', '90': '4' }; q.set('e', dm[p.listedWithin] || '3'); }
+        const qs = q.toString();
+        return qs ? `${url}?${qs}` : url;
+      },
+    },
+    {
+      name: 'Crexi',
+      buildUrl: (p) => {
+        const q = new URLSearchParams();
+        if (p.state) q.set('state', p.state);
+        if (p.city) q.set('city', p.city);
+        if (p.zip) q.set('zip', p.zip);
+        const tm: Record<string, string> = { 'Commercial': 'commercial', 'Office': 'office', 'Retail': 'retail', 'Industrial': 'industrial', 'Multi Family': 'multifamily', 'Land': 'land' };
+        if (p.propertyType && tm[p.propertyType]) q.set('propertyTypes', tm[p.propertyType]);
+        if (p.minPrice) q.set('priceMin', p.minPrice);
+        if (p.maxPrice) q.set('priceMax', p.maxPrice);
+        if (p.listedWithin) q.set('listedWithin', p.listedWithin);
+        return `https://www.crexi.com/properties?${q.toString()}`;
+      },
+    },
   ],
 };
 
-function getSitesForType(propertyType: string) {
+function getSitesForType(propertyType: string): SiteConfig[] {
   if (propertyType === 'Commercial') return SITE_MAP.commercial;
   if (['Single Family', 'Multi Family', 'Condo', 'Townhouse'].includes(propertyType)) return SITE_MAP.residential;
   return [...SITE_MAP.residential, ...SITE_MAP.commercial];
@@ -198,7 +263,7 @@ export default function SearchPage() {
 
     const sites = getSitesForType(propertyType);
     sites.forEach(site => {
-      const url = site.buildUrl({ city, state, zip });
+      const url = site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin });
       window.open(url, '_blank');
     });
 
