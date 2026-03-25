@@ -1,5 +1,6 @@
 // LoopNet search results page scraper
 // Uses robust approach: finds all listing links, then extracts data from parent containers
+console.log('DealEval: LoopNet search scraper LOADED on', window.location.href);
 (function () {
   function scrapeSearchResults() {
     const listings = [];

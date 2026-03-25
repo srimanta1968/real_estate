@@ -1,5 +1,6 @@
 // Crexi search results page scraper
 // Robust approach: finds listing links and extracts surrounding data
+console.log('DealEval: Crexi search scraper LOADED on', window.location.href);
 (function () {
   function scrapeSearchResults() {
     const listings = [];

@@ -1,3 +1,4 @@
+console.log('DealEval: Bridge script LOADED on', window.location.href);
 // DealEval Bridge - runs on localhost DealEval pages
 // Receives scraped search results from background worker and writes to window.localStorage
 // so the React SearchPage can read and display them.

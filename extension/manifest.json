@@ -62,12 +62,12 @@
       "run_at": "document_idle"
     },
     {
-      "matches": ["https://www.loopnet.com/search/*"],
+      "matches": ["https://www.loopnet.com/search/*", "https://loopnet.com/search/*"],
       "js": ["src/content/loopnet-search.js"],
       "run_at": "document_idle"
     },
     {
-      "matches": ["https://www.crexi.com/properties?*"],
+      "matches": ["https://www.crexi.com/properties*", "https://crexi.com/properties*"],
       "js": ["src/content/crexi-search.js"],
       "run_at": "document_idle"
     },
