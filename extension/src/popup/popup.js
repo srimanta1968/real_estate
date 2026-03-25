@@ -349,7 +349,7 @@ async function handleOpenSites() {
     for (const { id: tabId, source } of tabIds) {
       try {
         // Use site-specific scraper for LoopNet, universal for others
-        const scraperFunc = source.includes('loopnet') ? scrapeLoopNet : scrapeAnySearchPage;
+        const scraperFunc = source.includes('loopnet') ? scrapeLoopNet : source.includes('crexi') ? scrapeCrexi : scrapeAnySearchPage;
         const results = await chrome.scripting.executeScript({
           target: { tabId },
           func: scraperFunc,
@@ -397,7 +397,7 @@ async function handleOpenSites() {
         const retryResults = [];
         for (const { id: tabId, source } of tabIds) {
           try {
-            const scraperFunc = source.includes('loopnet') ? scrapeLoopNet : scrapeAnySearchPage;
+            const scraperFunc = source.includes('loopnet') ? scrapeLoopNet : source.includes('crexi') ? scrapeCrexi : scrapeAnySearchPage;
             const results = await chrome.scripting.executeScript({
               target: { tabId },
               func: scraperFunc,
@@ -532,6 +532,84 @@ function scrapeLoopNet() {
       if (capMatch) listing.cap_rate = parseFloat(capMatch[1]);
 
       // Only add if we have an address
+      if (listing.address && listing.address.length > 3) {
+        listings.push(listing);
+      }
+    } catch (err) {}
+  });
+
+  return listings;
+}
+
+// Crexi-specific scraper - uses data-cy attributes on crx-sales-property-tile elements
+function scrapeCrexi() {
+  const listings = [];
+  const tiles = document.querySelectorAll('crx-sales-property-tile');
+
+  tiles.forEach((tile, idx) => {
+    try {
+      const listing = {
+        id: `crexi-${idx}-${Date.now()}`,
+        source: 'crexi.com',
+        property_type: 'Commercial',
+      };
+
+      // Price from data-cy="propertyPrice"
+      const priceEl = tile.querySelector('[data-cy="propertyPrice"]');
+      if (priceEl) {
+        const priceText = priceEl.textContent.replace(/[^0-9.]/g, '');
+        if (priceText) {
+          const price = parseFloat(priceText);
+          if (price > 1000 && price < 5000000000) listing.price = price;
+        }
+      }
+
+      // Property name from data-cy="propertyName"
+      const nameEl = tile.querySelector('[data-cy="propertyName"]');
+      if (nameEl) listing.address = nameEl.textContent.trim();
+
+      // Full address from data-cy="propertyAddress"
+      const addrEl = tile.querySelector('[data-cy="propertyAddress"]');
+      if (addrEl) {
+        const fullAddr = addrEl.textContent.trim().replace(/\s+/g, ' ');
+        // Extract city, state, zip from the small text span
+        const smallSpan = addrEl.querySelector('.cui-card-info-text-small');
+        if (smallSpan) {
+          const locText = smallSpan.textContent.trim();
+          const locMatch = locText.match(/([A-Za-z\s]+),\s*([A-Z]{2})\s*(\d{5})?/);
+          if (locMatch) {
+            listing.city = locMatch[1].trim();
+            listing.state = locMatch[2];
+            if (locMatch[3]) listing.zip = locMatch[3];
+          }
+        }
+        // Use full address if no name was found
+        if (!listing.address) listing.address = fullAddr;
+      }
+
+      // Description: property type and sqft from data-cy="propertyDescription"
+      const descEl = tile.querySelector('[data-cy="propertyDescription"]');
+      if (descEl) {
+        const descText = descEl.textContent.trim();
+        // e.g. "Special Purpose • 7,184 SqFt"
+        const sqftMatch = descText.match(/([\d,]+)\s*(?:SqFt|SF|sq\s*ft)/i);
+        if (sqftMatch) listing.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
+
+        // Property type before the bullet
+        const typeMatch = descText.match(/^([^•]+)/);
+        if (typeMatch) {
+          const pType = typeMatch[1].trim();
+          if (pType && pType.length < 50) listing.property_type = pType;
+        }
+      }
+
+      // Link to detail page
+      const linkEl = tile.querySelector('a.cui-card-cover-link, a[href*="/properties/"]');
+      if (linkEl) {
+        const href = linkEl.getAttribute('href') || '';
+        listing.source_url = href.startsWith('http') ? href : `https://www.crexi.com${href}`;
+      }
+
       if (listing.address && listing.address.length > 3) {
         listings.push(listing);
       }
