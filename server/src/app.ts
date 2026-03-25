@@ -15,6 +15,11 @@ import visualizationRoutes from './routes/visualization.routes';
 import scenarioRoutes from './routes/scenario.routes';
 import pdfRoutes from './routes/pdf.routes';
 import savedPropertyRoutes from './routes/savedProperty.routes';
+import searchRoutes from './routes/search.routes';
+import listingRoutes from './routes/listing.routes';
+import extensionRoutes from './routes/extension.routes';
+import comparisonRoutes from './routes/comparison.routes';
+import dashboardRoutes from './routes/dashboard.routes';
 
 const app = express();
 
@@ -52,6 +57,11 @@ app.use('/api/visualizations', visualizationRoutes);
 app.use('/api/scenarios', scenarioRoutes);
 app.use('/api/pdf', pdfRoutes);
 app.use('/api/saved-properties', savedPropertyRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/listings', listingRoutes);
+app.use('/api/extension', extensionRoutes);
+app.use('/api/comparisons', comparisonRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -13,7 +13,7 @@
   "testCases": [{
     "name": "Login with registered user",
     "payload": {
-      "email": "{{cache:auth.register.response.data.email}}",
+      "email": "{{cache:auth.register.response.data.user.email}}",
       "password": "TestPass123!"
     },
     "expectedStatus": 200,

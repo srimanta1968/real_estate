@@ -18,7 +18,18 @@
       "mcp__projexlight__projexlight_submit_feature_validation",
       "Bash(docker-compose ps:*)",
       "mcp__projexlight__projexlight_create_task",
-      "mcp__projexlight__projexlight_clear_test_failures"
+      "mcp__projexlight__projexlight_clear_test_failures",
+      "Bash(find:*)",
+      "Bash(cd:*)",
+      "Read(//c/Users/srima/projex_mcp/projex_dev_mcp/**)",
+      "Bash(python -c \"import py_compile; py_compile.compile\\(''src/core/server.py'', doraise=True\\)\")",
+      "Bash(grep:*)",
+      "mcp__projexlight__projexlight_check_server_health",
+      "Bash(curl --version)",
+      "Bash(curl:*)",
+      "mcp__projexlight__projexlight_import_full",
+      "Bash(PGPASSWORD=postgres psql -h localhost -U postgres -d real_estate_deal_evaluator_db -f init-scripts/02-search-comparison-schema.sql)",
+      "Bash(PGPASSWORD=postgres psql -h localhost -U postgres -d real_estate_deal_evaluator_db -c \"\\\\dt\" 2>&1)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -56,7 +56,7 @@ export const AuthService = {
   /**
    * Register a new user
    */
-  async register(input: RegisterInput): Promise<Omit<UserRecord, 'password_hash'>> {
+  async register(input: RegisterInput): Promise<LoginResult> {
     try {
       const existing = await DataService.findOne<UserRecord>(
         'SELECT id FROM users WHERE email = $1',
@@ -87,8 +87,14 @@ export const AuthService = {
         last_name: input.last_name || null,
       });
 
+      const token = jwt.sign(
+        { userId: user.id, email: user.email, role: user.role },
+        config.jwt.secret,
+        { expiresIn: 24 * 60 * 60 }
+      );
+
       const { password_hash: _, ...userWithoutPassword } = user;
-      return userWithoutPassword;
+      return { user: userWithoutPassword, token };
     } catch (error) {
       if (error instanceof Error && (
         error.message === 'Email already registered' ||

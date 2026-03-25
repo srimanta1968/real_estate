@@ -11,18 +11,9 @@ export default function HomePage() {
               <span className="text-xl font-bold text-indigo-600">DealEval</span>
             </div>
             <div className="flex items-center gap-4">
-              <Link
-                to="/login"
-                className="text-gray-600 hover:text-gray-900 font-medium"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-medium"
-              >
-                Get Started
-              </Link>
+              <Link to="/search" className="text-gray-600 hover:text-gray-900 font-medium">Search</Link>
+              <Link to="/login" className="text-gray-600 hover:text-gray-900 font-medium">Sign In</Link>
+              <Link to="/register" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-medium">Get Started</Link>
             </div>
           </div>
         </div>
@@ -41,17 +32,17 @@ export default function HomePage() {
           </p>
           <div className="mt-10 flex justify-center gap-4">
             <Link
-              to="/property/new"
+              to="/search"
               className="bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-700 shadow-lg hover:shadow-xl transition-all"
             >
-              Analyze a Property
+              Search Properties
             </Link>
-            <a
-              href="#features"
+            <Link
+              to="/property/new"
               className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-all"
             >
-              Learn More
-            </a>
+              Manual Analysis
+            </Link>
           </div>
         </div>
       </section>

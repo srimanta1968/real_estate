@@ -1,5 +1,5 @@
 {
-  "last_scan": "2026-03-14T01:55:21.461812Z",
+  "last_scan": "2026-03-25T20:43:43.124456Z",
   "scanned_files": {
     "client/package-lock.json": {
       "hash": "3a85a5a685078b9db0a77c72a8db33591b8ab0bccce6a38a766ead4dc3de6355",
@@ -246,17 +246,17 @@
       "linesOfCode": 135
     },
     "tests/api_definitions/auth/login.json": {
-      "hash": "31b6a288df9062e28c26171824c568cb18ff61caec6661269bd16917fd762e1a",
+      "hash": "b515da94b82f29f18b431425dc1f48385d05617f4e3f86df68865e228bc94fef",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:38:29.292365Z",
+      "timestamp": "2026-03-14T01:57:17.595427Z",
       "linesOfCode": 27
     },
     "tests/api_definitions/auth/register.json": {
-      "hash": "4c9849de56433426fe211fafedb07c4fa99186e7da1e7baf905ae333c4bf6af0",
+      "hash": "da1234f0c7f49c936a2d660de806a69fb63f76cfe71240895f6110b1f98307d6",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:38:29.325639Z",
+      "timestamp": "2026-03-14T01:57:17.613927Z",
       "linesOfCode": 32
     },
     "client/src/components/financing/FinancingForm.tsx": {
@@ -893,11 +893,11 @@
       "linesOfCode": 28
     },
     ".mcp-cache/pre_commit_cache.json": {
-      "hash": "ec4b9f673f007a9206bd6a44c90b49a26b5e4a8b19a2846d861391b7dda7ce43",
+      "hash": "6b39c1aabf5a336e4586409073bd1e7e929d212d007489e78b43852375331782",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:55:09.951394Z",
-      "linesOfCode": 1380
+      "timestamp": "2026-03-14T01:57:17.557716Z",
+      "linesOfCode": 1387
     },
     ".mcp-cache/violations_latest.json": {
       "hash": "912a1e56530442dd03071c84c2064f3e48f51d2809293f2cca7dd922bdc1065a",
@@ -1317,10 +1317,10 @@
       "linesOfCode": 186
     },
     ".mcp-cache/api_test_cache.json": {
-      "hash": "9a71a1783a05978e4ca09cf9a0bb31609962d048d6c1b6d4f4a99560ce23d909",
+      "hash": "3a664129f594222176a53956569738c97bb278b4391ab12f58362361e4a71565",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:55:09.929112Z",
+      "timestamp": "2026-03-14T01:57:17.532273Z",
       "linesOfCode": 117
     },
     ".mcp-cache/violations_report_20260314_013036.json": {
@@ -1330,12 +1330,54 @@
       "timestamp": "2026-03-14T01:33:12.591323Z",
       "linesOfCode": 129
     },
-    ".mcp-cache/test_failures_latest.json": {
-      "hash": "0d85fed4c68f6e4c09f667a13efcaed47736cbc7aed8ae0c4cb6b816862787a2",
+    "server/src/controllers/search.controller.ts": {
+      "hash": "3fe5a2ee77ec52041437d49c38ae3f2aa61137a24eee8f4b316cb45e4509a005",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:55:09.969022Z",
-      "linesOfCode": 350
+      "timestamp": "2026-03-25T20:33:35.784320Z",
+      "linesOfCode": 91
+    },
+    "server/src/services/search.service.ts": {
+      "hash": "06393548034eb13345d9396b7ee9b6848e93bde7ff393ca917f2aaf385602148",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:33:35.820248Z",
+      "linesOfCode": 352
+    },
+    "tests/api_definitions/search/search-with-date-filter.json": {
+      "hash": "ff6fabe34352010d4428dd29f8ea15b5a2e138f6627d1073a8959344148f1c1a",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:33:35.840195Z",
+      "linesOfCode": 30
+    },
+    "client/src/pages/SearchPage.tsx": {
+      "hash": "145422b90ad2ff68bbabb654e5b97371eab9cb9c87c26fb4e5b30c379ff1c7df",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:37:17.611169Z",
+      "linesOfCode": 340
+    },
+    "extension/src/lib/site-search-urls.js": {
+      "hash": "7f2a7907b3dc608e9919cf1ccf1902fe04898dfd87b2335640a708379b9e8093",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:39:08.809432Z",
+      "linesOfCode": 186
+    },
+    "extension/src/popup/popup.js": {
+      "hash": "30436f19017a212e8f2a9496451f1198aa47971db113408d7ed04b98b25f50d0",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:41:24.201584Z",
+      "linesOfCode": 271
+    },
+    "extension/manifest.json": {
+      "hash": "46d8d1a18a326bc74d3d1fcad433008e07c78dc795399f8a4a2e2f5a21075897",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:43:31.921014Z",
+      "linesOfCode": 86
     }
   },
   "registered_apis": {

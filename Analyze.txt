@@ -1,1007 +1,808 @@
-  routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'irr',
-[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
+[server]   error: error: relation "comparison_sets" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 1)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]     length: 114,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
+[server] DashboardService getSummary error: error: relation "comparison_sets" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 1)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 114,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '31',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] DashboardController getSummary error: error: relation "comparison_sets" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 1)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 114,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '31',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
 [server] json
-[server] IrrService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] IrrController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'cash_flow',
-[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
+[server]   error: error: relation "property_searches" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 2) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
-[server] json
-[server] CashFlowService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] CashFlowController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] json
-[server] json
-[server] DataService insertOne error: {
-[server]   table: 'annual_projections',
-[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server] DataService findOne error: {
+[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
+[server]   error: error: column "subscription_tier" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 5) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42703',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '8',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '3665',
+[server]     routine: 'errorMissingColumn'
 [server]   }
 [server] }
-[server] json
-[server] ProjectionService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] ProjectionController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'financial_visualization',
-[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
+[server]   error: error: relation "comparison_sets" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 1)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]     length: 114,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
+[server] DashboardService getSummary error: error: relation "comparison_sets" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 1)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 114,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '31',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] DashboardController getSummary error: error: relation "comparison_sets" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 1)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 114,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '31',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
 [server] json
-[server] VisualizationService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] VisualizationController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'scenario_comparison',
-[server]   error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
+[server] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
+[server]   error: error: relation "property_searches" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 2) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
-[server] json
-[server] ScenarioService create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] ScenarioController create error: error: invalid input syntax for type integer: "e88c599b-ac52-493c-84e7-cdd994a3c9b8"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] json
-[server] json
-[server] json
-[server] json
-[server] json
-[server] json
-[server] json
-[server] json
-[server] json
-[server] json
-[server] DataService insertOne error: {
-[server]   table: 'financing_info',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findOne error: {
+[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
+[server]   error: error: column "subscription_tier" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\financing.service.ts:25:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\financing.controller.ts:15:25) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 5) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42703',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '8',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '3665',
+[server]     routine: 'errorMissingColumn'
 [server]   }
 [server] }
-[server] json
-[server] FinancingService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\financing.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\financing.controller.ts:15:25) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] FinancingController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\financing.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\financing.controller.ts:15:25) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'expense_info',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
+[server]   error: error: relation "comparison_sets" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\expense.service.ts:25:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\expense.controller.ts:15:23) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 1)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]     length: 114,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
 [server] json
-[server] ExpenseService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DashboardService getSummary error: error: relation "comparison_sets" does not exist
 [server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\expense.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\expense.controller.ts:15:23) {
-[server]   length: 174,
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 1)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 114,
 [server]   severity: 'ERROR',
-[server]   code: '22P02',
+[server]   code: '42P01',
 [server]   detail: undefined,
 [server]   hint: undefined,
-[server]   position: undefined,
+[server]   position: '31',
 [server]   internalPosition: undefined,
 [server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   where: undefined,
 [server]   schema: undefined,
 [server]   table: undefined,
 [server]   column: undefined,
 [server]   dataType: undefined,
 [server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
 [server] }
-[server] ExpenseController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DashboardController getSummary error: error: relation "comparison_sets" does not exist
 [server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\expense.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\expense.controller.ts:15:23) {
-[server]   length: 174,
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 1)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 114,
 [server]   severity: 'ERROR',
-[server]   code: '22P02',
+[server]   code: '42P01',
 [server]   detail: undefined,
 [server]   hint: undefined,
-[server]   position: undefined,
+[server]   position: '31',
 [server]   internalPosition: undefined,
 [server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   where: undefined,
 [server]   schema: undefined,
 [server]   table: undefined,
 [server]   column: undefined,
 [server]   dataType: undefined,
 [server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
 [server] }
-[server] DataService insertOne error: {
-[server]   table: 'cap_rate',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
+[server]   error: error: relation "property_searches" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\caprate.service.ts:25:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\caprate.controller.ts:15:23) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 2) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
-[server] json
-[server] CapRateService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\caprate.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\caprate.controller.ts:15:23) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] CapRateController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\caprate.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\caprate.controller.ts:15:23) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'irr',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findOne error: {
+[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
+[server]   error: error: column "subscription_tier" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 5) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42703',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '8',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '3665',
+[server]     routine: 'errorMissingColumn'
 [server]   }
 [server] }
-[server] json
-[server] IrrService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] IrrController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\irr.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\irr.controller.ts:15:25) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'cash_flow',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
+[server]   error: error: relation "property_searches" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 2)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $2 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
-[server] json
-[server] CashFlowService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DashboardService getSummary error: error: relation "property_searches" does not exist
 [server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
-[server]   length: 174,
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 2)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 116,
 [server]   severity: 'ERROR',
-[server]   code: '22P02',
+[server]   code: '42P01',
 [server]   detail: undefined,
 [server]   hint: undefined,
-[server]   position: undefined,
+[server]   position: '31',
 [server]   internalPosition: undefined,
 [server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   where: undefined,
 [server]   schema: undefined,
 [server]   table: undefined,
 [server]   column: undefined,
 [server]   dataType: undefined,
 [server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
 [server] }
-[server] CashFlowController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] json
+[server] DashboardController getSummary error: error: relation "property_searches" does not exist
 [server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\cashflow.service.ts:25:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\cashflow.controller.ts:15:24) {
-[server]   length: 174,
+[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]     at async Promise.all (index 2)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
+[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
+[server]   length: 116,
 [server]   severity: 'ERROR',
-[server]   code: '22P02',
+[server]   code: '42P01',
 [server]   detail: undefined,
 [server]   hint: undefined,
-[server]   position: undefined,
+[server]   position: '31',
 [server]   internalPosition: undefined,
 [server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $2 = '...'",
+[server]   where: undefined,
 [server]   schema: undefined,
 [server]   table: undefined,
 [server]   column: undefined,
 [server]   dataType: undefined,
 [server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
 [server] }
-[server] json
-[server] json
-[server] DataService insertOne error: {
-[server]   table: 'annual_projections',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findOne error: {
+[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
+[server]   error: error: relation "comparison_sets" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 1) {
+[server]     length: 114,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '31',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
-[server] json
-[server] ProjectionService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] ProjectionController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\projection.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\projection.controller.ts:20:26) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'financial_visualization',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findOne error: {
+[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
+[server]   error: error: column "subscription_tier" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
-[server]     length: 174,
+[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
+[server]       at async Promise.all (index 5) {
+[server]     length: 116,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42703',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '8',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '3665',
+[server]     routine: 'errorMissingColumn'
 [server]   }
 [server] }
-[server] json
-[server] VisualizationService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] VisualizationController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\visualization.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\visualization.controller.ts:20:29) {
-[server]   length: 174,
-[server]   severity: 'ERROR',
-[server]   code: '22P02',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: undefined,
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'scenario_comparison',
-[server]   error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] DataService findMany error: {
+[server]   text: 'SELECT * FROM extracted_listings WHERE city ILIKE $1 AND state ILIKE $2 AND zip = $3 ORDER BY created_at DESC LIMIT $4 OFFSET $5',
+[server]   error: error: relation "extracted_listings" does not exist
 [server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
-[server]       at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
-[server]     length: 174,
+[server]       at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]       at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]       at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]       at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]     length: 117,
 [server]     severity: 'ERROR',
-[server]     code: '22P02',
+[server]     code: '42P01',
 [server]     detail: undefined,
 [server]     hint: undefined,
-[server]     position: undefined,
+[server]     position: '15',
 [server]     internalPosition: undefined,
 [server]     internalQuery: undefined,
-[server]     where: "unnamed portal parameter $3 = '...'",
+[server]     where: undefined,
 [server]     schema: undefined,
 [server]     table: undefined,
 [server]     column: undefined,
 [server]     dataType: undefined,
 [server]     constraint: undefined,
-[server]     file: 'numutils.c',
-[server]     line: '232',
-[server]     routine: 'pg_strtoint32'
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
 [server]   }
 [server] }
 [server] json
-[server] ScenarioService create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] SearchService fetchFromLocalListings error: error: relation "extracted_listings" does not exist
 [server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
-[server]   length: 174,
+[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]   length: 117,
 [server]   severity: 'ERROR',
-[server]   code: '22P02',
+[server]   code: '42P01',
 [server]   detail: undefined,
 [server]   hint: undefined,
-[server]   position: undefined,
+[server]   position: '15',
 [server]   internalPosition: undefined,
 [server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   where: undefined,
 [server]   schema: undefined,
 [server]   table: undefined,
 [server]   column: undefined,
 [server]   dataType: undefined,
 [server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
 [server] }
-[server] ScenarioController create error: error: invalid input syntax for type integer: "b93c3a8a-b342-4955-abf6-d8cb2a83ee60"
+[server] SearchService search error: error: relation "extracted_listings" does not exist
 [server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
 [server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.create (C:\Users\srima\real_estate\server\src\services\scenario.service.ts:31:14)
-[server]     at create (C:\Users\srima\real_estate\server\src\controllers\scenario.controller.ts:20:24) {
-[server]   length: 174,
+[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]   length: 117,
 [server]   severity: 'ERROR',
-[server]   code: '22P02',
+[server]   code: '42P01',
 [server]   detail: undefined,
 [server]   hint: undefined,
-[server]   position: undefined,
+[server]   position: '15',
 [server]   internalPosition: undefined,
 [server]   internalQuery: undefined,
-[server]   where: "unnamed portal parameter $3 = '...'",
+[server]   where: undefined,
 [server]   schema: undefined,
 [server]   table: undefined,
 [server]   column: undefined,
 [server]   dataType: undefined,
 [server]   constraint: undefined,
-[server]   file: 'numutils.c',
-[server]   line: '232',
-[server]   routine: 'pg_strtoint32'
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] SearchController search error: error: relation "extracted_listings" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]   length: 117,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '15',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] DataService insertOne error: {
+[server]   table: 'property_searches',
+[server]   error: error: relation "property_searches" does not exist
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]       at Object.saveSearchQuery (C:\Users\srima\real_estate\server\src\services\search.service.ts:345:14)
+[server]       at Object.saveQuery (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:73:21) {
+[server]     length: 116,
+[server]     severity: 'ERROR',
+[server]     code: '42P01',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: '13',
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: undefined,
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
+[server]   }
 [server] }
 [server] json
+[server] SearchService saveSearchQuery error: error: relation "property_searches" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.saveSearchQuery (C:\Users\srima\real_estate\server\src\services\search.service.ts:345:14)
+[server]     at Object.saveQuery (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:73:21) {
+[server]   length: 116,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '13',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] SearchController saveQuery error: error: relation "property_searches" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
+[server]     at Object.saveSearchQuery (C:\Users\srima\real_estate\server\src\services\search.service.ts:345:14)
+[server]     at Object.saveQuery (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:73:21) {
+[server]   length: 116,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '13',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] DataService findMany error: {
+[server]   text: 'SELECT * FROM extracted_listings WHERE city ILIKE $1 AND state ILIKE $2 AND zip = $3 ORDER BY created_at DESC LIMIT $4 OFFSET $5',
+[server]   error: error: relation "extracted_listings" does not exist
+[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]       at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]       at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]       at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]       at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]     length: 117,
+[server]     severity: 'ERROR',
+[server]     code: '42P01',
+[server]     detail: undefined,
+[server]     hint: undefined,
+[server]     position: '15',
+[server]     internalPosition: undefined,
+[server]     internalQuery: undefined,
+[server]     where: undefined,
+[server]     schema: undefined,
+[server]     table: undefined,
+[server]     column: undefined,
+[server]     dataType: undefined,
+[server]     constraint: undefined,
+[server]     file: 'parse_relation.c',
+[server]     line: '1392',
+[server]     routine: 'parserOpenTable'
+[server]   }
+[server] }
 [server] json
-[server] json
+[server] SearchService fetchFromLocalListings error: error: relation "extracted_listings" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]   length: 117,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '15',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] SearchService search error: error: relation "extracted_listings" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]   length: 117,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '15',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }
+[server] SearchController search error: error: relation "extracted_listings" does not exist
+[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
+[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
+[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
+[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
+[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
+[server]   length: 117,
+[server]   severity: 'ERROR',
+[server]   code: '42P01',
+[server]   detail: undefined,
+[server]   hint: undefined,
+[server]   position: '15',
+[server]   internalPosition: undefined,
+[server]   internalQuery: undefined,
+[server]   where: undefined,
+[server]   schema: undefined,
+[server]   table: undefined,
+[server]   column: undefined,
+[server]   dataType: undefined,
+[server]   constraint: undefined,
+[server]   file: 'parse_relation.c',
+[server]   line: '1392',
+[server]   routine: 'parserOpenTable'
+[server] }

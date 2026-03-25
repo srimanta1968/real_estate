@@ -9,8 +9,9 @@
     "auth.register.request.password": "password"
   },
   "captureResponse": {
-    "auth.register.response.data.id": "data.id",
-    "auth.register.response.data.email": "data.email"
+    "auth.register.response.data.token": "data.token",
+    "auth.register.response.data.user.id": "data.user.id",
+    "auth.register.response.data.user.email": "data.user.email"
   },
   "testCases": [{
     "name": "Register new user",
@@ -25,7 +26,10 @@
     "expectedResponse": {
       "success": true,
       "data": {
-        "email": "{{dynamic:email}}"
+        "token": "{{type:string}}",
+        "user": {
+          "email": "{{dynamic:email}}"
+        }
       }
     }
   }]

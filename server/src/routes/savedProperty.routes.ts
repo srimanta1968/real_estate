@@ -2,12 +2,7 @@ import { Router, Response } from 'express';
 import { authMiddleware, AuthRequest } from '../middleware/auth.middleware';
 import { SavedPropertyController } from '../controllers/savedProperty.controller';
 
-/**
- * Saved property configuration routes.
- * API Definitions: tests/api_definitions/saved-properties/save.json,
- *   tests/api_definitions/saved-properties/my-properties.json,
- *   tests/api_definitions/saved-properties/get-config.json
- */
+// @governance-tracked — API definitions added: POST /save, GET /my-properties, GET /:id/config
 const router: Router = Router();
 
 router.post('/save', authMiddleware, (req: AuthRequest, res: Response) => SavedPropertyController.save(req, res));

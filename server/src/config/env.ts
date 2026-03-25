@@ -55,4 +55,17 @@ export const config = {
 
   // Body parser
   bodyLimit: process.env.BODY_PARSER_LIMIT || '10mb',
+
+  // Property Search API
+  propertyApi: {
+    provider: process.env.PROPERTY_API_PROVIDER || 'rentcast',
+    apiKey: process.env.PROPERTY_API_KEY || '',
+  },
+
+  // Free Tier Limits
+  freeTier: {
+    evaluationsPerMonth: parseInt(process.env.FREE_TIER_EVALUATIONS_PER_MONTH || '5', 10),
+    maxSavedProperties: parseInt(process.env.FREE_TIER_MAX_SAVED_PROPERTIES || '20', 10),
+    maxComparisonSize: parseInt(process.env.FREE_TIER_MAX_COMPARISON_SIZE || '3', 10),
+  },
 };

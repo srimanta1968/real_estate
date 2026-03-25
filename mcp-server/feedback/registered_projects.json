@@ -19,9 +19,34 @@
     "apiKey": "hBOLjE6hlaRJTtEkm+LZS7hKcWbW2jDk5rFnXr/J9oPByKQjKhI3K8gqdZZ2cLAIzdQDwm2+fVam65QJo2DEy63gFgN+aW++M1eQf8F0FF0A4W+g3HxOCIDCy8zM+gKNmgFKSQZigfMakpVeZ+Cl47sCpjbCqQrjzhyA0ZeqqFtLgh4cEQTykyJfRoI5ZXkeXipabKgJgn1hHQIh1w==",
     "sprintId": "693170cd-c22d-4f54-a75d-d85bb94fb547",
     "registeredAt": "2026-03-13T03:22:34.642078Z",
-    "lastSeen": "2026-03-13T03:22:34.642086Z",
+    "lastSeen": "2026-03-17T04:19:00.465815Z",
     "status": "active",
     "isOwner": false,
     "schemaSyncEnabled": true
+  },
+  "6c0fc1d6-5174-498b-a0c6-eb0498b3f92c": {
+    "projectId": "6c0fc1d6-5174-498b-a0c6-eb0498b3f92c",
+    "projectName": "projex_crm",
+    "projectPath": "/c/Users/srima/projex_crm",
+    "workspacePath": "/c/Users/srima/projex_crm",
+    "containerPath": "/projects/additional2",
+    "databaseName": "linked_in_lead_generation_db",
+    "databaseType": "postgresql",
+    "databaseConfig": {
+      "enabled": true,
+      "type": "postgresql",
+      "host": "host.docker.internal",
+      "port": 5432,
+      "database": "linked_in_lead_generation_db",
+      "username": "postgres",
+      "password": "postgres"
+    },
+    "apiKey": "e92eK1/7J6blfRQIKj1oBh7xXnqotSRV8D3eJPFPIN6lq5WfTHFliSc/Yk1ojz8uau3Q2VxkpL+GpFK1zcJgw3JDQPyZyHWWu4AtoEWrm10Rubs8KGXZD55/bled8LO+kw0v5FgpnklONI88TTKCOg/wa7pPJlLg/2GQQ2eVwj7QVcx7XSEYl+bNdbmFVtkLJIevEIZVY4rnY5uSiQ==",
+    "sprintId": "efb66e3b-c05c-4cbf-b6f4-9fa4ad73c9aa",
+    "registeredAt": "2026-03-15T01:27:28.009538Z",
+    "lastSeen": "2026-03-15T01:27:50.032098Z",
+    "status": "active",
+    "isOwner": false,
+    "schemaSyncEnabled": false
   }
 }

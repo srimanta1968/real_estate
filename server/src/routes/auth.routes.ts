@@ -8,6 +8,7 @@ import { OAuthController } from '../controllers/oauth.controller';
  *   tests/api_definitions/auth/google-oauth.json, tests/api_definitions/auth/linkedin-oauth.json
  */
 
+// @governance-tracked — API definitions added: register, login, google-oauth, google-oauth-callback, linkedin-oauth, linkedin-oauth-callback
 const router: Router = Router();
 
 // Email/password auth

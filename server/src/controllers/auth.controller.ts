@@ -22,11 +22,14 @@ export const AuthController = {
         return;
       }
 
-      const user = await AuthService.register({ email, username, password, first_name, last_name });
+      const result = await AuthService.register({ email, username, password, first_name, last_name });
 
       res.status(201).json({
         success: true,
-        data: user,
+        data: {
+          user: result.user,
+          token: result.token,
+        },
       });
     } catch (error: any) {
       if (error.message === 'Email already registered' || error.message === 'Username already taken') {
