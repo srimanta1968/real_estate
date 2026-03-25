@@ -187,18 +187,28 @@ const COMMERCIAL_SITES = {
     name: 'LoopNet',
     hostname: 'loopnet.com',
     /**
-     * LoopNet URL format: /search/{category}/{location}/for-sale/?Filters={encoded}
-     * Categories: commercial-real-estate, office-space, retail-space, industrial-space, etc.
-     * Price/date filters go as encoded query params
+     * LoopNet filter params (from Angular ng-model bindings):
+     *   criteria.PriceRangeMin / PriceRangeMax → price
+     *   criteria.BuildingSizeRangeMin / Max → building sqft
+     *   criteria.LotSizeRangeMin / Max → lot acres
+     *   criteria.UnitCountRangeMin / Max → units
+     *   Property type categories (bitwise): 32=Office, 1=Industrial, 2=Retail,
+     *     4=Shopping Center, 8=Multi-Family, 16=Hospitality, 512=Land, 64=Special Purpose
+     *   e= → listing age: 1=24h, 2=lastWeek, 3=lastMonth, 4=last3Mo
+     *
+     * URL format: /search/{category-slug}/{location}/for-sale/?PriceRangeMin=X&PriceRangeMax=X&e=X&BuildingSizeRangeMin=X
      */
-    buildSearchUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin }) {
-      // Property type → category slug
+    buildSearchUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin, minSqft, maxSqft }) {
+      // Property type → URL path category slug
       const typeMap = {
         'Commercial': 'commercial-real-estate',
         'Office': 'office-space',
         'Retail': 'retail-space',
         'Industrial': 'industrial-space',
         'Multi Family': 'multifamily-housing',
+        'Shopping Center': 'shopping-centers',
+        'Hospitality': 'hotels-motels',
+        'Special Purpose': 'special-purpose',
         'Land': 'land',
       };
       const category = typeMap[propertyType] || 'commercial-real-estate';
@@ -213,15 +223,21 @@ const COMMERCIAL_SITES = {
 
       let url = `https://www.loopnet.com/search/${category}/${location}/for-sale/`;
 
-      // Price and date filters as query params
+      // Query params matching LoopNet's Angular criteria model
       const params = new URLSearchParams();
-      if (minPrice) params.set('PriceMin', String(minPrice));
-      if (maxPrice) params.set('PriceMax', String(maxPrice));
 
-      // Days on market
+      // Price (criteria.PriceRangeMin / PriceRangeMax)
+      if (minPrice) params.set('PriceRangeMin', String(minPrice));
+      if (maxPrice) params.set('PriceRangeMax', String(maxPrice));
+
+      // Building size in SF (criteria.BuildingSizeRangeMin / Max)
+      if (minSqft) params.set('BuildingSizeRangeMin', String(minSqft));
+      if (maxSqft) params.set('BuildingSizeRangeMax', String(maxSqft));
+
+      // Listing age: e= param
+      // 1=Last 24 Hours, 2=Last Week, 3=Last Month, 4=Last 3 Months
       if (listedWithin) {
-        const dayMap = { '5': '1', '10': '2', '30': '3', '90': '4' };
-        // LoopNet uses e= param: 1=last24h, 2=lastWeek, 3=lastMonth, 4=last3Mo
+        const dayMap = { '5': '2', '10': '2', '30': '3', '90': '4' };
         params.set('e', dayMap[String(listedWithin)] || '3');
       }
 

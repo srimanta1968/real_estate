@@ -89,14 +89,14 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
     {
       name: 'LoopNet',
       buildUrl: (p) => {
-        const tm: Record<string, string> = { 'Commercial': 'commercial-real-estate', 'Office': 'office-space', 'Retail': 'retail-space', 'Industrial': 'industrial-space', 'Multi Family': 'multifamily-housing', 'Land': 'land' };
+        const tm: Record<string, string> = { 'Commercial': 'commercial-real-estate', 'Office': 'office-space', 'Retail': 'retail-space', 'Industrial': 'industrial-space', 'Multi Family': 'multifamily-housing', 'Shopping Center': 'shopping-centers', 'Hospitality': 'hotels-motels', 'Land': 'land' };
         const cat = tm[p.propertyType] || 'commercial-real-estate';
         const loc = p.zip || [p.city, p.state].filter(Boolean).join('-').toLowerCase().replace(/\s+/g, '-');
         let url = `https://www.loopnet.com/search/${cat}/${loc}/for-sale/`;
         const q = new URLSearchParams();
-        if (p.minPrice) q.set('PriceMin', p.minPrice);
-        if (p.maxPrice) q.set('PriceMax', p.maxPrice);
-        if (p.listedWithin) { const dm: Record<string, string> = { '5': '1', '10': '2', '30': '3', '90': '4' }; q.set('e', dm[p.listedWithin] || '3'); }
+        if (p.minPrice) q.set('PriceRangeMin', p.minPrice);
+        if (p.maxPrice) q.set('PriceRangeMax', p.maxPrice);
+        if (p.listedWithin) { const dm: Record<string, string> = { '5': '2', '10': '2', '30': '3', '90': '4' }; q.set('e', dm[p.listedWithin] || '3'); }
         const qs = q.toString();
         return qs ? `${url}?${qs}` : url;
       },
