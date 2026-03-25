@@ -271,8 +271,26 @@ export default function SearchPage() {
             {results.results.length === 0 ? (
               <div className="bg-white rounded-xl shadow-sm p-12 text-center">
                 <div className="text-gray-300 text-5xl mb-4">&#128270;</div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No properties found</h3>
-                <p className="text-gray-500">Try adjusting your search filters or location</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No properties found in local database</h3>
+                <p className="text-gray-500 mb-4">
+                  {propertyType === 'Commercial'
+                    ? 'Commercial listings are available on LoopNet and Crexi. Use "Search on Sites" to browse them, then extract listings with the DealEval extension.'
+                    : 'Try adjusting your search filters, or use "Search on Sites" to browse listings on Zillow, Realtor.com, and Redfin.'}
+                </p>
+                {(city || state || zip) && (
+                  <button
+                    onClick={() => {
+                      const sites = getSitesForType(propertyType);
+                      sites.forEach(site => {
+                        const url = site.buildUrl({ city, state, zip });
+                        window.open(url, '_blank');
+                      });
+                    }}
+                    className="bg-emerald-600 text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
+                  >
+                    Search on {getSitesForType(propertyType).map(s => s.name).join(', ')}
+                  </button>
+                )}
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
