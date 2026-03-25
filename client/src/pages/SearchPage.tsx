@@ -76,51 +76,59 @@ export default function SearchPage() {
   const [results, setResults] = useState<SearchResponse | null>(null);
   const [siteResults, setSiteResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [siteSearching, setSiteSearching] = useState(false);
+  const [siteSearchStatus, setSiteSearchStatus] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
 
   // Listen for external site search results from Chrome extension via localStorage
   useEffect(() => {
-    const loadSiteResults = () => {
+    const parseSiteResults = (stored: string | null): SearchResult[] => {
+      if (!stored) return [];
       try {
-        const stored = localStorage.getItem('siteSearchResults');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setSiteResults(parsed.map((r: Record<string, unknown>, i: number) => ({
-              id: (r.id as string) || `site-${i}`,
-              address: (r.address as string) || '',
-              city: (r.city as string) || '',
-              state: (r.state as string) || '',
-              zip: (r.zip as string) || '',
-              price: Number(r.price) || 0,
-              beds: r.beds != null ? Number(r.beds) : null,
-              baths: r.baths != null ? Number(r.baths) : null,
-              sqft: r.sqft != null ? Number(r.sqft) : null,
-              property_type: (r.property_type as string) || null,
-              listing_status: null,
-              year_built: r.year_built != null ? Number(r.year_built) : null,
-              lot_size: null,
-              tax_amount: null,
-            })));
-          }
+        const parsed = JSON.parse(stored);
+        if (!Array.isArray(parsed) || parsed.length === 0) return [];
+        return parsed.map((r: Record<string, unknown>, i: number) => ({
+          id: (r.id as string) || `site-${i}`,
+          address: (r.address as string) || '',
+          city: (r.city as string) || '',
+          state: (r.state as string) || '',
+          zip: (r.zip as string) || '',
+          price: Number(r.price) || 0,
+          beds: r.beds != null ? Number(r.beds) : null,
+          baths: r.baths != null ? Number(r.baths) : null,
+          sqft: r.sqft != null ? Number(r.sqft) : null,
+          property_type: (r.property_type as string) || null,
+          listing_status: null,
+          year_built: r.year_built != null ? Number(r.year_built) : null,
+          lot_size: null,
+          tax_amount: null,
+        }));
+      } catch { return []; }
+    };
+
+    const loadSiteResults = () => {
+      const results = parseSiteResults(localStorage.getItem('siteSearchResults'));
+      if (results.length > 0) {
+        setSiteResults(results);
+        if (siteSearching) {
+          setSiteSearching(false);
+          setSiteSearchStatus(`Found ${results.length} listings from external sites`);
         }
-      } catch {}
+      }
     };
 
     loadSiteResults();
 
-    // Listen for custom event from extension bridge
     const handler = () => loadSiteResults();
     window.addEventListener('dealeval-site-results', handler);
-    // Also poll every 3 seconds in case event is missed
-    const interval = setInterval(loadSiteResults, 3000);
+    const interval = setInterval(loadSiteResults, 2000);
 
     return () => {
       window.removeEventListener('dealeval-site-results', handler);
       clearInterval(interval);
     };
-  }, []);
+  }, [siteSearching]);
 
   const handleSearch = async (p = 1) => {
     if (!city && !state && !zip) {
@@ -159,6 +167,47 @@ export default function SearchPage() {
       handleSearch();
     }
   }, []);
+
+  const handleSearchOnSites = () => {
+    if (!city && !state && !zip) return;
+
+    // Clear previous external results
+    localStorage.removeItem('siteSearchResults');
+    localStorage.removeItem('siteSearchResultsTimestamp');
+    setSiteResults([]);
+    setSiteSearching(true);
+    setSiteSearchStatus('Opening sites and extracting listings...');
+
+    const sites = getSitesForType(propertyType);
+    sites.forEach(site => {
+      const url = site.buildUrl({ city, state, zip });
+      window.open(url, '_blank');
+    });
+
+    // Update status messages over time
+    setTimeout(() => {
+      if (siteSearching) setSiteSearchStatus(`Waiting for ${sites.map(s => s.name).join(', ')} to load...`);
+    }, 3000);
+
+    setTimeout(() => {
+      if (siteSearching) setSiteSearchStatus('Scraping listing data from search results...');
+    }, 6000);
+
+    // Timeout after 30s - stop waiting
+    setTimeout(() => {
+      setSiteSearching(prev => {
+        if (prev) {
+          setSiteSearchStatus('');
+          const current = localStorage.getItem('siteSearchResults');
+          if (!current || JSON.parse(current).length === 0) {
+            setSiteSearchStatus('No listings could be extracted. Sites may have blocked scraping. Try using the extension Extract tab on individual listings.');
+          }
+          return false;
+        }
+        return prev;
+      });
+    }, 30000);
+  };
 
   const handleEvaluate = (result: SearchResult) => {
     if (!isAuthenticated) {
@@ -282,19 +331,34 @@ export default function SearchPage() {
             )}
             {(city || state || zip) && (
               <button
-                onClick={() => {
-                  const sites = getSitesForType(propertyType);
-                  sites.forEach(site => {
-                    const url = site.buildUrl({ city, state, zip });
-                    window.open(url, '_blank');
-                  });
-                }}
-                className="bg-emerald-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
+                onClick={handleSearchOnSites}
+                disabled={siteSearching}
+                className="bg-emerald-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-60 disabled:cursor-wait"
               >
-                Search on Sites ({getSitesForType(propertyType).map(s => s.name).join(', ')})
+                {siteSearching ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                    Extracting from Sites...
+                  </span>
+                ) : (
+                  `Search on Sites (${getSitesForType(propertyType).map(s => s.name).join(', ')})`
+                )}
               </button>
             )}
           </div>
+
+          {/* Site search progress banner */}
+          {(siteSearching || siteSearchStatus) && (
+            <div className={`mt-4 flex items-center gap-3 px-4 py-3 rounded-lg text-sm ${siteSearching ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' : siteSearchStatus.includes('No listings') ? 'bg-amber-50 border border-amber-200 text-amber-800' : 'bg-emerald-50 border border-emerald-200 text-emerald-700'}`}>
+              {siteSearching && (
+                <svg className="animate-spin h-4 w-4 text-emerald-600 flex-shrink-0" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+              )}
+              <span>{siteSearchStatus}</span>
+              {!siteSearching && siteSearchStatus && (
+                <button onClick={() => setSiteSearchStatus('')} className="ml-auto text-gray-400 hover:text-gray-600">&times;</button>
+              )}
+            </div>
+          )}
         </div>
 
         {error && (
@@ -323,16 +387,18 @@ export default function SearchPage() {
                 </p>
                 {(city || state || zip) && (
                   <button
-                    onClick={() => {
-                      const sites = getSitesForType(propertyType);
-                      sites.forEach(site => {
-                        const url = site.buildUrl({ city, state, zip });
-                        window.open(url, '_blank');
-                      });
-                    }}
-                    className="bg-emerald-600 text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
+                    onClick={handleSearchOnSites}
+                    disabled={siteSearching}
+                    className="bg-emerald-600 text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-60 disabled:cursor-wait"
                   >
-                    Search on {getSitesForType(propertyType).map(s => s.name).join(', ')}
+                    {siteSearching ? (
+                      <span className="flex items-center gap-2 justify-center">
+                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                        Extracting from Sites...
+                      </span>
+                    ) : (
+                      `Search on ${getSitesForType(propertyType).map(s => s.name).join(', ')}`
+                    )}
                   </button>
                 )}
               </div>
