@@ -88,22 +88,39 @@ export default function SearchPage() {
       try {
         const parsed = JSON.parse(stored);
         if (!Array.isArray(parsed) || parsed.length === 0) return [];
-        return parsed.map((r: Record<string, unknown>, i: number) => ({
-          id: (r.id as string) || `site-${i}`,
-          address: (r.address as string) || '',
-          city: (r.city as string) || '',
-          state: (r.state as string) || '',
-          zip: (r.zip as string) || '',
-          price: Number(r.price) || 0,
-          beds: r.beds != null ? Number(r.beds) : null,
-          baths: r.baths != null ? Number(r.baths) : null,
-          sqft: r.sqft != null ? Number(r.sqft) : null,
-          property_type: (r.property_type as string) || null,
-          listing_status: null,
-          year_built: r.year_built != null ? Number(r.year_built) : null,
-          lot_size: null,
-          tax_amount: null,
-        }));
+
+        // Deduplicate by address (case-insensitive) on the display side
+        const seen = new Set<string>();
+        const unique: SearchResult[] = [];
+
+        for (let i = 0; i < parsed.length; i++) {
+          const r = parsed[i] as Record<string, unknown>;
+          const addr = ((r.address as string) || '').toLowerCase().trim();
+
+          // Skip duplicates, empty addresses, and page-title-like text
+          if (!addr || addr.length < 4) continue;
+          if (seen.has(addr)) continue;
+          if (/commercial real estate|for sale|properties for|auctions/i.test(addr)) continue;
+
+          seen.add(addr);
+          unique.push({
+            id: (r.id as string) || `site-${i}`,
+            address: (r.address as string) || '',
+            city: (r.city as string) || '',
+            state: (r.state as string) || '',
+            zip: (r.zip as string) || '',
+            price: Number(r.price) || 0,
+            beds: r.beds != null ? Number(r.beds) : null,
+            baths: r.baths != null ? Number(r.baths) : null,
+            sqft: r.sqft != null ? Number(r.sqft) : null,
+            property_type: (r.property_type as string) || null,
+            listing_status: null,
+            year_built: r.year_built != null ? Number(r.year_built) : null,
+            lot_size: null,
+            tax_amount: null,
+          });
+        }
+        return unique;
       } catch { return []; }
     };
 
