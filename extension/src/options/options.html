@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DealEval Extension Settings</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 500px; margin: 40px auto; padding: 0 20px; }
+    h1 { font-size: 22px; color: #111827; }
+    label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-top: 16px; margin-bottom: 4px; }
+    input { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+    input:focus { outline: none; border-color: #4f46e5; }
+    .btn { margin-top: 20px; padding: 10px 24px; background: #4f46e5; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn:hover { background: #4338ca; }
+    .saved { color: #065f46; font-size: 13px; margin-top: 8px; display: none; }
+    .info { font-size: 12px; color: #6b7280; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h1>DealEval Extension Settings</h1>
+
+  <label for="api-url">DealEval API URL</label>
+  <input type="text" id="api-url" placeholder="http://localhost:3000" />
+  <p class="info">The URL of your DealEval backend server</p>
+
+  <label>Default Residential Sites</label>
+  <div id="res-sites" style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px;">
+    <label style="font-size:13px;font-weight:400;display:flex;align-items:center;gap:4px;"><input type="checkbox" class="res-site-cb" value="Zillow" checked /> Zillow</label>
+    <label style="font-size:13px;font-weight:400;display:flex;align-items:center;gap:4px;"><input type="checkbox" class="res-site-cb" value="Realtor.com" checked /> Realtor.com</label>
+    <label style="font-size:13px;font-weight:400;display:flex;align-items:center;gap:4px;"><input type="checkbox" class="res-site-cb" value="Redfin" checked /> Redfin</label>
+    <label style="font-size:13px;font-weight:400;display:flex;align-items:center;gap:4px;"><input type="checkbox" class="res-site-cb" value="Trulia" /> Trulia</label>
+  </div>
+
+  <label>Default Commercial Sites</label>
+  <div id="com-sites" style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px;">
+    <label style="font-size:13px;font-weight:400;display:flex;align-items:center;gap:4px;"><input type="checkbox" class="com-site-cb" value="LoopNet" checked /> LoopNet</label>
+    <label style="font-size:13px;font-weight:400;display:flex;align-items:center;gap:4px;"><input type="checkbox" class="com-site-cb" value="Crexi" checked /> Crexi</label>
+    <label style="font-size:13px;font-weight:400;display:flex;align-items:center;gap:4px;"><input type="checkbox" class="com-site-cb" value="CommercialCafe" /> CommercialCafe</label>
+  </div>
+
+  <button class="btn" id="save-btn">Save Settings</button>
+  <p class="saved" id="saved-msg">Settings saved!</p>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const settings = await chrome.storage.sync.get(['apiUrl', 'defaultResSites', 'defaultComSites']);
+      document.getElementById('api-url').value = settings.apiUrl || 'http://localhost:3000';
+
+      if (settings.defaultResSites) {
+        document.querySelectorAll('.res-site-cb').forEach(cb => {
+          cb.checked = settings.defaultResSites.includes(cb.value);
+        });
+      }
+      if (settings.defaultComSites) {
+        document.querySelectorAll('.com-site-cb').forEach(cb => {
+          cb.checked = settings.defaultComSites.includes(cb.value);
+        });
+      }
+    });
+
+    document.getElementById('save-btn').addEventListener('click', async () => {
+      const apiUrl = document.getElementById('api-url').value.replace(/\/+$/, '');
+      const defaultResSites = Array.from(document.querySelectorAll('.res-site-cb:checked')).map(cb => cb.value);
+      const defaultComSites = Array.from(document.querySelectorAll('.com-site-cb:checked')).map(cb => cb.value);
+      await chrome.storage.sync.set({ apiUrl, defaultResSites, defaultComSites });
+      const msg = document.getElementById('saved-msg');
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 2000);
+    });
+  </script>
+</body>
+</html>

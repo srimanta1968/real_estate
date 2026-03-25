@@ -1,0 +1,86 @@
+{
+  "manifest_version": 3,
+  "name": "DealEval - Property Data Extractor",
+  "version": "1.0.0",
+  "description": "Extract property data from NLS/MLS listing sites and send to DealEval for instant investment analysis.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://www.realtor.com/*",
+    "https://www.zillow.com/*",
+    "https://www.redfin.com/*",
+    "https://www.loopnet.com/*",
+    "https://www.crexi.com/*",
+    "https://www.trulia.com/*",
+    "https://www.commercialcafe.com/*",
+    "http://localhost:*/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.realtor.com/realestateandhomes-detail/*"],
+      "js": ["src/content/realtor.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.zillow.com/homedetails/*"],
+      "js": ["src/content/zillow.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.loopnet.com/Listing/*"],
+      "js": ["src/content/loopnet.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.crexi.com/properties/*"],
+      "js": ["src/content/crexi.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.zillow.com/homes/*"],
+      "js": ["src/content/fallback.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.realtor.com/realestateandhomes-search/*"],
+      "js": ["src/content/fallback.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.loopnet.com/search/*"],
+      "js": ["src/content/fallback.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.trulia.com/*"],
+      "js": ["src/content/fallback.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.commercialcafe.com/*"],
+      "js": ["src/content/fallback.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "src/options/options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
