@@ -274,6 +274,10 @@ export default function SearchPage() {
     // which opens tabs AND scrapes them after loading
     window.postMessage({ type: 'DEALEVAL_START_SITE_SEARCH', urls }, '*');
 
+    // Also open tabs directly as fallback (if extension bridge is stale/unavailable)
+    // The background worker deduplicates so double-opening is harmless
+    urls.forEach(u => { window.open(u.url, '_blank'); });
+
     // Update status messages over time
     setTimeout(() => {
       if (siteSearching) setSiteSearchStatus(`Waiting for ${sites.map(s => s.name).join(', ')} to load...`);
