@@ -8,7 +8,7 @@ console.log('DealEval: Bridge script LOADED on', window.location.href);
       if (e.message && e.message.includes('Extension context invalidated')) {
         console.warn('DealEval: Extension was reloaded. Please refresh this page.');
       } else {
-        console.error('DealEval bridge chrome error:', e);
+        console.warn('DealEval bridge chrome error:', e.message);
       }
     }
   }

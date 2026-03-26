@@ -10,14 +10,60 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.action.setBadgeText({ text: '' });
 });
 
+// Search results page patterns — auto-scrape when these load
+const SEARCH_PAGE_PATTERNS = [
+  { pattern: /loopnet\.com\/search\//i, hostname: 'loopnet.com' },
+  { pattern: /crexi\.com\/properties/i, hostname: 'crexi.com' },
+  { pattern: /zillow\.com\/homes\//i, hostname: 'zillow.com' },
+  { pattern: /realtor\.com\/realestateandhomes-search\//i, hostname: 'realtor.com' },
+];
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status !== 'complete' || !tab.url) return;
+
   const isSupported = SUPPORTED_PATTERNS.some(pattern => {
     const regex = new RegExp(pattern.replace(/\*/g, '.*'));
     return regex.test(tab.url);
   });
   if (isSupported) {
     chrome.action.setIcon({ tabId, path: { 16: '/icons/icon16.png', 48: '/icons/icon48.png' } }).catch(() => {});
+  }
+
+  // Auto-scrape search results pages when they finish loading
+  const searchMatch = SEARCH_PAGE_PATTERNS.find(p => p.pattern.test(tab.url));
+  if (searchMatch) {
+    console.log('DealEval BG: Search page loaded, will auto-scrape:', tab.url);
+    // Wait for SPA content to render, then scrape
+    setTimeout(() => {
+      scrapeTab(tabId, searchMatch.hostname).then(results => {
+        if (results.length > 0) {
+          console.log(`DealEval BG: Auto-scraped ${results.length} listings from ${searchMatch.hostname}`);
+          // Store and forward
+          chrome.storage.local.get(['siteSearchResults'], (stored) => {
+            const existing = stored.siteSearchResults || [];
+            const seen = new Set();
+            existing.forEach(r => { if (r.address) seen.add(r.address.toLowerCase()); });
+            const merged = [...existing];
+            for (const r of results) {
+              const key = (r.address || '').toLowerCase().trim();
+              if (!key || key.length < 4 || seen.has(key)) continue;
+              if (/commercial real estate|for sale|properties for|auctions/i.test(key)) continue;
+              seen.add(key);
+              merged.push(r);
+            }
+            chrome.storage.local.set({ siteSearchResults: merged });
+            chrome.action.setBadgeText({ text: String(merged.length) });
+            chrome.action.setBadgeBackgroundColor({ color: '#10b981' });
+            // Forward to DealEval tabs
+            chrome.tabs.query({ url: 'http://localhost:*/*' }, (tabs) => {
+              for (const t of tabs) {
+                chrome.tabs.sendMessage(t.id, { type: 'SITE_SEARCH_RESULTS', data: merged, source: searchMatch.hostname }).catch(() => {});
+              }
+            });
+          });
+        }
+      });
+    }, 5000); // 5s delay for SPA rendering
   }
 });
 
