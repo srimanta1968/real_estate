@@ -7,6 +7,12 @@ export default function PropertyInfoPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  // Load pre-populated data from sessionStorage (set by SearchPage "Evaluate Property")
+  const savedInfo = sessionStorage.getItem('propertyInfo');
+  const initialData: PropertyInfoFormData | undefined = savedInfo
+    ? JSON.parse(savedInfo)
+    : undefined;
+
   function handleSubmit(data: PropertyInfoFormData) {
     setLoading(true);
     // Store in session for multi-step flow
@@ -38,7 +44,7 @@ export default function PropertyInfoPage() {
         </div>
 
         <div className="bg-white rounded-xl shadow-sm p-8">
-          <PropertyInfoForm onSubmit={handleSubmit} loading={loading} />
+          <PropertyInfoForm onSubmit={handleSubmit} loading={loading} initialData={initialData} />
         </div>
       </div>
     </div>
