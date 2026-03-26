@@ -253,19 +253,26 @@ export default function SearchPage() {
   const handleSearchOnSites = () => {
     if (!city && !state && !zip) return;
 
-    // Clear previous external results (localStorage + tell extension to clear chrome.storage)
+    // Clear previous external results
     localStorage.removeItem('siteSearchResults');
     localStorage.removeItem('siteSearchResultsTimestamp');
     setSiteResults([]);
     setSiteSearching(true);
-    setSiteSearchStatus('Opening sites and extracting listings...');
-    window.postMessage({ type: 'DEALEVAL_CLEAR_SITE_RESULTS' }, '*');
+    setSiteSearchStatus('Opening sites and scraping listings in background...');
+
+    // Tell extension bridge to clear chrome.storage
+    try { window.postMessage({ type: 'DEALEVAL_CLEAR_SITE_RESULTS' }, '*'); } catch {}
 
     const sites = getSitesForType(propertyType);
-    sites.forEach(site => {
-      const url = site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin });
-      window.open(url, '_blank');
-    });
+    const urls = sites.map(site => ({
+      url: site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin }),
+      hostname: site.name.toLowerCase().replace(/[^a-z.]/g, '') + '.com',
+    }));
+
+    // Tell the extension background worker to open tabs + scrape
+    // The bridge content script forwards this to the service worker
+    // which opens tabs AND scrapes them after loading
+    window.postMessage({ type: 'DEALEVAL_START_SITE_SEARCH', urls }, '*');
 
     // Update status messages over time
     setTimeout(() => {

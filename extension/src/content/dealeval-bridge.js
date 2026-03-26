@@ -2,13 +2,24 @@ console.log('DealEval: Bridge script LOADED on', window.location.href);
 // DealEval Bridge - runs on localhost DealEval pages
 // Receives scraped search results from background worker and writes to window.localStorage
 (function () {
-  // Listen for clear command from the React app (before new search starts)
+  // Listen for messages from the React app (via window.postMessage)
   window.addEventListener('message', (event) => {
+    if (event.source !== window) return;
+
     if (event.data?.type === 'DEALEVAL_CLEAR_SITE_RESULTS') {
       console.log('DealEval: Clearing site search results');
       window.localStorage.removeItem('siteSearchResults');
       window.localStorage.removeItem('siteSearchResultsTimestamp');
       chrome.storage.local.remove(['siteSearchResults']);
+    }
+
+    // Forward site search request to background worker
+    if (event.data?.type === 'DEALEVAL_START_SITE_SEARCH') {
+      console.log('DealEval: Forwarding START_SITE_SEARCH to background worker');
+      chrome.runtime.sendMessage({
+        type: 'START_SITE_SEARCH',
+        urls: event.data.urls || [],
+      });
     }
   });
 
