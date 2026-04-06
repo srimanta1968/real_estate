@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MetricsDashboard from '../components/visualization/MetricsDashboard';
 import AddToComparisonModal from '../components/common/AddToComparisonModal';
-import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import { MetricCard, BarChartData } from '../types/visualization';
 
