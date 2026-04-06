@@ -17,7 +17,8 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.0",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "stripe": "^22.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",

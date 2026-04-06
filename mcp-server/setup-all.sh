@@ -290,6 +290,34 @@ auto_fix_credentials() {
 # Project Registration Functions (Local .env Setup)
 #===============================================================================
 
+# Get the owner project's mcp-server directory (where Docker Compose was launched)
+# This is the .env that Docker actually reads for volume mounts.
+# Returns the path on stdout, or empty string if not found.
+get_owner_env_dir() {
+    local owner_dir=""
+
+    # Method 1: Docker inspect - get the compose working directory from the running container
+    if container_running "$DEV_MCP_CONTAINER"; then
+        owner_dir=$(docker inspect "$DEV_MCP_CONTAINER" \
+            --format='{{index .Config.Labels "com.docker.compose.project.working_dir"}}' 2>/dev/null || echo "")
+        # Normalize Windows path separators
+        owner_dir="${owner_dir//\\//}"
+    fi
+
+    # Method 2: Check /workspace mount source (the owner project root + /mcp-server)
+    if [ -z "$owner_dir" ] && container_running "$DEV_MCP_CONTAINER"; then
+        local workspace_source
+        workspace_source=$(docker inspect "$DEV_MCP_CONTAINER" \
+            --format='{{range .Mounts}}{{if eq .Destination "/workspace"}}{{.Source}}{{end}}{{end}}' 2>/dev/null || echo "")
+        workspace_source="${workspace_source//\\//}"
+        if [ -n "$workspace_source" ] && [ -f "$workspace_source/mcp-server/.env" ]; then
+            owner_dir="$workspace_source/mcp-server"
+        fi
+    fi
+
+    echo "$owner_dir"
+}
+
 # Setup local .env for project path mappings before starting containers
 # This ensures PROJECT_PATH_MAPPINGS is set correctly for the MCP server
 # Registration data is stored in feedback/registered_projects.json by MCP server
@@ -300,7 +328,7 @@ create_local_registration() {
     if [ "$is_owner" = "true" ]; then
         # Owner project maps to /workspace
         log "Setting up path mappings for owner project..."
-        update_path_mappings "$unix_path" "/workspace"
+        update_path_mappings "$unix_path" "/workspace" "$SCRIPT_DIR/.env"
     else
         # Find next available additional slot by checking feedback/registered_projects.json
         local slot=1
@@ -319,21 +347,40 @@ create_local_registration() {
 
         log "Setting up path mappings for additional project (slot $slot)..."
 
-        # Update ADDITIONAL_PROJECT_N in .env and path mappings
-        update_additional_project_env $slot "$unix_path"
+        # Update local .env (for reference)
+        update_additional_project_env $slot "$unix_path" "$SCRIPT_DIR/.env"
+
+        # CRITICAL: Also update the OWNER project's .env (where Docker reads volumes from)
+        # Without this, the container won't have the new project mounted
+        local owner_dir
+        owner_dir=$(get_owner_env_dir)
+        if [ -n "$owner_dir" ] && [ -f "$owner_dir/.env" ] && [ "$owner_dir" != "$SCRIPT_DIR" ]; then
+            log "Updating owner project .env at: $owner_dir"
+            update_additional_project_env $slot "$unix_path" "$owner_dir/.env"
+            NEEDS_CONTAINER_RESTART=true
+        elif [ -z "$owner_dir" ]; then
+            warn "Could not find owner project's .env - container may need manual restart"
+            warn "After restart, run: ./setup-all.sh --register"
+        fi
     fi
 }
 
-# Update PROJECT_PATH_MAPPINGS in .env file
+# Update PROJECT_PATH_MAPPINGS in a given .env file
 update_path_mappings() {
     local unix_path="$1"
     local container_path="$2"
-    local env_file="$SCRIPT_DIR/.env"
+    local env_file="${3:-$SCRIPT_DIR/.env}"
 
     # Read existing mappings or create new
     local current_mappings=""
     if [ -f "$env_file" ]; then
         current_mappings=$(grep "^PROJECT_PATH_MAPPINGS=" "$env_file" 2>/dev/null | cut -d'=' -f2- | tr -d "'" || echo "")
+    fi
+
+    # Check if this path is already mapped (avoid duplicates)
+    if echo "$current_mappings" | grep -q "\"$unix_path\""; then
+        log "Path $unix_path already in PROJECT_PATH_MAPPINGS ($(basename $(dirname "$env_file")))"
+        return 0
     fi
 
     # Parse existing JSON or start fresh
@@ -360,14 +407,14 @@ update_path_mappings() {
         echo "PROJECT_PATH_MAPPINGS='$current_mappings'" >> "$env_file"
     fi
 
-    log "Updated PROJECT_PATH_MAPPINGS in .env"
+    log "Updated PROJECT_PATH_MAPPINGS in $(basename $(dirname "$env_file"))/.env"
 }
 
-# Update ADDITIONAL_PROJECT_N environment variable
+# Update ADDITIONAL_PROJECT_N environment variable in a given .env file
 update_additional_project_env() {
     local slot=$1
     local unix_path="$2"
-    local env_file="$SCRIPT_DIR/.env"
+    local env_file="${3:-$SCRIPT_DIR/.env}"
 
     # Convert Unix path to Windows path for Docker volume mount
     # /c/Users/... -> C:/Users/...
@@ -376,6 +423,14 @@ update_additional_project_env() {
         local drive="${BASH_REMATCH[1]}"
         local rest="${BASH_REMATCH[2]}"
         windows_path="${drive^}:/$rest"
+    fi
+
+    # Check if this path is already set for this slot
+    if grep -q "^ADDITIONAL_PROJECT_${slot}=${windows_path}$" "$env_file" 2>/dev/null; then
+        log "ADDITIONAL_PROJECT_${slot} already set in $(basename $(dirname "$env_file"))/.env"
+        # Still update path mappings in case they're missing
+        update_path_mappings "$unix_path" "/projects/additional${slot}" "$env_file"
+        return 0
     fi
 
     # Update or add ADDITIONAL_PROJECT_N
@@ -392,9 +447,9 @@ update_additional_project_env() {
     fi
 
     # Also update path mappings
-    update_path_mappings "$unix_path" "/projects/additional${slot}"
+    update_path_mappings "$unix_path" "/projects/additional${slot}" "$env_file"
 
-    log "Updated ADDITIONAL_PROJECT_${slot} in .env"
+    log "Updated ADDITIONAL_PROJECT_${slot} in $(basename $(dirname "$env_file"))/.env"
 }
 
 # Check if this project is already registered in feedback/registered_projects.json
@@ -458,7 +513,101 @@ check_prerequisites() {
     # Load PROJEXLIGHT_API_URL from .env if not already set
     load_api_url_from_env
 
+    # Check config expiry for this project
+    check_config_expiry
+
     log "Prerequisites OK"
+}
+
+#===============================================================================
+# Config Expiry Check
+#===============================================================================
+
+# Check if the mcp-config.json for this project has expired or is expiring soon.
+# Warns during setup so users don't discover it only at push time.
+check_config_expiry() {
+    if [ ! -f "$CONFIG_FILE" ]; then
+        warn "No mcp-config.json found at: $CONFIG_FILE"
+        warn "Setup will continue but API features will not work."
+        return 0
+    fi
+
+    local expires_at=""
+    if command -v jq &> /dev/null; then
+        expires_at=$(jq -r '.expiresAt // empty' "$CONFIG_FILE" 2>/dev/null)
+    else
+        # Fallback: extract expiresAt with grep/sed
+        expires_at=$(grep -o '"expiresAt"[[:space:]]*:[[:space:]]*"[^"]*"' "$CONFIG_FILE" 2>/dev/null | sed 's/.*"expiresAt"[[:space:]]*:[[:space:]]*"//;s/"//')
+    fi
+
+    if [ -z "$expires_at" ]; then
+        return 0  # No expiry field — skip check
+    fi
+
+    # Parse expiry date (cross-platform: works on Linux, macOS, Windows Git Bash)
+    local expires_epoch=""
+    local now_epoch=""
+
+    # Try GNU date first (Linux, Git Bash on Windows)
+    if date -d "2000-01-01T00:00:00Z" +%s > /dev/null 2>&1; then
+        expires_epoch=$(date -d "${expires_at}" +%s 2>/dev/null)
+        now_epoch=$(date +%s)
+    # Try BSD date (macOS)
+    elif date -j -f "%Y-%m-%dT%H:%M:%S" "2000-01-01T00:00:00" +%s > /dev/null 2>&1; then
+        local clean_date="${expires_at%%.*}"  # Remove fractional seconds
+        clean_date="${clean_date%Z}"          # Remove trailing Z
+        expires_epoch=$(date -j -f "%Y-%m-%dT%H:%M:%S" "$clean_date" +%s 2>/dev/null)
+        now_epoch=$(date +%s)
+    fi
+
+    if [ -z "$expires_epoch" ] || [ -z "$now_epoch" ]; then
+        return 0  # Could not parse date — skip check silently
+    fi
+
+    local diff_seconds=$((expires_epoch - now_epoch))
+    local diff_days=$((diff_seconds / 86400))
+
+    if [ $diff_seconds -le 0 ]; then
+        # EXPIRED
+        local days_ago=$(( (-diff_seconds) / 86400 ))
+        echo ""
+        echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${RED}⚠️  MCP CONFIG EXPIRED ($days_ago day(s) ago)${NC}"
+        echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "   Project:  ${YELLOW}$PROJECT_NAME${NC}"
+        echo -e "   Config:   $CONFIG_FILE"
+        echo -e "   Expired:  ${RED}$expires_at${NC}"
+        echo ""
+        echo -e "   ${YELLOW}API testing, code review, and platform reporting will NOT work.${NC}"
+        echo -e "   Git hooks (pre-push) will fail when trying to run tests."
+        echo ""
+        echo -e "   ${BLUE}HOW TO FIX:${NC}"
+        echo -e "   1. Go to ${CYAN}https://projexlight.com${NC}"
+        echo -e "   2. Open your project > Code Generation Sessions"
+        echo -e "   3. Click 'New Session' > CLI Export Wizard"
+        echo -e "   4. Download the new export and copy mcp-config.json to:"
+        echo -e "      ${GREEN}$CONFIG_FILE${NC}"
+        echo -e "   5. Re-run this setup script"
+        echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo ""
+        warn "Continuing setup with expired config..."
+    elif [ $diff_days -le 7 ]; then
+        # EXPIRING SOON
+        echo ""
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${YELLOW}⚠️  MCP CONFIG EXPIRING SOON ($diff_days day(s) remaining)${NC}"
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "   Project:  $PROJECT_NAME"
+        echo -e "   Config:   $CONFIG_FILE"
+        echo -e "   Expires:  ${YELLOW}$expires_at${NC}"
+        echo ""
+        echo -e "   ${BLUE}Please renew before it expires:${NC}"
+        echo -e "   ProjexLight Portal > Project > Code Generation Sessions > New Session"
+        echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo ""
+    else
+        log "Config valid ($diff_days days remaining)"
+    fi
 }
 
 # Load PROJEXLIGHT_API_URL from .env file
@@ -1104,29 +1253,48 @@ run_setup() {
         log "Existing MCP detected - reusing containers"
         echo ""
 
-        # Check if containers are already healthy - if so, skip restart to preserve volume mounts
-        # This is important when running from a different project's mcp-server folder
-        local skip_restart=false
-        if check_dev_mcp && check_test_mcp; then
-            info "Containers are already running and healthy"
-            info "Skipping restart to preserve existing volume mounts"
-            skip_restart=true
-        fi
+        # Track whether we need to restart containers for new volume mounts
+        NEEDS_CONTAINER_RESTART=false
 
         # Create local registration if not already registered
+        # This may update the owner's .env with new ADDITIONAL_PROJECT_N mounts
         if ! is_project_registered; then
             create_local_registration "false"
             echo ""
-
-            # Only restart if containers are NOT healthy (need to start them)
-            if [ "$skip_restart" = "false" ]; then
-                warn "Containers not healthy - restarting..."
-                "$SCRIPT_DIR/setup-dev-mcp.sh" restart 2>/dev/null || true
-                "$SCRIPT_DIR/setup-test-mcp.sh" restart 2>/dev/null || true
-                echo ""
-            fi
         else
             info "Project already registered locally"
+        fi
+
+        # Restart containers if owner's .env was updated with new volume mounts
+        # The container must be recreated for Docker to pick up the new mount
+        if [ "$NEEDS_CONTAINER_RESTART" = "true" ]; then
+            warn "New volume mount added - restarting containers to apply..."
+            local owner_dir
+            owner_dir=$(get_owner_env_dir)
+            if [ -n "$owner_dir" ]; then
+                # Find the docker-compose file that started the container
+                local compose_file
+                compose_file=$(docker inspect "$DEV_MCP_CONTAINER" \
+                    --format='{{index .Config.Labels "com.docker.compose.project.config_files"}}' 2>/dev/null || echo "")
+                compose_file="${compose_file//\\//}"
+
+                if [ -n "$compose_file" ] && [ -f "$compose_file" ]; then
+                    log "Recreating containers from: $compose_file"
+                    (cd "$owner_dir" && docker compose -f "$(basename "$compose_file")" up -d 2>/dev/null) || \
+                    (cd "$owner_dir" && docker-compose -f "$(basename "$compose_file")" up -d 2>/dev/null) || \
+                        warn "Could not restart containers automatically"
+                else
+                    warn "Could not find compose file - restart containers manually"
+                fi
+            fi
+            echo ""
+        elif ! check_dev_mcp || ! check_test_mcp; then
+            warn "Containers not healthy - restarting..."
+            "$SCRIPT_DIR/setup-dev-mcp.sh" restart 2>/dev/null || true
+            "$SCRIPT_DIR/setup-test-mcp.sh" restart 2>/dev/null || true
+            echo ""
+        else
+            info "Containers are already running and healthy"
         fi
 
         # Check and setup database (may need different type)

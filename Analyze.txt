@@ -1,808 +1,167 @@
-] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
-[server]   error: error: relation "comparison_sets" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 1)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]     length: 114,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] DashboardService getSummary error: error: relation "comparison_sets" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 1)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 114,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] DashboardController getSummary error: error: relation "comparison_sets" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 1)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 114,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] json
-[server] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
-[server]   error: error: relation "property_searches" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 2) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
-[server]   error: error: column "subscription_tier" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 5) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42703',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '8',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '3665',
-[server]     routine: 'errorMissingColumn'
-[server]   }
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
-[server]   error: error: relation "comparison_sets" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 1)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]     length: 114,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] DashboardService getSummary error: error: relation "comparison_sets" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 1)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 114,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] DashboardController getSummary error: error: relation "comparison_sets" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 1)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 114,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] json
-[server] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
-[server]   error: error: relation "property_searches" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 2) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
-[server]   error: error: column "subscription_tier" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 5) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42703',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '8',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '3665',
-[server]     routine: 'errorMissingColumn'
-[server]   }
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
-[server]   error: error: relation "comparison_sets" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 1)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]     length: 114,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] json
-[server] DashboardService getSummary error: error: relation "comparison_sets" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 1)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 114,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] DashboardController getSummary error: error: relation "comparison_sets" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 1)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 114,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
-[server]   error: error: relation "property_searches" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 2) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
-[server]   error: error: column "subscription_tier" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 5) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42703',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '8',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '3665',
-[server]     routine: 'errorMissingColumn'
-[server]   }
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM property_searches WHERE user_id = $1',
-[server]   error: error: relation "property_searches" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 2)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]       at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] DashboardService getSummary error: error: relation "property_searches" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 2)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 116,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] json
-[server] DashboardController getSummary error: error: relation "property_searches" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]     at async Promise.all (index 2)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\services\dashboard.service.ts:21:100)
-[server]     at Object.getSummary (C:\Users\srima\real_estate\server\src\controllers\dashboard.controller.ts:20:23) {
-[server]   length: 116,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '31',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT COUNT(*) as count FROM comparison_sets WHERE user_id = $1',
-[server]   error: error: relation "comparison_sets" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 1) {
-[server]     length: 114,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '31',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] DataService findOne error: {
-[server]   text: 'SELECT subscription_tier FROM users WHERE id = $1',
-[server]   error: error: column "subscription_tier" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:55:22)
-[server]       at async Promise.all (index 5) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42703',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '8',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '3665',
-[server]     routine: 'errorMissingColumn'
-[server]   }
-[server] }
-[server] DataService findMany error: {
-[server]   text: 'SELECT * FROM extracted_listings WHERE city ILIKE $1 AND state ILIKE $2 AND zip = $3 ORDER BY created_at DESC LIMIT $4 OFFSET $5',
-[server]   error: error: relation "extracted_listings" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]       at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]       at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]       at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]     length: 117,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '15',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] json
-[server] SearchService fetchFromLocalListings error: error: relation "extracted_listings" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]   length: 117,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '15',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] SearchService search error: error: relation "extracted_listings" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]   length: 117,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '15',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] SearchController search error: error: relation "extracted_listings" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]   length: 117,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '15',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] DataService insertOne error: {
-[server]   table: 'property_searches',
-[server]   error: error: relation "property_searches" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]       at Object.saveSearchQuery (C:\Users\srima\real_estate\server\src\services\search.service.ts:345:14)
-[server]       at Object.saveQuery (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:73:21) {
-[server]     length: 116,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '13',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] json
-[server] SearchService saveSearchQuery error: error: relation "property_searches" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.saveSearchQuery (C:\Users\srima\real_estate\server\src\services\search.service.ts:345:14)
-[server]     at Object.saveQuery (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:73:21) {
-[server]   length: 116,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '13',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] SearchController saveQuery error: error: relation "property_searches" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.insertOne (C:\Users\srima\real_estate\server\src\services\data.service.ts:86:22)
-[server]     at Object.saveSearchQuery (C:\Users\srima\real_estate\server\src\services\search.service.ts:345:14)
-[server]     at Object.saveQuery (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:73:21) {
-[server]   length: 116,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '13',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] DataService findMany error: {
-[server]   text: 'SELECT * FROM extracted_listings WHERE city ILIKE $1 AND state ILIKE $2 AND zip = $3 ORDER BY created_at DESC LIMIT $4 OFFSET $5',
-[server]   error: error: relation "extracted_listings" does not exist
-[server]       at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]       at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]       at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]       at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]       at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]       at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]     length: 117,
-[server]     severity: 'ERROR',
-[server]     code: '42P01',
-[server]     detail: undefined,
-[server]     hint: undefined,
-[server]     position: '15',
-[server]     internalPosition: undefined,
-[server]     internalQuery: undefined,
-[server]     where: undefined,
-[server]     schema: undefined,
-[server]     table: undefined,
-[server]     column: undefined,
-[server]     dataType: undefined,
-[server]     constraint: undefined,
-[server]     file: 'parse_relation.c',
-[server]     line: '1392',
-[server]     routine: 'parserOpenTable'
-[server]   }
-[server] }
-[server] json
-[server] SearchService fetchFromLocalListings error: error: relation "extracted_listings" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]   length: 117,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '15',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] SearchService search error: error: relation "extracted_listings" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]   length: 117,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '15',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
-[server] SearchController search error: error: relation "extracted_listings" does not exist
-[server]     at C:\Users\srima\real_estate\server\node_modules\pg-pool\index.js:45:11
-[server]     at processTicksAndRejections (node:internal/process/task_queues:105:5)
-[server]     at Object.findMany (C:\Users\srima\real_estate\server\src\services\data.service.ts:68:22)
-[server]     at Object.fetchFromLocalListings (C:\Users\srima\real_estate\server\src\services\search.service.ts:214:24)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\services\search.service.ts:92:23)
-[server]     at Object.search (C:\Users\srima\real_estate\server\src\controllers\search.controller.ts:22:23) {
-[server]   length: 117,
-[server]   severity: 'ERROR',
-[server]   code: '42P01',
-[server]   detail: undefined,
-[server]   hint: undefined,
-[server]   position: '15',
-[server]   internalPosition: undefined,
-[server]   internalQuery: undefined,
-[server]   where: undefined,
-[server]   schema: undefined,
-[server]   table: undefined,
-[server]   column: undefined,
-[server]   dataType: undefined,
-[server]   constraint: undefined,
-[server]   file: 'parse_relation.c',
-[server]   line: '1392',
-[server]   routine: 'parserOpenTable'
-[server] }
+ Chrome Web Store Submission Guide
+
+  Step 1: Register as a Developer
+
+  1. Go to https://chrome.google.com/webstore/devconsole
+  2. Sign in with your Google account
+  3. Pay the one-time $5 registration fee
+  4. Accept the Developer Agreement
+
+  Step 2: Upload the Extension
+
+  1. Click "New Item" in the Developer Dashboard
+  2. Click "Upload" and select: extension/dealeval-extension-v1.0.0.zip
+  3. Wait for the upload to process (should take a few seconds)
+
+  Step 3: Fill Out the Store Listing
+
+  Tab 1: Store Listing
+
+  ┌────────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │     Field      │                                                      What to Enter                                                      │
+  ├────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Language       │ English (United States)                                                                                                 │
+  ├────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Extension Name │ DealEval - Property Data Extractor                                                                                      │
+  ├────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Summary        │ Extract property data from Zillow, Realtor.com, Redfin, LoopNet, and Crexi for instant real estate investment analysis. │
+  ├────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Description    │ See below                                                                                                               │
+  ├────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Category       │ Productivity                                                                                                            │
+  ├────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Extension Icon │ Already in zip (128x128)                                                                                                │
+  └────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  Detailed Description (paste this):
+  DealEval helps real estate professionals instantly evaluate investment properties by extracting listing data from major real estate websites.
+
+  SUPPORTED SITES:
+  - Zillow - Residential listings
+  - Realtor.com - Residential listings
+  - Redfin - Residential listings
+  - LoopNet - Commercial listings
+  - Crexi - Commercial listings
+  - Trulia - Residential listings
+  - CommercialCafe - Commercial listings
+
+  KEY FEATURES:
+  - One-click property data extraction from listing pages
+  - Multi-site search across all supported sites simultaneously
+  - Automatic data forwarding to DealEval web app for analysis
+  - Investment metrics: Cap Rate, Cash-on-Cash, IRR, DSCR, GRM
+  - Side-by-side property comparison
+  - PDF report generation with professional formatting
+  - 10-year financial projections
+
+  HOW IT WORKS:
+  1. Install the extension and navigate to any supported listing site
+  2. The extension automatically detects property listings
+  3. Click "Extract" to pull property data into DealEval
+  4. View instant investment analysis with key financial metrics
+  5. Compare multiple properties and export PDF reports
+
+  PRIVACY:
+  - No tracking or analytics
+  - Data stays between your browser and DealEval
+  - See our full privacy policy for details
+
+  DealEval is the fastest way for agents, investors, lenders, and brokers to evaluate real estate deals using institutional-grade financial metrics.
+
+  Tab 2: Screenshots (REQUIRED - you need to create these)
+
+  Chrome requires at least 1 screenshot (1280x800 or 640x400). Recommended: 3-5 screenshots.
+
+  Screenshots to take:
+  1. Popup UI — Show the extension popup with the Extract/Search tabs
+  2. Search Results — Show DealEval search page with scraped property cards
+  3. Comparison View — Show the comparison page with metrics table and charts
+  4. PDF Report — Show a generated comparison PDF
+  5. Dashboard — Show the enhanced dashboard with sorted properties
+
+  To take screenshots at the right resolution:
+  1. Open Chrome DevTools (F12)
+  2. Click the device toggle (Ctrl+Shift+M)
+  3. Set resolution to 1280x800
+  4. Take screenshot (Ctrl+Shift+P → "Capture screenshot")
+
+  Tab 3: Privacy
+
+  ┌────────────────────────────────────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                       Field                        │                                                     What to Enter                                                      │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Single Purpose                                     │ "Extracts real estate property data from listing websites for investment analysis"                                     │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Permission Justifications                          │                                                                                                                        │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ - activeTab                                        │ "Required to read property data from the currently active real estate listing page"                                    │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ - tabs                                             │ "Required to detect when the user navigates to a supported real estate listing site and trigger data extraction"       │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ - scripting                                        │ "Required to inject content scripts that read property details (price, address, sqft) from listing page DOM"           │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ - storage                                          │ "Required to save user preferences and temporarily cache extracted property data for display"                          │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ - notifications                                    │ "Required to notify the user when property data has been successfully extracted from a listing page"                   │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ - host_permissions (realtor.com, zillow.com, etc.) │ "Required to run content scripts on specific real estate listing websites to extract publicly available property data" │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ - host_permissions (localhost)                     │ "Required to communicate with the locally-running DealEval web application for real-time data transfer"                │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Data Usage                                         │ Select: "I do not sell or transfer user data to third parties"                                                         │
+  ├────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Privacy Policy URL                                 │ Host your PRIVACY_POLICY.md somewhere (GitHub Pages, your website) and paste the URL                                   │
+  └────────────────────────────────────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  Tab 4: Distribution
+
+  ┌────────────────┬───────────────┐
+  │     Field      │ What to Enter │
+  ├────────────────┼───────────────┤
+  │ Visibility     │ Public        │
+  ├────────────────┼───────────────┤
+  │ Distribution   │ All regions   │
+  ├────────────────┼───────────────┤
+  │ Mature Content │ No            │
+  └────────────────┴───────────────┘
+
+  Step 4: Submit for Review
+
+  1. Click "Submit for Review"
+  2. Google typically reviews within 1-3 business days
+  3. You'll get an email when approved or if changes are requested
+
+  Common Rejection Reasons & How to Avoid Them
+
+  ┌────────────────────────┬──────────────────────────────────────────────────────────────────┐
+  │         Reason         │                            Prevention                            │
+  ├────────────────────────┼──────────────────────────────────────────────────────────────────┤
+  │ Broad host permissions │ Each permission is justified (specific real estate domains only) │
+  ├────────────────────────┼──────────────────────────────────────────────────────────────────┤
+  │ Missing privacy policy │ Included in zip + you'll provide URL in form                     │
+  ├────────────────────────┼──────────────────────────────────────────────────────────────────┤
+  │ Missing single purpose │ Clearly stated: "extract property data for analysis"             │
+  ├────────────────────────┼──────────────────────────────────────────────────────────────────┤
+  │ Poor description       │ Detailed description provided above                              │
+  ├────────────────────────┼──────────────────────────────────────────────────────────────────┤
+  │ No screenshots         │ You must create 1-5 screenshots before submitting                │
+  ├────────────────────────┼──────────────────────────────────────────────────────────────────┤
+  │ Remote code execution  │ We don't use any remote scripts, eval(), or CDN libraries        │
+  └────────────────────────┴──────────────────────────────────────────────────────────────────┘
+
+  Step 5: After Approval
+
+  Once approved, your extension gets a Chrome Web Store URL like:
+  https://chrome.google.com/webstore/detail/dealeval-property-data-ex/[EXTENSION_ID]
+
+  You can then:
+  - Share this link with users
+  - Update the extension by uploading a new zip with a bumped version number
+  - View install analytics in the Developer Dashboard
+
+  Updating the Extension Later
+
+  1. Bump version in manifest.json (e.g., "1.0.0" → "1.1.0")
+  2. Run bash extension/build-extension.sh
+  3. Upload the new zip in Developer Dashboard → your extension → "Package" tab
+  4. Submit for review again

@@ -22,9 +22,14 @@
         }
       }
 
-      // Price
-      const priceMatch = pageText.match(/(?:price|asking)\s*[:.]?\s*\$?([\d,]+(?:\.\d+)?)/i);
-      if (priceMatch) data.price = parseFloat(priceMatch[1].replace(/,/g, ''));
+      // Price (handles $2.5M, $500K, and $2,500,000 formats)
+      const priceMatch = pageText.match(/(?:price|asking)\s*[:.]?\s*\$?\s*([\d,]+(?:\.\d+)?)\s*(M|K)?/i);
+      if (priceMatch) {
+        let price = parseFloat(priceMatch[1].replace(/,/g, ''));
+        if (priceMatch[2] && priceMatch[2].toUpperCase() === 'M') price *= 1000000;
+        else if (priceMatch[2] && priceMatch[2].toUpperCase() === 'K') price *= 1000;
+        data.price = price;
+      }
 
       // Cap rate
       const capMatch = pageText.match(/(?:cap\s*rate)\s*[:.]?\s*([\d.]+)%/i);

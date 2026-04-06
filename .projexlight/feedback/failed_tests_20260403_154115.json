@@ -1,0 +1,445 @@
+{
+  "type": "failed_tests",
+  "timestamp": "2026-04-03T15:41:15.548389",
+  "totalFailures": 14,
+  "instructions": [
+    {
+      "endpoint": "POST /api/properties",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/properties</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/properties\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/properties",
+        "requestBody": {
+          "address": "text_875396",
+          "purchase_price": "500000"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/properties</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"address\": \"text_875396\",\n  \"purchase_price\": \"500000\"\n}' \\\n  \"http://localhost:3000/api/properties\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/properties\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/financing",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/financing</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/financing\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/financing",
+        "requestBody": {
+          "property_id": "6dc11069-86d8-4b22-8780-bdc76e8f9ffe",
+          "loan_amount": "400000"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/financing</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"6dc11069-86d8-4b22-8780-bdc76e8f9ffe\",\n  \"loan_amount\": \"400000\"\n}' \\\n  \"http://localhost:3000/api/financing\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/financing\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/expenses",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/expenses</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/expenses\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/expenses",
+        "requestBody": {
+          "property_id": "1af234f3-5600-4021-84f2-c0563c798e99",
+          "property_tax": "5000"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/expenses</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"1af234f3-5600-4021-84f2-c0563c798e99\",\n  \"property_tax\": \"5000\"\n}' \\\n  \"http://localhost:3000/api/expenses\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/expenses\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/caprate",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/caprate</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/caprate\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/caprate",
+        "requestBody": {
+          "property_id": "b874e150-7c00-4081-9607-94c65bb19a6a",
+          "cap_rate": "7.5"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/caprate</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"b874e150-7c00-4081-9607-94c65bb19a6a\",\n  \"cap_rate\": \"7.5\"\n}' \\\n  \"http://localhost:3000/api/caprate\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/caprate\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/irr",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/irr</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/irr\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/irr",
+        "requestBody": {
+          "property_id": "933faf6b-8ac8-461d-a5fc-e6a63499a06f",
+          "irr": "12.5"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/irr</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"933faf6b-8ac8-461d-a5fc-e6a63499a06f\",\n  \"irr\": \"12.5\"\n}' \\\n  \"http://localhost:3000/api/irr\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/irr\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/cashflow",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/cashflow</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/cashflow\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/cashflow",
+        "requestBody": {
+          "property_id": "8cf11ff4-ae7d-4bd9-9229-332b1a10c2ab",
+          "cash_flow": "2500"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/cashflow</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"8cf11ff4-ae7d-4bd9-9229-332b1a10c2ab\",\n  \"cash_flow\": \"2500\"\n}' \\\n  \"http://localhost:3000/api/cashflow\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/cashflow\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/pdf/track-download",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/pdf/track-download</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/pdf/track-download\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/pdf/track-download",
+        "requestBody": {
+          "property_address": "text_875485"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/pdf/track-download</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_address\": \"text_875485\"\n}' \\\n  \"http://localhost:3000/api/pdf/track-download\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/pdf/track-download\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/saved-properties/save",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/saved-properties/save</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/saved-properties/save\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/saved-properties/save",
+        "requestBody": {
+          "property_data": {
+            "address": "{{dynamic:text}}",
+            "purchase_price": "{{static:500000}}"
+          },
+          "financing_data": {
+            "loan_amount": "{{static:400000}}",
+            "interest_rate": "{{static:6.5}}"
+          },
+          "expense_data": {
+            "property_tax": "{{static:12000}}",
+            "monthly_rental_income": "{{static:3500}}"
+          }
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/saved-properties/save</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_data\": {\n    \"address\": \"{{dynamic:text}}\",\n    \"purchase_price\": \"{{static:500000}}\"\n  },\n  \"financing_data\": {\n    \"loan_amount\": \"{{static:400000}}\",\n    \"interest_rate\": \"{{static:6.5}}\"\n  },\n  \"expense_data\": {\n    \"property_tax\": \"{{static:12000}}\",\n    \"monthly_rental_income\": \"{{static:3500}}\"\n  }\n}' \\\n  \"http://localhost:3000/api/saved-properties/save\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/saved-properties/save\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/projections",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/projections</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/projections\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/projections",
+        "requestBody": {
+          "property_id": "6ebf4213-de84-42a3-b34d-24effbe837c3",
+          "year": "1",
+          "rental_income": "36000"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/projections</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"6ebf4213-de84-42a3-b34d-24effbe837c3\",\n  \"year\": \"1\",\n  \"rental_income\": \"36000\"\n}' \\\n  \"http://localhost:3000/api/projections\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/projections\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/visualizations",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/visualizations</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/visualizations\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/visualizations",
+        "requestBody": {
+          "property_id": "b30cdaeb-64ed-4698-93cb-247eb36207f3",
+          "metric_name": "Cap Rate",
+          "value": "7.5"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/visualizations</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"b30cdaeb-64ed-4698-93cb-247eb36207f3\",\n  \"metric_name\": \"Cap Rate\",\n  \"value\": \"7.5\"\n}' \\\n  \"http://localhost:3000/api/visualizations\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/visualizations\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "POST /api/scenarios",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/scenarios</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/scenarios\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/scenarios",
+        "requestBody": {
+          "property_id": "dba14ecd-52d4-4b74-9a96-e0675fbf52af",
+          "scenario_type": "optimistic",
+          "comparison_value": "150000"
+        },
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/scenarios</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  POST \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  -d '{\n  \"property_id\": \"dba14ecd-52d4-4b74-9a96-e0675fbf52af\",\n  \"scenario_type\": \"optimistic\",\n  \"comparison_value\": \"150000\"\n}' \\\n  \"http://localhost:3000/api/scenarios\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/scenarios\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "GET /api/pdf/download-count",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/pdf/download-count</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/pdf/download-count\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/pdf/download-count",
+        "requestBody": null,
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/pdf/download-count</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  GET \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  \"http://localhost:3000/api/pdf/download-count\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/pdf/download-count\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "GET /api/saved-properties/my-properties",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/saved-properties/my-properties</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/saved-properties/my-properties\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/saved-properties/my-properties",
+        "requestBody": null,
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/saved-properties/my-properties</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  GET \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\n  \"http://localhost:3000/api/saved-properties/my-properties\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/saved-properties/my-properties\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    },
+    {
+      "endpoint": "GET /api/search",
+      "issue": "Test failed with status 404",
+      "errorMessage": "Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/search</pre>\n</body>\n</html>\n",
+      "suggestedFix": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/search\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+      "priority": "high",
+      "debug": {
+        "fullUrl": "http://localhost:3000/api/search",
+        "requestBody": null,
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/search</pre>\n</body>\n</html>\n",
+        "curlCommand": "curl \\\n  -X \\\n  GET \\\n  -H Content-Type: application/json \\\n  -H Accept: application/json \\\n  \"http://localhost:3000/api/search?city=Austin&state=TX&listedWithin=30\"",
+        "instructions": [
+          "Copy the curl command below to reproduce the request locally",
+          "Make sure your local server is running on the same port",
+          "Replace host.docker.internal with localhost if running outside Docker",
+          "Check the response body for detailed error information"
+        ]
+      },
+      "errorCategory": {
+        "category": "not_found",
+        "subcategory": "resource_missing",
+        "severity": "warning",
+        "title": "Resource Not Found",
+        "description": "The requested resource does not exist",
+        "guidance": "The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/search\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```",
+        "isExpected": false
+      }
+    }
+  ],
+  "llm_prompt": "# Failed API Tests - Fix Required\n\n14 API test(s) failed. Please review and fix the following issues:\n\n## Failed Tests:\n\n### Issue 1:\n- **endpoint**: POST /api/properties\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/properties</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/properties\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/properties', 'requestBody': {'address': 'text_875396', 'purchase_price': '500000'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/properties</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"address\": \"text_875396\",\\n  \"purchase_price\": \"500000\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/properties\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/properties\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 2:\n- **endpoint**: POST /api/financing\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/financing</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/financing\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/financing', 'requestBody': {'property_id': '6dc11069-86d8-4b22-8780-bdc76e8f9ffe', 'loan_amount': '400000'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/financing</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"6dc11069-86d8-4b22-8780-bdc76e8f9ffe\",\\n  \"loan_amount\": \"400000\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/financing\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/financing\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 3:\n- **endpoint**: POST /api/expenses\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/expenses</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/expenses\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/expenses', 'requestBody': {'property_id': '1af234f3-5600-4021-84f2-c0563c798e99', 'property_tax': '5000'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/expenses</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"1af234f3-5600-4021-84f2-c0563c798e99\",\\n  \"property_tax\": \"5000\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/expenses\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/expenses\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 4:\n- **endpoint**: POST /api/caprate\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/caprate</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/caprate\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/caprate', 'requestBody': {'property_id': 'b874e150-7c00-4081-9607-94c65bb19a6a', 'cap_rate': '7.5'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/caprate</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"b874e150-7c00-4081-9607-94c65bb19a6a\",\\n  \"cap_rate\": \"7.5\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/caprate\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/caprate\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 5:\n- **endpoint**: POST /api/irr\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/irr</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/irr\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/irr', 'requestBody': {'property_id': '933faf6b-8ac8-461d-a5fc-e6a63499a06f', 'irr': '12.5'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/irr</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"933faf6b-8ac8-461d-a5fc-e6a63499a06f\",\\n  \"irr\": \"12.5\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/irr\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/irr\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 6:\n- **endpoint**: POST /api/cashflow\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/cashflow</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/cashflow\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/cashflow', 'requestBody': {'property_id': '8cf11ff4-ae7d-4bd9-9229-332b1a10c2ab', 'cash_flow': '2500'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/cashflow</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"8cf11ff4-ae7d-4bd9-9229-332b1a10c2ab\",\\n  \"cash_flow\": \"2500\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/cashflow\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/cashflow\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 7:\n- **endpoint**: POST /api/pdf/track-download\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/pdf/track-download</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/pdf/track-download\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/pdf/track-download', 'requestBody': {'property_address': 'text_875485'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/pdf/track-download</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_address\": \"text_875485\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/pdf/track-download\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/pdf/track-download\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 8:\n- **endpoint**: POST /api/saved-properties/save\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/saved-properties/save</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/saved-properties/save\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/saved-properties/save', 'requestBody': {'property_data': {'address': '{{dynamic:text}}', 'purchase_price': '{{static:500000}}'}, 'financing_data': {'loan_amount': '{{static:400000}}', 'interest_rate': '{{static:6.5}}'}, 'expense_data': {'property_tax': '{{static:12000}}', 'monthly_rental_income': '{{static:3500}}'}}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/saved-properties/save</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_data\": {\\n    \"address\": \"{{dynamic:text}}\",\\n    \"purchase_price\": \"{{static:500000}}\"\\n  },\\n  \"financing_data\": {\\n    \"loan_amount\": \"{{static:400000}}\",\\n    \"interest_rate\": \"{{static:6.5}}\"\\n  },\\n  \"expense_data\": {\\n    \"property_tax\": \"{{static:12000}}\",\\n    \"monthly_rental_income\": \"{{static:3500}}\"\\n  }\\n}\\' \\\\\\n  \"http://localhost:3000/api/saved-properties/save\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/saved-properties/save\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 9:\n- **endpoint**: POST /api/projections\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/projections</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/projections\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/projections', 'requestBody': {'property_id': '6ebf4213-de84-42a3-b34d-24effbe837c3', 'year': '1', 'rental_income': '36000'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/projections</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"6ebf4213-de84-42a3-b34d-24effbe837c3\",\\n  \"year\": \"1\",\\n  \"rental_income\": \"36000\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/projections\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/projections\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 10:\n- **endpoint**: POST /api/visualizations\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/visualizations</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/visualizations\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/visualizations', 'requestBody': {'property_id': 'b30cdaeb-64ed-4698-93cb-247eb36207f3', 'metric_name': 'Cap Rate', 'value': '7.5'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/visualizations</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"b30cdaeb-64ed-4698-93cb-247eb36207f3\",\\n  \"metric_name\": \"Cap Rate\",\\n  \"value\": \"7.5\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/visualizations\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/visualizations\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 11:\n- **endpoint**: POST /api/scenarios\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/scenarios</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/scenarios\",\n  \"method\": \"POST\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/scenarios', 'requestBody': {'property_id': 'dba14ecd-52d4-4b74-9a96-e0675fbf52af', 'scenario_type': 'optimistic', 'comparison_value': '150000'}, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot POST /api/scenarios</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  POST \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  -d \\'{\\n  \"property_id\": \"dba14ecd-52d4-4b74-9a96-e0675fbf52af\",\\n  \"scenario_type\": \"optimistic\",\\n  \"comparison_value\": \"150000\"\\n}\\' \\\\\\n  \"http://localhost:3000/api/scenarios\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/scenarios\",\\n  \"method\": \"POST\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 12:\n- **endpoint**: GET /api/pdf/download-count\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/pdf/download-count</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/pdf/download-count\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/pdf/download-count', 'requestBody': None, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot GET /api/pdf/download-count</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  GET \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  \"http://localhost:3000/api/pdf/download-count\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/pdf/download-count\",\\n  \"method\": \"GET\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 13:\n- **endpoint**: GET /api/saved-properties/my-properties\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/saved-properties/my-properties</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/saved-properties/my-properties\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/saved-properties/my-properties', 'requestBody': None, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot GET /api/saved-properties/my-properties</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  GET \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  -H Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMWM3MGFlZS1iMmYxLTRhNTktYjIyMS04ZmM0OTZmN2E4ZmQiLCJlbWFpbCI6InRlc3R1c2VyXzg3NDk3MkBleGFtcGxlLmNvbSIsInBvb2xJbmRleCI6MSwiaWF0IjoxNzc1MjMwODc1LCJleHAiOjE3NzU4MzU2NzV9.M4AMNBWvGgJcFgPIfKzYQnWm5vRf5JTRnp6QXnUcfvE \\\\\\n  \"http://localhost:3000/api/saved-properties/my-properties\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/saved-properties/my-properties\",\\n  \"method\": \"GET\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n### Issue 14:\n- **endpoint**: GET /api/search\n- **issue**: Test failed with status 404\n- **errorMessage**: Status 404 - <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/search</pre>\n</body>\n</html>\n\n- **suggestedFix**: The endpoint or resource was not found.\n\n**Possible causes:**\n1. Resource hasn't been created yet (POST not run before GET)\n2. Incorrect ID in path parameter\n3. Resource was deleted\n4. Endpoint path is incorrect\n\n**Recommended actions:**\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\n2. Use {{cache:resource.id}} to capture and reuse created IDs\n3. Add dependsOn to enforce execution order\n\nExample fix:\n```json\n{\n  \"endpoint\": \"/api/search\",\n  \"method\": \"GET\",\n  \"dependsOn\": [\"POST /api/resource\"],\n  \"pathParams\": {\n    \"id\": \"{{cache:resource.id}}\"\n  }\n}\n```\n- **debug**: {'fullUrl': 'http://localhost:3000/api/search', 'requestBody': None, 'responseBody': '<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<meta charset=\"utf-8\">\\n<title>Error</title>\\n</head>\\n<body>\\n<pre>Cannot GET /api/search</pre>\\n</body>\\n</html>\\n', 'curlCommand': 'curl \\\\\\n  -X \\\\\\n  GET \\\\\\n  -H Content-Type: application/json \\\\\\n  -H Accept: application/json \\\\\\n  \"http://localhost:3000/api/search?city=Austin&state=TX&listedWithin=30\"', 'instructions': ['Copy the curl command below to reproduce the request locally', 'Make sure your local server is running on the same port', 'Replace host.docker.internal with localhost if running outside Docker', 'Check the response body for detailed error information']}\n- **errorCategory**: {'category': 'not_found', 'subcategory': 'resource_missing', 'severity': 'warning', 'title': 'Resource Not Found', 'description': 'The requested resource does not exist', 'guidance': 'The endpoint or resource was not found.\\n\\n**Possible causes:**\\n1. Resource hasn\\'t been created yet (POST not run before GET)\\n2. Incorrect ID in path parameter\\n3. Resource was deleted\\n4. Endpoint path is incorrect\\n\\n**Recommended actions:**\\n1. Ensure POST endpoint runs before GET/PUT/DELETE (use priority field)\\n2. Use {{cache:resource.id}} to capture and reuse created IDs\\n3. Add dependsOn to enforce execution order\\n\\nExample fix:\\n```json\\n{\\n  \"endpoint\": \"/api/search\",\\n  \"method\": \"GET\",\\n  \"dependsOn\": [\"POST /api/resource\"],\\n  \"pathParams\": {\\n    \"id\": \"{{cache:resource.id}}\"\\n  }\\n}\\n```', 'isExpected': False}\n\n## Instructions:\n1. Review each failed endpoint\n2. Check the error messages and status codes\n3. Implement the suggested fixes\n4. Re-run tests to verify fixes\n5. Ensure all tests pass before committing\n\n## Priority:\nHIGH - These failures may block deployment"
+}

@@ -12,7 +12,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const settings = await chrome.storage.sync.get(['apiUrl']);
   if (settings.apiUrl) apiUrl = settings.apiUrl;
 
-  document.getElementById('dashboard-link').href = `${apiUrl.replace(':3000', ':5173')}/dashboard`;
+  const appUrl = apiUrl.replace(':3000', ':5173');
+  document.getElementById('dashboard-link').href = `${appUrl}/dashboard`;
+  const openAppLink = document.getElementById('open-app-link');
+  if (openAppLink) openAppLink.href = `${appUrl}/login`;
 
   const { token } = await chrome.storage.local.get(['token']);
 
@@ -38,6 +41,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Initialize site checkboxes
   updateSiteCheckboxes();
+
+  // Auto-update popup when web app syncs token
+  chrome.storage.onChanged.addListener((changes) => {
+    if (changes.token) {
+      if (changes.token.newValue) {
+        showMainSection();
+        checkCurrentSite();
+      } else {
+        showAuthSection();
+      }
+    }
+  });
 });
 
 function showAuthSection() {

@@ -27,6 +27,8 @@ console.log('DealEval: Bridge script LOADED on', window.location.href);
     // Forward site search request to background worker
     if (event.data?.type === 'DEALEVAL_START_SITE_SEARCH') {
       console.log('DealEval: Forwarding START_SITE_SEARCH to background worker', event.data.urls?.length, 'urls');
+      // ACK back to React so it knows the bridge is alive and won't double-open tabs
+      window.postMessage({ type: 'DEALEVAL_BRIDGE_ACK' }, '*');
       safeChromeCall(() => {
         chrome.runtime.sendMessage({
           type: 'START_SITE_SEARCH',
@@ -36,9 +38,18 @@ console.log('DealEval: Bridge script LOADED on', window.location.href);
     }
   });
 
-  // Listen for results pushed from background worker
+  // Listen for results and status pushed from background worker
   safeChromeCall(() => {
     chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+      if (msg.type === 'SITE_SEARCH_BLOCKED') {
+        console.warn('DealEval: Sites blocked:', msg.data);
+        window.dispatchEvent(new CustomEvent('dealeval-site-blocked', {
+          detail: { sites: msg.data },
+        }));
+        sendResponse({ success: true });
+        return;
+      }
+
       if (msg.type === 'SITE_SEARCH_RESULTS') {
         try {
           const newResults = msg.data || [];

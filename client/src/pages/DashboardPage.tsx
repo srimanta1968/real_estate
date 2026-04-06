@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MetricsDashboard from '../components/visualization/MetricsDashboard';
+import AddToComparisonModal from '../components/common/AddToComparisonModal';
+import { useAuth } from '../context/AuthContext';
+import api from '../services/api';
 import { MetricCard, BarChartData } from '../types/visualization';
 
 export default function DashboardPage() {
@@ -9,6 +12,8 @@ export default function DashboardPage() {
   const [incomeBreakdown, setIncomeBreakdown] = useState<BarChartData[]>([]);
   const [expenseBreakdown, setExpenseBreakdown] = useState<BarChartData[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [showCompareModal, setShowCompareModal] = useState(false);
+  const [savedPropertyId, setSavedPropertyId] = useState('');
 
   useEffect(() => {
     try {
@@ -95,6 +100,24 @@ export default function DashboardPage() {
     }
   }, []);
 
+  const handleAddToComparison = async () => {
+    const propertyInfo = JSON.parse(sessionStorage.getItem('propertyInfo') || '{}');
+    const financingInfo = JSON.parse(sessionStorage.getItem('financingInfo') || '{}');
+    const expenseInfo = JSON.parse(sessionStorage.getItem('expenseInfo') || '{}');
+    try {
+      const res = await api.post('/saved-properties/save', {
+        property_name: propertyInfo.address || 'Untitled Property',
+        property_data: propertyInfo,
+        financing_data: financingInfo,
+        expense_data: expenseInfo,
+      });
+      setSavedPropertyId(res.data.data.savedProperty.id);
+      setShowCompareModal(true);
+    } catch {
+      alert('Please log in to add properties to comparison');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white shadow-sm">
@@ -153,6 +176,13 @@ export default function DashboardPage() {
               >
                 Compare Scenarios
               </button>
+              <button
+                type="button"
+                onClick={handleAddToComparison}
+                className="px-6 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700"
+              >
+                Add to Comparison
+              </button>
             </div>
           </div>
         ) : (
@@ -161,6 +191,13 @@ export default function DashboardPage() {
           </div>
         )}
       </main>
+
+      <AddToComparisonModal
+        isOpen={showCompareModal}
+        onClose={() => setShowCompareModal(false)}
+        savedPropertyId={savedPropertyId}
+        propertyAddress={JSON.parse(sessionStorage.getItem('propertyInfo') || '{}').address || 'Untitled Property'}
+      />
     </div>
   );
 }

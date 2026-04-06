@@ -51,12 +51,19 @@
     <div id="auth-section" style="display:none">
       <div class="status warning">
         <span class="dot yellow"></span>
-        Sign in to extract property data
+        Not connected
       </div>
-      <div class="login-form">
-        <input type="email" id="login-email" placeholder="Email address" />
-        <input type="password" id="login-password" placeholder="Password" />
-        <button class="btn btn-primary" id="login-btn">Sign In</button>
+      <div style="text-align:center;padding:8px 0;">
+        <p style="font-size:12px;color:#6b7280;margin-bottom:8px;">Log in to DealEval in your browser to auto-connect.</p>
+        <a href="" id="open-app-link" target="_blank" class="btn btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Open DealEval</a>
+      </div>
+      <div style="border-top:1px solid #e5e7eb;padding-top:12px;margin-top:12px;">
+        <p style="font-size:11px;color:#9ca3af;text-align:center;margin-bottom:8px;">Or sign in manually:</p>
+        <div class="login-form">
+          <input type="email" id="login-email" placeholder="Email address" />
+          <input type="password" id="login-password" placeholder="Password" />
+          <button class="btn btn-primary" id="login-btn">Sign In</button>
+        </div>
       </div>
     </div>
 

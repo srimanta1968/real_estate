@@ -250,38 +250,42 @@ const COMMERCIAL_SITES = {
     name: 'Crexi',
     hostname: 'crexi.com',
     /**
-     * Crexi URL format: /properties?state={ST}&propertyTypes={types}&priceMin={min}&priceMax={max}&listedWithin={days}
-     * All filters as query parameters
+     * Crexi URL format: /properties/{STATE}/{City_Name}/{PropertyType}
+     * Location and property type go in the path; city uses underscores for spaces.
+     * Crexi does NOT support query-param-based location filtering.
      */
-    buildSearchUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin }) {
-      const params = new URLSearchParams();
-
-      // Location
-      if (state) params.set('state', state);
-      if (city) params.set('city', city);
-      if (zip) params.set('zip', zip);
-
-      // Property type mapping to Crexi categories
+    buildSearchUrl({ city, state, zip, propertyType }) {
+      // Property type mapping to Crexi path slugs
       const typeMap = {
-        'Commercial': 'commercial',
-        'Office': 'office',
-        'Retail': 'retail',
-        'Industrial': 'industrial',
-        'Multi Family': 'multifamily',
-        'Land': 'land',
+        'Commercial': '',
+        'Office': 'Office',
+        'Retail': 'Retail',
+        'Industrial': 'Industrial',
+        'Multi Family': 'Multifamily',
+        'Land': 'Land',
       };
-      if (propertyType && typeMap[propertyType]) {
-        params.set('propertyTypes', typeMap[propertyType]);
+      const typePath = (propertyType && typeMap[propertyType]) || '';
+
+      // Build path: /properties/{STATE}/{City_Name}/{Type}
+      const segments = ['https://www.crexi.com/properties'];
+
+      if (state) {
+        segments.push(state.toUpperCase());
+
+        // City slug: replace spaces with underscores (e.g. "San Jose" → "San_Jose")
+        if (city) {
+          segments.push(city.replace(/\s+/g, '_'));
+        }
       }
 
-      // Price range
-      if (minPrice) params.set('priceMin', String(minPrice));
-      if (maxPrice) params.set('priceMax', String(maxPrice));
+      let url = segments.join('/');
 
-      // Listed within days
-      if (listedWithin) params.set('listedWithin', String(listedWithin));
+      // Append property type as final path segment
+      if (typePath) {
+        url += `/${typePath}`;
+      }
 
-      return `https://www.crexi.com/properties?${params.toString()}`;
+      return url;
     },
   },
 

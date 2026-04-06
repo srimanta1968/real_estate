@@ -7,10 +7,11 @@ interface AppLayoutProps {
 }
 
 const NAV_ITEMS = [
-  { path: '/dashboard', label: 'Dashboard', icon: '&#9633;' },
-  { path: '/search', label: 'Search Properties', icon: '&#128269;' },
-  { path: '/property/new', label: 'New Analysis', icon: '&#43;' },
-  { path: '/compare', label: 'Compare', icon: '&#8596;' },
+  { path: '/dashboard', label: 'Dashboard', icon: '&#9633;', requiresAuth: true },
+  { path: '/search', label: 'Search Properties', icon: '&#128269;', requiresAuth: false },
+  { path: '/property/new', label: 'New Analysis', icon: '&#43;', requiresAuth: true },
+  { path: '/compare', label: 'Compare', icon: '&#8596;', requiresAuth: true },
+  { path: '/pricing', label: 'Pricing', icon: '&#9734;', requiresAuth: false },
 ];
 
 export default function AppLayout({ children }: AppLayoutProps) {
@@ -25,6 +26,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
     navigate('/');
   };
 
+  const visibleNavItems = NAV_ITEMS.filter(item => !item.requiresAuth || isAuthenticated);
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar - Desktop */}
@@ -33,7 +36,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           <Link to="/" className="text-xl font-bold text-indigo-600">DealEval</Link>
         </div>
         <nav className="flex-1 px-4">
-          {NAV_ITEMS.map(item => (
+          {visibleNavItems.map(item => (
             <Link
               key={item.path}
               to={item.path}
@@ -56,11 +59,20 @@ export default function AppLayout({ children }: AppLayoutProps) {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate">{user?.email}</p>
-                <p className="text-xs text-gray-400">Free Tier</p>
+                <p className="text-xs text-gray-400">
+                  {(user?.subscription_tier || 'free').charAt(0).toUpperCase() + (user?.subscription_tier || 'free').slice(1)} Plan
+                  {user?.credits_remaining != null && ` · ${user.credits_remaining} credits`}
+                </p>
               </div>
             </div>
           </div>
         )}
+        <div className="p-4 border-t border-gray-100 text-center">
+          <p className="text-xs text-gray-400">
+            Powered by{' '}
+            <a href="https://projexlight.com" target="_blank" rel="noopener noreferrer" className="text-indigo-500 hover:text-indigo-700">ProjexLight</a>
+          </p>
+        </div>
       </aside>
 
       {/* Mobile sidebar overlay */}
@@ -73,7 +85,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
               <button onClick={() => setSidebarOpen(false)} className="text-gray-400 text-xl">&times;</button>
             </div>
             <nav className="px-4">
-              {NAV_ITEMS.map(item => (
+              {visibleNavItems.map(item => (
                 <Link
                   key={item.path}
                   to={item.path}
@@ -158,7 +170,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         {/* Mobile Bottom Nav */}
         <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-30">
           <div className="flex justify-around py-2">
-            {NAV_ITEMS.map(item => (
+            {visibleNavItems.map(item => (
               <Link
                 key={item.path}
                 to={item.path}

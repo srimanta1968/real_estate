@@ -68,4 +68,18 @@ export const config = {
     maxSavedProperties: parseInt(process.env.FREE_TIER_MAX_SAVED_PROPERTIES || '20', 10),
     maxComparisonSize: parseInt(process.env.FREE_TIER_MAX_COMPARISON_SIZE || '3', 10),
   },
+
+  // Stripe
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY || '',
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
+    prices: {
+      starter: process.env.STRIPE_PRICE_STARTER || '',
+      growth: process.env.STRIPE_PRICE_GROWTH || '',
+      premium: process.env.STRIPE_PRICE_PREMIUM || '',
+    },
+  },
+
+  // App URLs
+  clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
 };

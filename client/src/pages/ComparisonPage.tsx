@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import { exportComparisonPdf } from '../utils/exportComparisonPdf';
 
 interface ComparisonSet {
   id: string;
@@ -92,6 +93,7 @@ export default function ComparisonPage() {
   const [loading, setLoading] = useState(true);
   const [newSetName, setNewSetName] = useState('');
   const [creating, setCreating] = useState(false);
+  const [pdfError, setPdfError] = useState('');
 
   useEffect(() => {
     if (!isAuthenticated) { navigate('/login', { replace: true }); return; }
@@ -144,6 +146,44 @@ export default function ComparisonPage() {
 
   const computed = activeSet?.items.map(computeMetrics) || [];
 
+  const handleExportPdf = async () => {
+    if (!activeSet || computed.length < 2) return;
+    setPdfError('');
+
+    const propertyCount = activeSet.items.length;
+
+    try {
+      // Check credits first
+      const usageRes = await api.get('/subscriptions/usage');
+      const usage = usageRes.data.data;
+      if (usage.remaining < propertyCount) {
+        setPdfError(`Need ${propertyCount} credits (1 per property) but only ${usage.remaining} remaining. Upgrade at /pricing.`);
+        return;
+      }
+
+      // Generate PDF first — credit only deducted after successful download
+      exportComparisonPdf(activeSet.name, activeSet.items.map(i => ({
+        property_name: i.property_name,
+        property_data: i.property_data,
+        financing_data: i.financing_data,
+        expense_data: i.expense_data,
+      })));
+
+      // PDF generated successfully — now consume credits
+      const addresses = activeSet.items.map(i => i.property_data?.address || i.property_name || 'Unknown');
+      api.post('/subscriptions/consume-credits', {
+        creditsNeeded: propertyCount,
+        reportType: 'comparison',
+        propertyAddresses: addresses,
+        comparisonSetId: activeSet.id,
+      }).catch(() => {});
+    } catch (err: any) {
+      if (err.response?.status === 403) {
+        setPdfError(err.response.data.error);
+      }
+    }
+  };
+
   return (
     <div>
       <div className="max-w-7xl mx-auto">
@@ -162,8 +202,28 @@ export default function ComparisonPage() {
                 {sets.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
               </select>
             )}
+            <button
+              onClick={handleExportPdf}
+              className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 disabled:opacity-50"
+              disabled={!activeSet || computed.length < 2}
+            >
+              Export PDF
+            </button>
           </div>
         </div>
+
+        {/* Credit cost info for PDF */}
+        {activeSet && computed.length >= 2 && (
+          <p className="text-xs text-gray-400 text-right mb-2 -mt-6">
+            PDF export uses {computed.length} credit{computed.length > 1 ? 's' : ''} (1 per property)
+          </p>
+        )}
+
+        {pdfError && (
+          <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+            {pdfError} <a href="/pricing" className="font-semibold underline ml-1">Upgrade plan</a>
+          </div>
+        )}
 
         {/* Create New Set */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
@@ -186,8 +246,50 @@ export default function ComparisonPage() {
           </div>
         </div>
 
+        {/* Property Summary Cards */}
+        {activeSet && computed.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            {computed.map((c, idx) => {
+              const item = activeSet.items[idx];
+              const colors = ['bg-blue-500', 'bg-emerald-500', 'bg-purple-500', 'bg-amber-500', 'bg-rose-500'];
+              const color = colors[idx % colors.length];
+              return (
+                <div key={idx} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                  <div className={`${color} px-4 py-2`}>
+                    <h3 className="text-white font-semibold text-sm truncate">{c.address}</h3>
+                  </div>
+                  <div className="p-4">
+                    <p className="text-xl font-bold text-gray-900">{fmt(c.purchasePrice)}</p>
+                    <div className="mt-2 grid grid-cols-2 gap-2 text-xs text-gray-500">
+                      <span>Rent: {fmt(c.monthlyRent)}/mo</span>
+                      <span>Cap: {c.capRate.toFixed(1)}%</span>
+                      <span>CoC: {c.cashOnCash.toFixed(1)}%</span>
+                      <span>CF: {fmt(c.monthlyCF)}/mo</span>
+                    </div>
+                    {item.property_data?.city && (
+                      <p className="mt-2 text-xs text-gray-400">{item.property_data.city}, {item.property_data.state}</p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Cross-market banner */}
+        {activeSet && computed.length > 1 && (() => {
+          const cities = new Set(activeSet.items.map(i => i.property_data?.city).filter(Boolean));
+          return cities.size > 1 ? (
+            <div className="mb-6 px-4 py-3 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-2 text-sm text-amber-800">
+              <span>{'\ud83d\udccd'}</span>
+              <span>Cross-market comparison: Properties from {Array.from(cities).join(', ')}. Consider local market conditions when comparing.</span>
+            </div>
+          ) : null;
+        })()}
+
         {/* Comparison Table */}
         {activeSet && computed.length > 0 ? (
+          <>
           <div className="bg-white rounded-xl shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -228,6 +330,66 @@ export default function ComparisonPage() {
               </table>
             </div>
           </div>
+
+          {/* Visual Comparison Bar Charts */}
+          <div className="mt-8 space-y-8">
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Visual Comparison</h3>
+              {METRICS.map(metric => {
+                const values = computed.map(c => c[metric.key] as number);
+                const maxVal = Math.max(...values.map(Math.abs));
+                const best = metric.higherIsBetter ? Math.max(...values) : Math.min(...values);
+                const colors = ['bg-blue-500', 'bg-emerald-500', 'bg-purple-500', 'bg-amber-500', 'bg-rose-500'];
+                if (maxVal === 0) return null;
+                return (
+                  <div key={metric.key} className="mb-6">
+                    <p className="text-sm font-medium text-gray-700 mb-2">{metric.label}</p>
+                    <div className="space-y-2">
+                      {computed.map((c, idx) => {
+                        const val = c[metric.key] as number;
+                        const pct = maxVal > 0 ? (Math.abs(val) / maxVal) * 100 : 0;
+                        const isBest = val === best;
+                        return (
+                          <div key={idx} className="flex items-center gap-3">
+                            <span className="text-xs text-gray-500 w-24 truncate" title={c.address}>{c.address.split(',')[0]}</span>
+                            <div className="flex-1 bg-gray-100 rounded-full h-5 overflow-hidden">
+                              <div className={`h-full rounded-full ${colors[idx % colors.length]} ${isBest ? 'ring-2 ring-offset-1 ring-yellow-400' : ''}`} style={{ width: `${Math.max(pct, 2)}%` }} />
+                            </div>
+                            <span className={`text-xs font-semibold w-20 text-right ${isBest ? 'text-green-600' : 'text-gray-700'}`}>
+                              {metric.format(val)}{isBest ? ' \u2605' : ''}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Recommendation Summary */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Recommendation Summary</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {METRICS.map(metric => {
+                  const values = computed.map(c => c[metric.key] as number);
+                  const bestVal = metric.higherIsBetter ? Math.max(...values) : Math.min(...values);
+                  const bestIdx = values.indexOf(bestVal);
+                  if (bestIdx < 0) return null;
+                  return (
+                    <div key={metric.key} className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-lg">
+                      <span className="text-green-500 text-lg">{'\u2605'}</span>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">Best {metric.label}</p>
+                        <p className="text-xs text-gray-500">{computed[bestIdx].address.split(',')[0]} — {metric.format(bestVal)}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          </>
         ) : activeSet ? (
           <div className="bg-white rounded-xl shadow-sm p-12 text-center">
             <div className="text-gray-300 text-5xl mb-4">&#128200;</div>

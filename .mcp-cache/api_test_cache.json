@@ -1,116 +1,120 @@
 {
-  "last_test_run": "2026-03-20T23:33:57.346729",
+  "last_test_run": "2026-04-03T16:52:44.398664",
   "tested_apis": {
     "POST:/api/auth/register": {
-      "lastTested": "2026-03-20T23:33:57.346777",
+      "lastTested": "2026-04-03T16:52:44.398705",
       "fileHash": null
     },
     "POST:/api/auth/login": {
-      "lastTested": "2026-03-20T23:33:57.346774",
+      "lastTested": "2026-04-03T16:52:44.398702",
       "fileHash": null
     },
     "POST:/api/pdf/track-download": {
-      "lastTested": "2026-03-20T23:33:57.346810",
+      "lastTested": "2026-04-03T16:52:44.398736",
       "fileHash": null
     },
     "GET:/api/pdf/download-count": {
-      "lastTested": "2026-03-20T23:33:57.346807",
+      "lastTested": "2026-04-03T16:52:44.398734",
       "fileHash": null
     },
     "GET:/api/auth/google/callback": {
-      "lastTested": "2026-03-20T23:33:57.346754",
+      "lastTested": "2026-04-03T16:52:44.398685",
       "fileHash": null
     },
     "GET:/api/auth/linkedin/callback": {
-      "lastTested": "2026-03-20T23:33:57.346767",
+      "lastTested": "2026-04-03T16:52:44.398696",
       "fileHash": null
     },
     "GET:/api/auth/google": {
-      "lastTested": "2026-03-20T23:33:57.346763",
+      "lastTested": "2026-04-03T16:52:44.398692",
       "fileHash": null
     },
     "GET:/api/auth/linkedin": {
-      "lastTested": "2026-03-20T23:33:57.346770",
+      "lastTested": "2026-04-03T16:52:44.398699",
       "fileHash": null
     },
     "POST:/api/caprate": {
-      "lastTested": "2026-03-20T23:33:57.346780",
+      "lastTested": "2026-04-03T16:52:44.398708",
       "fileHash": null
     },
     "GET:/api/caprate/:id": {
-      "lastTested": "2026-03-20T23:33:57.346783",
+      "lastTested": "2026-04-03T16:52:44.398710",
       "fileHash": null
     },
     "POST:/api/cashflow": {
-      "lastTested": "2026-03-20T23:33:57.346785",
+      "lastTested": "2026-04-03T16:52:44.398713",
       "fileHash": null
     },
     "GET:/api/cashflow/:id": {
-      "lastTested": "2026-03-20T23:33:57.346789",
+      "lastTested": "2026-04-03T16:52:44.398716",
       "fileHash": null
     },
     "POST:/api/expenses": {
-      "lastTested": "2026-03-20T23:33:57.346792",
+      "lastTested": "2026-04-03T16:52:44.398719",
       "fileHash": null
     },
     "GET:/api/expenses/:id": {
-      "lastTested": "2026-03-20T23:33:57.346794",
+      "lastTested": "2026-04-03T16:52:44.398722",
       "fileHash": null
     },
     "POST:/api/financing": {
-      "lastTested": "2026-03-20T23:33:57.346798",
+      "lastTested": "2026-04-03T16:52:44.398725",
       "fileHash": null
     },
     "POST:/api/irr": {
-      "lastTested": "2026-03-20T23:33:57.346801",
+      "lastTested": "2026-04-03T16:52:44.398728",
       "fileHash": null
     },
     "GET:/api/irr/:id": {
-      "lastTested": "2026-03-20T23:33:57.346804",
+      "lastTested": "2026-04-03T16:52:44.398731",
       "fileHash": null
     },
     "POST:/api/projections": {
-      "lastTested": "2026-03-20T23:33:57.346812",
+      "lastTested": "2026-04-03T16:52:44.398739",
       "fileHash": null
     },
     "GET:/api/projections/:id": {
-      "lastTested": "2026-03-20T23:33:57.346815",
+      "lastTested": "2026-04-03T16:52:44.398742",
       "fileHash": null
     },
     "POST:/api/properties": {
-      "lastTested": "2026-03-20T23:33:57.346818",
+      "lastTested": "2026-04-03T16:52:44.398745",
       "fileHash": null
     },
     "GET:/api/properties/:id": {
-      "lastTested": "2026-03-20T23:33:57.346821",
+      "lastTested": "2026-04-03T16:52:44.398748",
       "fileHash": null
     },
     "GET:/api/saved-properties/:id/config": {
-      "lastTested": "2026-03-20T23:33:57.346824",
+      "lastTested": "2026-04-03T16:52:44.398751",
       "fileHash": null
     },
     "GET:/api/saved-properties/my-properties": {
-      "lastTested": "2026-03-20T23:33:57.346827",
+      "lastTested": "2026-04-03T16:52:44.398754",
       "fileHash": null
     },
     "POST:/api/saved-properties/save": {
-      "lastTested": "2026-03-20T23:33:57.346829",
+      "lastTested": "2026-04-03T16:52:44.398757",
       "fileHash": null
     },
     "POST:/api/scenarios": {
-      "lastTested": "2026-03-20T23:33:57.346832",
+      "lastTested": "2026-04-03T16:52:44.398759",
       "fileHash": null
     },
     "GET:/api/scenarios/:id": {
-      "lastTested": "2026-03-20T23:33:57.346835",
+      "lastTested": "2026-04-03T16:52:44.398762",
       "fileHash": null
     },
     "POST:/api/visualizations": {
-      "lastTested": "2026-03-20T23:33:57.346838",
+      "lastTested": "2026-04-03T16:52:44.398768",
       "fileHash": null
     },
     "GET:/api/visualizations/:id": {
-      "lastTested": "2026-03-20T23:33:57.346841",
+      "lastTested": "2026-04-03T16:52:44.398770",
+      "fileHash": null
+    },
+    "GET:/api/search": {
+      "lastTested": "2026-04-03T16:52:44.398765",
       "fileHash": null
     }
   }

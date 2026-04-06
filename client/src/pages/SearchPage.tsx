@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import AuthModal from '../components/auth/AuthModal';
+import AddToComparisonModal from '../components/common/AddToComparisonModal';
 
 interface SearchResult {
   id: string;
@@ -19,6 +20,8 @@ interface SearchResult {
   year_built: number | null;
   lot_size: number | null;
   tax_amount: number | null;
+  source_url?: string;
+  source?: string;
 }
 
 interface SearchResponse {
@@ -89,31 +92,35 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
     {
       name: 'LoopNet',
       buildUrl: (p) => {
+        // Open the base national search page — the content script will
+        // fill the location filter and submit, avoiding 404s from bad slugs.
         const tm: Record<string, string> = { 'Commercial': 'commercial-real-estate', 'Office': 'office-space', 'Retail': 'retail-space', 'Industrial': 'industrial-space', 'Multi Family': 'multifamily-housing', 'Shopping Center': 'shopping-centers', 'Hospitality': 'hotels-motels', 'Land': 'land' };
         const cat = tm[p.propertyType] || 'commercial-real-estate';
-        const loc = p.zip || [p.city, p.state].filter(Boolean).join('-').toLowerCase().replace(/\s+/g, '-');
-        let url = `https://www.loopnet.com/search/${cat}/${loc}/for-sale/`;
+        const url = `https://www.loopnet.com/search/${cat}/for-sale/`;
+        // Pass search criteria via hash — the content script reads it
+        const loc = p.zip || [p.city, p.state].filter(Boolean).join(', ');
         const q = new URLSearchParams();
         if (p.minPrice) q.set('PriceRangeMin', p.minPrice);
         if (p.maxPrice) q.set('PriceRangeMax', p.maxPrice);
         if (p.listedWithin) { const dm: Record<string, string> = { '5': '2', '10': '2', '30': '3', '90': '4' }; q.set('e', dm[p.listedWithin] || '3'); }
         const qs = q.toString();
-        return qs ? `${url}?${qs}` : url;
+        const base = qs ? `${url}?${qs}` : url;
+        return loc ? `${base}#dealeval-loc=${encodeURIComponent(loc)}` : base;
       },
     },
     {
       name: 'Crexi',
       buildUrl: (p) => {
-        const q = new URLSearchParams();
-        if (p.state) q.set('state', p.state);
-        if (p.city) q.set('city', p.city);
-        if (p.zip) q.set('zip', p.zip);
-        const tm: Record<string, string> = { 'Commercial': 'commercial', 'Office': 'office', 'Retail': 'retail', 'Industrial': 'industrial', 'Multi Family': 'multifamily', 'Land': 'land' };
-        if (p.propertyType && tm[p.propertyType]) q.set('propertyTypes', tm[p.propertyType]);
-        if (p.minPrice) q.set('priceMin', p.minPrice);
-        if (p.maxPrice) q.set('priceMax', p.maxPrice);
-        if (p.listedWithin) q.set('listedWithin', p.listedWithin);
-        return `https://www.crexi.com/properties?${q.toString()}`;
+        const tm: Record<string, string> = { 'Commercial': '', 'Office': 'Office', 'Retail': 'Retail', 'Industrial': 'Industrial', 'Multi Family': 'Multifamily', 'Land': 'Land' };
+        const typePath = (p.propertyType && tm[p.propertyType]) || '';
+        const segments = ['https://www.crexi.com/properties'];
+        if (p.state) {
+          segments.push(p.state.toUpperCase());
+          if (p.city) segments.push(p.city.replace(/\s+/g, '_'));
+        }
+        let url = segments.join('/');
+        if (typePath) url += `/${typePath}`;
+        return url;
       },
     },
   ],
@@ -143,8 +150,13 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [siteSearching, setSiteSearching] = useState(false);
   const [siteSearchStatus, setSiteSearchStatus] = useState('');
+  const [blockedSites, setBlockedSites] = useState<{ hostname: string; reason: string; message: string }[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
+  const [compareModalOpen, setCompareModalOpen] = useState(false);
+  const [comparePropertyId, setComparePropertyId] = useState('');
+  const [comparePropertyAddress, setComparePropertyAddress] = useState('');
+  const [compareSaving, setCompareSaving] = useState<string | null>(null);
 
   // Listen for external site search results from Chrome extension via localStorage
   useEffect(() => {
@@ -183,6 +195,8 @@ export default function SearchPage() {
             year_built: r.year_built != null ? Number(r.year_built) : null,
             lot_size: null,
             tax_amount: null,
+            source_url: (r.source_url as string) || undefined,
+            source: (r.source as string) || undefined,
           });
         }
         return unique;
@@ -204,10 +218,16 @@ export default function SearchPage() {
 
     const handler = () => loadSiteResults();
     window.addEventListener('dealeval-site-results', handler);
+    const blockedHandler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.sites) setBlockedSites(detail.sites);
+    };
+    window.addEventListener('dealeval-site-blocked', blockedHandler);
     const interval = setInterval(loadSiteResults, 2000);
 
     return () => {
       window.removeEventListener('dealeval-site-results', handler);
+      window.removeEventListener('dealeval-site-blocked', blockedHandler);
       clearInterval(interval);
     };
   }, [siteSearching]);
@@ -257,6 +277,7 @@ export default function SearchPage() {
     localStorage.removeItem('siteSearchResults');
     localStorage.removeItem('siteSearchResultsTimestamp');
     setSiteResults([]);
+    setBlockedSites([]);
     setSiteSearching(true);
     setSiteSearchStatus('Opening sites and scraping listings in background...');
 
@@ -269,14 +290,23 @@ export default function SearchPage() {
       hostname: site.name.toLowerCase().replace(/[^a-z.]/g, '') + '.com',
     }));
 
-    // Tell the extension background worker to open tabs + scrape
-    // The bridge content script forwards this to the service worker
-    // which opens tabs AND scrapes them after loading
+    // Tell the extension background worker to open tabs + scrape.
+    // Listen for an ACK from the bridge; if none arrives within 1.5s,
+    // fall back to window.open so tabs still open without the extension.
+    let bridgeAcked = false;
+    const ackHandler = (e: MessageEvent) => {
+      if (e.data?.type === 'DEALEVAL_BRIDGE_ACK') bridgeAcked = true;
+    };
+    window.addEventListener('message', ackHandler);
     window.postMessage({ type: 'DEALEVAL_START_SITE_SEARCH', urls }, '*');
 
-    // Also open tabs directly as fallback (if extension bridge is stale/unavailable)
-    // The background worker deduplicates so double-opening is harmless
-    urls.forEach(u => { window.open(u.url, '_blank'); });
+    setTimeout(() => {
+      window.removeEventListener('message', ackHandler);
+      if (!bridgeAcked) {
+        // Extension bridge not responding — open tabs directly as fallback
+        urls.forEach(u => { window.open(u.url, '_blank'); });
+      }
+    }, 1500);
 
     // Update status messages over time
     setTimeout(() => {
@@ -321,6 +351,29 @@ export default function SearchPage() {
     window.location.href = '/property/new';
   };
 
+  const handleCompare = async (result: SearchResult) => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
+    setCompareSaving(result.id);
+    try {
+      const res = await api.post('/saved-properties/save', {
+        property_name: result.address || 'Untitled Property',
+        property_data: { address: result.address, purchase_price: String(result.price) },
+        financing_data: {},
+        expense_data: result.tax_amount ? { property_tax: String(result.tax_amount) } : {},
+      });
+      setComparePropertyId(res.data.data.savedProperty.id);
+      setComparePropertyAddress(result.address);
+      setCompareModalOpen(true);
+    } catch {
+      alert('Failed to save property for comparison');
+    } finally {
+      setCompareSaving(null);
+    }
+  };
+
   return (
     <div>
       <div className="max-w-7xl mx-auto">
@@ -328,6 +381,26 @@ export default function SearchPage() {
           <h1 className="text-3xl font-bold text-gray-900">Search Properties</h1>
           <p className="mt-1 text-gray-500">Find properties by location, type, and price range</p>
         </div>
+
+        {/* Extension Install Banner */}
+        {siteResults.length === 0 && !siteSearching && (
+          <div className="mb-6 px-5 py-4 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-emerald-800">Install the DealEval Chrome Extension for best results</p>
+              <p className="text-xs text-emerald-600 mt-0.5">
+                The extension auto-extracts property data from Zillow, Realtor.com, LoopNet, Crexi, and more. Without it, search results are limited to our API sources.
+              </p>
+            </div>
+            <a
+              href="https://chrome.google.com/webstore"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700"
+            >
+              Get Extension
+            </a>
+          </div>
+        )}
 
         {/* Search Filters */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
@@ -453,6 +526,29 @@ export default function SearchPage() {
               )}
             </div>
           )}
+
+          {/* Blocked sites warning */}
+          {blockedSites.length > 0 && (
+            <div className="mt-3 bg-amber-50 border border-amber-300 rounded-lg px-4 py-3 text-sm text-amber-900">
+              <div className="flex items-start gap-2">
+                <svg className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                <div>
+                  <p className="font-semibold mb-1">Some sites blocked scraping:</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    {blockedSites.map((s, i) => (
+                      <li key={i}>
+                        <span className="font-medium">{s.hostname}</span> — {s.message}
+                        {s.reason === 'captcha' && (
+                          <span className="text-amber-700 ml-1">(tab opened — solve the CAPTCHA then click "Search on Sites" again)</span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <button onClick={() => setBlockedSites([])} className="ml-auto text-amber-400 hover:text-amber-600 flex-shrink-0">&times;</button>
+              </div>
+            </div>
+          )}
         </div>
 
         {error && (
@@ -537,12 +633,22 @@ export default function SearchPage() {
                         {result.property_type && <span>| {result.property_type}</span>}
                         {result.year_built && <span>| Built {result.year_built}</span>}
                       </div>
-                      <button
-                        onClick={() => handleEvaluate(result)}
-                        className="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors"
-                      >
-                        Evaluate Property
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleEvaluate(result)}
+                          className="flex-1 bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors"
+                        >
+                          Evaluate Property
+                        </button>
+                        <button
+                          onClick={() => handleCompare(result)}
+                          disabled={compareSaving === result.id}
+                          className="px-3 py-2 border border-indigo-300 text-indigo-600 rounded-lg text-sm font-semibold hover:bg-indigo-50 transition-colors disabled:opacity-50"
+                          title="Add to comparison set"
+                        >
+                          {compareSaving === result.id ? '...' : 'Compare'}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -633,15 +739,37 @@ export default function SearchPage() {
                         </div>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-400 mb-4">
+                    <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
                       {result.city && <span>{result.city}{result.state ? `, ${result.state}` : ''} {result.zip || ''}</span>}
                     </div>
-                    <button
-                      onClick={() => handleEvaluate(result)}
-                      className="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors"
-                    >
-                      Evaluate Property
-                    </button>
+                    {result.source_url && (
+                      <a
+                        href={result.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-800 font-medium mb-3 truncate"
+                        title={result.source_url}
+                      >
+                        <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        View on {result.source ? result.source.replace('.com', '').replace(/^\w/, (c: string) => c.toUpperCase()) + '.com' : 'Source'}
+                      </a>
+                    )}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEvaluate(result)}
+                        className="flex-1 bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors"
+                      >
+                        Evaluate Property
+                      </button>
+                      <button
+                        onClick={() => handleCompare(result)}
+                        disabled={compareSaving === result.id}
+                        className="px-3 py-2 border border-emerald-300 text-emerald-600 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors disabled:opacity-50"
+                        title="Add to comparison set"
+                      >
+                        {compareSaving === result.id ? '...' : 'Compare'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -649,6 +777,13 @@ export default function SearchPage() {
           </div>
         )}
       </div>
+
+      <AddToComparisonModal
+        isOpen={compareModalOpen}
+        onClose={() => setCompareModalOpen(false)}
+        savedPropertyId={comparePropertyId}
+        propertyAddress={comparePropertyAddress}
+      />
 
       <AuthModal
         isOpen={showAuthModal}

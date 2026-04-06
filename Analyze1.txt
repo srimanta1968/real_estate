@@ -1,0 +1,139 @@
+Product details
+For all languages
+
+Title from package
+
+DealEval - Property Data Extractor
+
+Summary from package
+
+Extract property data from NLS/MLS listing sites and send to DealEval for instant investment analysis.
+
+Description
+DealEval helps real estate professionals instantly evaluate investment properties by extracting listing data from major real estate websites.
+
+  SUPPORTED SITES:
+  • Zillow - Residential listings
+  • Realtor.com - Residential listings
+  • Redfin - Residential listings
+  • LoopNet - Commercial listings
+  • Crexi - Commercial listings
+  • Trulia - Residential listings
+  • CommercialCafe - Commercial listings
+
+  KEY FEATURES:
+  • One-click property data extraction from any supported listing page
+  • Multi-site search — search across all 7 sites simultaneously from one dashboard
+  • Auto-extract price, beds, baths, sqft, year built, lot size, and more
+  • Automatic data forwarding to DealEval web app for analysis
+  • No manual data entry — the extension reads the listing page for you
+
+  INVESTMENT METRICS CALCULATED:
+  • Cap Rate (Capitalization Rate)
+  • Cash-on-Cash Return
+  • Internal Rate of Return (IRR)
+  • Debt Service Coverage Ratio (DSCR)
+  • Gross Rent Multiplier (GRM)
+  • Monthly & Annual Cash Flow
+  • 10-Year Financial Projections
+  • Operating Expense Ratio
+
+  HOW IT WORKS:
+  1. Install the extension and sign in to your DealEval account
+  2. Browse any supported listing site (Zillow, Realtor.com, LoopNet, etc.)
+  3. Click the extension icon → "Extract" to pull property data automatically
+  4. View instant investment analysis with all key financial metrics on DealEval
+  5. Compare multiple properties side-by-side across cities and states
+  6. Export professional PDF reports to share with clients, partners, or lenders
+
+  WHO IT'S FOR:
+  • Real Estate Investors — evaluate deals in seconds, not hours
+  • Agents & Brokers — impress clients with professional investment reports
+  • Lenders — assess deal viability with DSCR and cash flow analysis
+  • Property Managers — analyze acquisition opportunities quickly
+
+  COMPARISON & REPORTS:
+  • Compare 2-10 properties side-by-side with visual charts
+  • Cross-market comparison with location context
+  • Professional PDF reports with metrics, charts, and recommendations
+  • Share comparison links with clients and partners
+
+  PRIVACY & SECURITY:
+  • No tracking or analytics — your data stays between your browser and DealEval
+  • Property data is only extracted from pages you actively visit
+  • No background scraping or data collection
+  • See our full privacy policy for details
+
+ FREE TO USE:
+  The extension is completely free to install and use for extracting property data.
+  PDF report generation and advanced comparison features are available through
+  DealEval subscription plans at https://dealeval.projexlight.com/pricing
+2,613/16,0002613 of 16000 characters entered
+Focus on explaining what the item does and why users should install it
+Category
+Tools
+Language
+English (United States)
+Specifying your item’s language will help users find it. If you support multiple languages, then you should internationalize your item. Learn more
+Graphic assets
+Store icon
+
+128x128 pixels
+
+Please ensure icon follows image guidelines
+
+Store icon
+Global assets
+Global promo video
+Youtube URL
+Enter a YouTube video URL. Example: https://www.youtube.com/watch?v=1234567890A
+
+Screenshots
+
+Up to a maximum of 5
+
+1280x800 or 640x400
+
+JPEG or 24-bit PNG (no alpha)
+
+At least one is required 
+
+Screenshot 1
+Screenshot 2
+Screenshot 3
+Screenshot 4
+Drop image here
+
+Small promo tile
+
+440x280 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Small promo tile
+Marquee promo tile
+
+1400x560 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Marquee promo tile
+Additional fields
+Official URL
+None
+Or Add a new site
+If your item is associated with a website that you own, select that website from the list. You can register as the owner for a site using Google Search Console.
+Homepage URL
+https://dealeval.projexlight.com
+32/2,04832 of 2048 characters entered
+Support URL
+Support URL
+0/2,0480 of 2048 characters entered
+Providing the URLs for description and support pages can improve your users’ experience and help make this item’s ratings and comments more meaningful.
+Mature content
+
+Examples of mature content include sexual and suggestive content, strong language, violence, or a focus on the consumption or sale of alcohol, tobacco, or drugs. Learn more
+Item support
+Visibility. 
+Change visibility here
+Turn your item support on or off on your store listing. Learn more

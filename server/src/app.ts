@@ -20,8 +20,13 @@ import listingRoutes from './routes/listing.routes';
 import extensionRoutes from './routes/extension.routes';
 import comparisonRoutes from './routes/comparison.routes';
 import dashboardRoutes from './routes/dashboard.routes';
+import subscriptionRoutes from './routes/subscription.routes';
+import webhookRoutes from './routes/webhook.routes';
 
 const app = express();
+
+// Stripe webhook needs raw body for signature verification — must come before json parser
+app.use('/api/webhooks/stripe', express.raw({ type: 'application/json' }));
 
 // Middleware
 app.use(helmet());
@@ -62,6 +67,8 @@ app.use('/api/listings', listingRoutes);
 app.use('/api/extension', extensionRoutes);
 app.use('/api/comparisons', comparisonRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/webhooks', webhookRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -71,8 +78,20 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 
 const PORT = config.port || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Run auto-migrations then start server
+import { runAutoMigrations } from './db/auto-migrate';
+
+runAutoMigrations()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('[auto-migrate] Migration failed, starting server anyway:', err.message);
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  });
 
 export default app;

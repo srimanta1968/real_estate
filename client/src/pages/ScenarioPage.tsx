@@ -42,32 +42,34 @@ export default function ScenarioPage() {
       return;
     }
 
-    // Check free tier
+    // Check credits BEFORE generating PDF
     try {
-      const countRes = await api.get('/pdf/download-count');
-      const rem = countRes.data.data.remaining;
-      if (rem <= 0) {
-        setTierError('You have used all 5 free PDF downloads. Please upgrade to continue.');
+      const usageRes = await api.get('/subscriptions/usage');
+      const usage = usageRes.data.data;
+      if (usage.remaining <= 0) {
+        setTierError(`You have used all your credits (${usage.tier} plan: ${usage.limit} credits). Upgrade at /pricing for more.`);
         return;
       }
 
-      // Track download
+      // Generate PDF first — only deduct credit if successful
+      exportScenarioPdf(scenariosRef.current, resultsRef.current);
+
+      // PDF generated and downloaded successfully — now consume credit
       const address = sessionStorage.getItem('propertyInfo') ? JSON.parse(sessionStorage.getItem('propertyInfo')!).address : '';
-      await api.post('/pdf/track-download', { property_address: address });
-      setRemaining(rem - 1);
+      api.post('/subscriptions/consume-credits', {
+        creditsNeeded: 1,
+        reportType: 'single',
+        propertyAddresses: [address],
+      }).then(() => setRemaining(usage.remaining - 1)).catch(() => {});
 
       // Auto-save property config
       const propertyData = JSON.parse(sessionStorage.getItem('propertyInfo') || '{}');
       const financingData = JSON.parse(sessionStorage.getItem('financingInfo') || '{}');
       const expenseData = JSON.parse(sessionStorage.getItem('expenseInfo') || '{}');
       api.post('/saved-properties/save', { property_data: propertyData, financing_data: financingData, expense_data: expenseData }).catch(() => {});
-
-      exportScenarioPdf(scenariosRef.current, resultsRef.current);
     } catch (err: any) {
       if (err.response?.status === 403) {
         setTierError(err.response.data.error);
-      } else {
-        exportScenarioPdf(scenariosRef.current, resultsRef.current);
       }
     }
   };
@@ -156,13 +158,13 @@ export default function ScenarioPage() {
             {tierError && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-6 text-center">
                 <p className="text-amber-800 font-medium">{tierError}</p>
-                <p className="text-amber-600 text-sm mt-1">Contact us to upgrade your plan.</p>
+                <a href="/pricing" className="text-emerald-600 hover:text-emerald-800 text-sm font-medium mt-1 inline-block">Upgrade your plan</a>
               </div>
             )}
 
             {isAuthenticated && remaining !== null && !tierError && (
               <p className="text-sm text-gray-400 text-center mt-6">
-                {remaining}/5 free PDF downloads remaining
+                {remaining} credit{remaining !== 1 ? 's' : ''} remaining this month
               </p>
             )}
 

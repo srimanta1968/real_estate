@@ -19,7 +19,7 @@
     "apiKey": "hBOLjE6hlaRJTtEkm+LZS7hKcWbW2jDk5rFnXr/J9oPByKQjKhI3K8gqdZZ2cLAIzdQDwm2+fVam65QJo2DEy63gFgN+aW++M1eQf8F0FF0A4W+g3HxOCIDCy8zM+gKNmgFKSQZigfMakpVeZ+Cl47sCpjbCqQrjzhyA0ZeqqFtLgh4cEQTykyJfRoI5ZXkeXipabKgJgn1hHQIh1w==",
     "sprintId": "693170cd-c22d-4f54-a75d-d85bb94fb547",
     "registeredAt": "2026-03-13T03:22:34.642078Z",
-    "lastSeen": "2026-03-17T04:19:00.465815Z",
+    "lastSeen": "2026-04-03T17:34:34.000774Z",
     "status": "active",
     "isOwner": false,
     "schemaSyncEnabled": true
@@ -44,7 +44,32 @@
     "apiKey": "e92eK1/7J6blfRQIKj1oBh7xXnqotSRV8D3eJPFPIN6lq5WfTHFliSc/Yk1ojz8uau3Q2VxkpL+GpFK1zcJgw3JDQPyZyHWWu4AtoEWrm10Rubs8KGXZD55/bled8LO+kw0v5FgpnklONI88TTKCOg/wa7pPJlLg/2GQQ2eVwj7QVcx7XSEYl+bNdbmFVtkLJIevEIZVY4rnY5uSiQ==",
     "sprintId": "efb66e3b-c05c-4cbf-b6f4-9fa4ad73c9aa",
     "registeredAt": "2026-03-15T01:27:28.009538Z",
-    "lastSeen": "2026-03-15T01:27:50.032098Z",
+    "lastSeen": "2026-04-03T17:42:11.257016Z",
+    "status": "active",
+    "isOwner": false,
+    "schemaSyncEnabled": false
+  },
+  "f761a5bd-d59a-4983-9225-e4521f2a3d90": {
+    "projectId": "f761a5bd-d59a-4983-9225-e4521f2a3d90",
+    "projectName": "test_projex2",
+    "projectPath": "/c/Users/srima/test_projex2",
+    "workspacePath": "/c/Users/srima/test_projex2",
+    "containerPath": "/projects/additional3",
+    "databaseName": "supply_chain_management_platform_with_inventory_db",
+    "databaseType": "postgresql",
+    "databaseConfig": {
+      "enabled": true,
+      "type": "postgresql",
+      "host": "host.docker.internal",
+      "port": 5432,
+      "database": "supply_chain_management_platform_with_inventory_db",
+      "username": "postgres",
+      "password": "postgres"
+    },
+    "apiKey": "dSAtdCavsAlzk/B+Ft3YmfIVekzlZKy6vD887V77KZC3qQSjeg2ylwA6QGZ5ZstESHe/BIGBMjtVeNuonDQQwaLX/be/G/jGzvoyzl8idFqXQrqmw8eoVrmu4UJH8Y0BvMXq2mv7zzXl5pLl4Ia6PkT7DzJoAEdfP8AKPuv1T5tcHxUno3O3nebf/ZaIDHDCLT1/NqDUfc/EtWkvsg==",
+    "sprintId": "360cff8b-6103-4089-9940-6e72d685ead3",
+    "registeredAt": "2026-04-04T04:01:14.252822Z",
+    "lastSeen": "2026-04-04T04:01:14.252833Z",
     "status": "active",
     "isOwner": false,
     "schemaSyncEnabled": false

@@ -43,8 +43,8 @@
           }
         }
 
-        // Price
-        const priceMatch = text.match(/\$([\d,]+)/);
+        // Price — comma-separated format naturally stops at non-comma boundaries
+        const priceMatch = text.match(/\$(\d{1,3}(?:,\d{3})*)/);
         if (priceMatch) listing.price = parseFloat(priceMatch[1].replace(/,/g, ''));
 
         // Beds/baths/sqft

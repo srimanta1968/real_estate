@@ -18,7 +18,12 @@
     "https://www.crexi.com/*",
     "https://www.trulia.com/*",
     "https://www.commercialcafe.com/*",
-    "http://localhost:*/*"
+    "http://localhost/*",
+    "http://localhost:3000/*",
+    "http://localhost:5173/*",
+    "http://localhost:5174/*",
+    "https://*.dealeval.com/*",
+    "https://*.projexlight.com/*"
   ],
   "action": {
     "default_popup": "src/popup/popup.html",
@@ -83,11 +88,14 @@
       "run_at": "document_idle"
     },
     {
-      "matches": ["http://localhost:*/*"],
+      "matches": ["http://localhost/*", "http://localhost:3000/*", "http://localhost:5173/*", "http://localhost:5174/*", "https://*.dealeval.com/*", "https://*.projexlight.com/*"],
       "js": ["src/content/dealeval-bridge.js"],
       "run_at": "document_idle"
     }
   ],
+  "externally_connectable": {
+    "matches": ["http://localhost/*", "http://localhost:3000/*", "http://localhost:5173/*", "http://localhost:5174/*", "https://*.dealeval.com/*", "https://*.projexlight.com/*"]
+  },
   "options_page": "src/options/options.html",
   "icons": {
     "16": "icons/icon16.png",

@@ -1,5 +1,5 @@
 {
-  "last_scan": "2026-03-25T20:43:43.124456Z",
+  "last_scan": "2026-04-04T05:02:17.350397Z",
   "scanned_files": {
     "client/package-lock.json": {
       "hash": "3a85a5a685078b9db0a77c72a8db33591b8ab0bccce6a38a766ead4dc3de6355",
@@ -16,11 +16,11 @@
       "linesOfCode": 32
     },
     "client/src/App.tsx": {
-      "hash": "f1fabba4a7295c7bf96f69fa98e157baf52ed31817716b895b761417f66831f2",
+      "hash": "151414cc97d49e39b03f610feec80e4eab6544fdd034c63a796927b288b26f8c",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:30:14.348218Z",
-      "linesOfCode": 39
+      "timestamp": "2026-03-25T20:49:18.949638Z",
+      "linesOfCode": 50
     },
     "client/src/components/property/PropertyInfoForm.tsx": {
       "hash": "c699b20f1d5161b9f2fb9fb5fdefbeca18cc7ae75440785800961d62e4c78523",
@@ -37,11 +37,11 @@
       "linesOfCode": 12
     },
     "client/src/pages/HomePage.tsx": {
-      "hash": "fdc2a06289886425bec47aa77e788fe67e8f2d4f5e1c8771285c12bab3644043",
+      "hash": "d811e2398fd6296682f3f436f7a877d4183ac58d573d780223a1606aede93618",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T03:55:10.760940Z",
-      "linesOfCode": 135
+      "timestamp": "2026-03-25T20:49:20.717755Z",
+      "linesOfCode": 126
     },
     "client/src/pages/LoginPage.tsx": {
       "hash": "4c9b8ce295b974603ed171e4c93984aa3d2809ade140682b7efb1c4e80a32acc",
@@ -51,11 +51,11 @@
       "linesOfCode": 114
     },
     "client/src/pages/PropertyInfoPage.tsx": {
-      "hash": "5e2ec83841c9d46f46fdc1f3dcf9a204a2d96ad0ee8a6f7dad1c2e311a8c1ea1",
+      "hash": "93fda55f464707d707debef3da37bc388b5331f3c412dd5f31d0131be8c6745b",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T03:55:11.516032Z",
-      "linesOfCode": 46
+      "timestamp": "2026-03-26T00:51:58.385266Z",
+      "linesOfCode": 44
     },
     "client/src/pages/RegisterPage.tsx": {
       "hash": "2c94b3b310d0afb0324c0a2dde36629478c30d02cb54398435569ce2aec97888",
@@ -140,7 +140,7 @@
       "linesOfCode": 34
     },
     "server/src/app.ts": {
-      "hash": "c184f6a921acef0e2f7e0dbb403f1f79c4591111bdb960562b8331abc118a37e",
+      "hash": "1b9e0bf9f53bb8d13c9d3f4fe4a311b3b97e36a9cfde757d4d7b70386c3f69fa",
       "compliance": 95,
       "violations": [
         {
@@ -156,15 +156,15 @@
           "filePath": "server/src/app.ts"
         }
       ],
-      "timestamp": "2026-03-14T01:30:18.666227Z",
-      "linesOfCode": 56
+      "timestamp": "2026-03-25T20:49:21.956942Z",
+      "linesOfCode": 66
     },
     "server/src/controllers/auth.controller.ts": {
-      "hash": "35060677de0e47bd2a42c951647231202dd6b09403534ae0901f59b53a550152",
+      "hash": "ba3b3c9d36e5be67044e63aa965bd655dfc29b8b155b5d5b27c86247b70a7017",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-13T03:55:12.495502Z",
-      "linesOfCode": 62
+      "timestamp": "2026-03-25T20:49:22.003695Z",
+      "linesOfCode": 65
     },
     "server/src/middleware/auth.middleware.ts": {
       "hash": "9679ea67d59146d9a5d9eab34910d009f03a6b8ba53b3712673ab193d907017b",
@@ -174,7 +174,7 @@
       "linesOfCode": 28
     },
     "server/src/routes/auth.routes.ts": {
-      "hash": "a75e638f7951d26eab5cb20e66902863d2e37210c4d1e9a42f96ee40bb9cf493",
+      "hash": "18fd5b97b392873fe8c3b44369ff92868372b9a7c87e9ce559ae1bf94fa0fb3d",
       "compliance": 80,
       "violations": [
         {
@@ -202,11 +202,11 @@
           "filePath": "server/src/routes/auth.routes.ts"
         }
       ],
-      "timestamp": "2026-03-14T01:30:18.817841Z",
+      "timestamp": "2026-03-25T20:49:22.126097Z",
       "linesOfCode": 16
     },
     "server/src/services/auth.service.ts": {
-      "hash": "5706fae48b7a7f99c0e65786cf3491d6b2c5f228ba0659552a0a4cd69f938158",
+      "hash": "41166c2d0d2d7e137ad470ea803ecb0c7767da9826c962438648b192407e21b9",
       "compliance": 75,
       "violations": [
         {
@@ -222,8 +222,8 @@
           "filePath": "server/src/services/auth.service.ts"
         }
       ],
-      "timestamp": "2026-03-14T01:30:22.711997Z",
-      "linesOfCode": 202
+      "timestamp": "2026-03-25T20:49:31.453401Z",
+      "linesOfCode": 207
     },
     "server/src/services/data.service.ts": {
       "hash": "144aa6ec0ce35a23cb6438f8f33cbe539a9d17323c489e593915a5a0fddaa097",
@@ -246,18 +246,18 @@
       "linesOfCode": 135
     },
     "tests/api_definitions/auth/login.json": {
-      "hash": "b515da94b82f29f18b431425dc1f48385d05617f4e3f86df68865e228bc94fef",
+      "hash": "1685d49243a78b3cd16e8b93b8a8f521b1a1dc554d4da85f24e355440086fd26",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:57:17.595427Z",
+      "timestamp": "2026-03-25T20:49:31.513872Z",
       "linesOfCode": 27
     },
     "tests/api_definitions/auth/register.json": {
-      "hash": "da1234f0c7f49c936a2d660de806a69fb63f76cfe71240895f6110b1f98307d6",
+      "hash": "c29ce1178c782aa56b1af457a98ea8067c399e88a97939d78cb04700c797880b",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:57:17.613927Z",
-      "linesOfCode": 32
+      "timestamp": "2026-03-25T20:49:31.533418Z",
+      "linesOfCode": 36
     },
     "client/src/components/financing/FinancingForm.tsx": {
       "hash": "3c0f4599f3e04557f5f959700b6a831e2f3c2dc2e77660b8acc6f805f79896d0",
@@ -886,18 +886,18 @@
       "linesOfCode": 30
     },
     ".claude/settings.local.json": {
-      "hash": "7e858a1d75edc475101beed7a99f06cc8434eb816a6925aa68d7e8376ed57bc1",
+      "hash": "a71accef27b52f6653c9c51f81c362ddc1bccf54d9129cf57783c372ca233a1c",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:38:29.192610Z",
-      "linesOfCode": 28
+      "timestamp": "2026-03-25T20:49:18.295985Z",
+      "linesOfCode": 39
     },
     ".mcp-cache/pre_commit_cache.json": {
-      "hash": "6b39c1aabf5a336e4586409073bd1e7e929d212d007489e78b43852375331782",
+      "hash": "244fd8219c3d525a761a81ce0b6c7c1a03f3fb8818b1f78831fd1ccbf6648c72",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:57:17.557716Z",
-      "linesOfCode": 1387
+      "timestamp": "2026-03-25T20:49:18.889553Z",
+      "linesOfCode": 1429
     },
     ".mcp-cache/violations_latest.json": {
       "hash": "912a1e56530442dd03071c84c2064f3e48f51d2809293f2cca7dd922bdc1065a",
@@ -1121,7 +1121,7 @@
       "linesOfCode": 13
     },
     "server/src/config/env.ts": {
-      "hash": "fb5c9a6b6b1166b7bf37d1155213a32e2cc7163824b1b3fdf5b1f5300c34f162",
+      "hash": "a2142ec7d7dc2e9c6f4c02ee4584ee81d91f28f97669b2eb27ed35db2d6470eb",
       "compliance": 95,
       "violations": [
         {
@@ -1137,8 +1137,8 @@
           "filePath": "server/src/config/env.ts"
         }
       ],
-      "timestamp": "2026-03-14T01:30:18.704375Z",
-      "linesOfCode": 43
+      "timestamp": "2026-03-25T20:49:21.981425Z",
+      "linesOfCode": 52
     },
     "server/src/controllers/oauth.controller.ts": {
       "hash": "eff6596e6ddbbeacebddc3d0c8ad1e30c54657d8562ed85ff271d523d120295c",
@@ -1162,7 +1162,7 @@
       "linesOfCode": 86
     },
     "server/src/routes/pdf.routes.ts": {
-      "hash": "d6d72b2bca69c1d0dcd5433d40dfee5e362aa2e728564e859567a302602447f8",
+      "hash": "bf456b60c10729c06779453886f71b5fbe47d467e40035403ee518ffefca7558",
       "compliance": 80,
       "violations": [
         {
@@ -1190,11 +1190,11 @@
           "filePath": "server/src/routes/pdf.routes.ts"
         }
       ],
-      "timestamp": "2026-03-14T01:30:20.950118Z",
-      "linesOfCode": 11
+      "timestamp": "2026-03-25T20:49:28.298051Z",
+      "linesOfCode": 7
     },
     "server/src/routes/savedProperty.routes.ts": {
-      "hash": "3c68e07acbbdbe771595b2b3a82ad405dbb96316941220c0c92e87f2b74f8622",
+      "hash": "61bf025727226dba747c1c25b42e39bf48e2964e9a48442e92887af4b772161d",
       "compliance": 80,
       "violations": [
         {
@@ -1222,8 +1222,8 @@
           "filePath": "server/src/routes/savedProperty.routes.ts"
         }
       ],
-      "timestamp": "2026-03-14T01:30:21.679537Z",
-      "linesOfCode": 14
+      "timestamp": "2026-03-25T20:49:29.048911Z",
+      "linesOfCode": 8
     },
     "server/src/services/pdf.service.ts": {
       "hash": "21a2ca87877ebc3893abd6876dc1680274a0f7260ff35375e7d43b3c461edeb4",
@@ -1317,10 +1317,10 @@
       "linesOfCode": 186
     },
     ".mcp-cache/api_test_cache.json": {
-      "hash": "3a664129f594222176a53956569738c97bb278b4391ab12f58362361e4a71565",
+      "hash": "5db5a73784bf427ff9901336a632691c7b5743e5621a9c61ff5283b839a119bf",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-14T01:57:17.532273Z",
+      "timestamp": "2026-03-25T20:49:18.341462Z",
       "linesOfCode": 117
     },
     ".mcp-cache/violations_report_20260314_013036.json": {
@@ -1352,58 +1352,393 @@
       "linesOfCode": 30
     },
     "client/src/pages/SearchPage.tsx": {
-      "hash": "145422b90ad2ff68bbabb654e5b97371eab9cb9c87c26fb4e5b30c379ff1c7df",
+      "hash": "ab2b86c43f74fbd67460b0179fa6abc9e2338eddddaa055b1000d86e5d7d7f32",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-25T20:37:17.611169Z",
-      "linesOfCode": 340
+      "timestamp": "2026-03-26T00:32:51.663210Z",
+      "linesOfCode": 603
     },
     "extension/src/lib/site-search-urls.js": {
-      "hash": "7f2a7907b3dc608e9919cf1ccf1902fe04898dfd87b2335640a708379b9e8093",
+      "hash": "3c4b10155b73e8f692aad0f34a3a998a34806a527342141ee7bcf04c10644939",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-25T20:39:08.809432Z",
-      "linesOfCode": 186
+      "timestamp": "2026-03-25T23:53:37.986294Z",
+      "linesOfCode": 303
     },
     "extension/src/popup/popup.js": {
-      "hash": "30436f19017a212e8f2a9496451f1198aa47971db113408d7ed04b98b25f50d0",
+      "hash": "7ad470f59b0b043a25a487c1dbf53d626f1ce50e2a815ed526b58f1db3c06942",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-25T20:41:24.201584Z",
-      "linesOfCode": 271
+      "timestamp": "2026-03-26T00:18:21.758469Z",
+      "linesOfCode": 286
     },
     "extension/manifest.json": {
-      "hash": "46d8d1a18a326bc74d3d1fcad433008e07c78dc795399f8a4a2e2f5a21075897",
+      "hash": "acdf22546ab1c2c231778db06b16c8d1496d0b71b9470dcd6904a362d84b3aa9",
       "compliance": 100,
       "violations": [],
-      "timestamp": "2026-03-25T20:43:31.921014Z",
+      "timestamp": "2026-03-25T23:16:04.644155Z",
+      "linesOfCode": 97
+    },
+    ".mcp-cache/component_scan_cache.json": {
+      "hash": "0caa9c52c387ddc26529262057aefaf15ca7ca2f45cc26f90dd7a22fc7a36947",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:18.385720Z",
+      "linesOfCode": 9
+    },
+    "client/src/components/layout/AppLayout.tsx": {
+      "hash": "ad22ce1978f95634d88889b1fab23fa5782881746fa14276623cc993d622bd26",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:19.298877Z",
+      "linesOfCode": 169
+    },
+    "client/src/components/layout/LayoutWrapper.tsx": {
+      "hash": "d8a514f1b85e00eeeefc427e71e54cc4954451fc9b94d3eeeb804b29c1d08942",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:19.652370Z",
+      "linesOfCode": 9
+    },
+    "client/src/pages/ComparisonPage.tsx": {
+      "hash": "ec47d09a2064a4da780a21ce9fe52eeac8c7bd4c76661f8f8e71ca7075410f24",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:20.002802Z",
+      "linesOfCode": 227
+    },
+    "client/src/pages/EnhancedDashboardPage.tsx": {
+      "hash": "bb2ebcace69075b1a2050c966ed7f08ec18d21f8756ca9fc456edce247b5f07b",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:20.363245Z",
+      "linesOfCode": 188
+    },
+    "client/src/pages/ListingDetailPage.tsx": {
+      "hash": "60266b5d93915f7c41e4cd3422b81513fa0b8370387efdd6a14b502f215a1598",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.094196Z",
+      "linesOfCode": 188
+    },
+    "docs/Sample_crexi.json": {
+      "hash": "7587eb54553c45adc31670dc53640c87f68d539d76d953e7f4b5e7f8ae22d0a2",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.808222Z",
+      "linesOfCode": 104
+    },
+    "docs/Sample_tinyfish_loopnet.json": {
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.821518Z",
+      "linesOfCode": 0
+    },
+    "extension/src/background/service-worker.js": {
+      "hash": "d7658ed24ca9b722e4f3a25da7e2cd23629c6d647199477cbaa5576b0c36d1a6",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-26T00:41:07.567494Z",
+      "linesOfCode": 295
+    },
+    "extension/src/content/crexi.js": {
+      "hash": "53176993229e26360e9ff4c88ebcaf3343c3fb6f9e134f445730954e47f2ac2c",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.854446Z",
+      "linesOfCode": 45
+    },
+    "extension/src/content/fallback.js": {
+      "hash": "fa175612ace3532cd63cda3b1101c78a1befb8913f987fed07e07ad340166958",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.871741Z",
+      "linesOfCode": 60
+    },
+    "extension/src/content/loopnet.js": {
+      "hash": "835973dc91797b40fd7bfaa6a160bfc68fb0a14b42cd574c298f7806dee2a3cf",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.889154Z",
+      "linesOfCode": 44
+    },
+    "extension/src/content/realtor.js": {
+      "hash": "937ebde39ea4186b9bc5a49aba6be049d789dd143f022dfe24b1b37c462a72de",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.906562Z",
+      "linesOfCode": 50
+    },
+    "extension/src/content/zillow.js": {
+      "hash": "58b86ac1226f9bdd83de8a01f01c751c4e9fe81a0a455b58431d22b028ba1bf1",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:21.923111Z",
+      "linesOfCode": 51
+    },
+    "server/src/controllers/comparison.controller.ts": {
+      "hash": "7577166c2f4a9d1cf67fa02954e786dca3a3e8cc5a6a306bab6ea4f1ab67e443",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:22.029781Z",
+      "linesOfCode": 135
+    },
+    "server/src/controllers/dashboard.controller.ts": {
+      "hash": "3e5fda9d212fad9fde8930ab398488aaff729d999359ffe4e92999ae2324bf64",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:22.053133Z",
+      "linesOfCode": 26
+    },
+    "server/src/controllers/extension.controller.ts": {
+      "hash": "51f54cb12662100b1a7aae6e640c5d43e6833b0b9a35c5ebdb332b21a5c0126c",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:22.077411Z",
+      "linesOfCode": 41
+    },
+    "server/src/controllers/listing.controller.ts": {
+      "hash": "3777b0b781b856c4d58048f7c4f00c9da6590275419bf9468a8153cc1916b8ff",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:22.102700Z",
+      "linesOfCode": 43
+    },
+    "server/src/routes/comparison.routes.ts": {
+      "hash": "25b7242e8a79662c924300dc275b66cb23a168898cc16b4ccdc80210630a19cd",
+      "compliance": 80,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/comparison.routes.ts"
+        },
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-02",
+          "description": "API JSON definition not found - create it first",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/comparison.routes.ts"
+        }
+      ],
+      "timestamp": "2026-03-25T20:49:24.180015Z",
+      "linesOfCode": 13
+    },
+    "server/src/routes/dashboard.routes.ts": {
+      "hash": "3323e3b9e1c46223c43669ed9f5159e9e03f4ee2d9475bc113809a680230f58a",
+      "compliance": 80,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/dashboard.routes.ts"
+        },
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-02",
+          "description": "API JSON definition not found - create it first",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/dashboard.routes.ts"
+        }
+      ],
+      "timestamp": "2026-03-25T20:49:26.863303Z",
+      "linesOfCode": 6
+    },
+    "server/src/routes/extension.routes.ts": {
+      "hash": "ed645c019d7327f5c800c341326811b3f037bc2bae71133b3194077259fa68cb",
+      "compliance": 80,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/extension.routes.ts"
+        },
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-02",
+          "description": "API JSON definition not found - create it first",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/extension.routes.ts"
+        }
+      ],
+      "timestamp": "2026-03-25T20:49:27.224825Z",
+      "linesOfCode": 6
+    },
+    "server/src/routes/listing.routes.ts": {
+      "hash": "0bcd709e589e2f110c3ad5af05f92300fbaec3d23ceb17300845d6ccf5172c7d",
+      "compliance": 80,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/listing.routes.ts"
+        },
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-02",
+          "description": "API JSON definition not found - create it first",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/listing.routes.ts"
+        }
+      ],
+      "timestamp": "2026-03-25T20:49:27.596152Z",
+      "linesOfCode": 7
+    },
+    "server/src/routes/search.routes.ts": {
+      "hash": "b147d12323cd3a1ffcc24bb72286886400b6e669d8e27f5eed4beabbcb97010c",
+      "compliance": 80,
+      "violations": [
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-05",
+          "description": "Missing TypeScript types/interfaces",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/search.routes.ts"
+        },
+        {
+          "line": 0,
+          "severity": "minor",
+          "category": "general",
+          "rule": "SC-02",
+          "description": "API JSON definition not found - create it first",
+          "currentCode": "",
+          "autoFixable": false,
+          "confidence": 90,
+          "source": "local_rules",
+          "filePath": "server/src/routes/search.routes.ts"
+        }
+      ],
+      "timestamp": "2026-03-25T20:49:30.077998Z",
+      "linesOfCode": 9
+    },
+    "server/src/services/comparison.service.ts": {
+      "hash": "b37445f1d911c48a9ef2d8bbde0887b11434714436ba65f6bf2df12607c1a00a",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:31.474307Z",
+      "linesOfCode": 191
+    },
+    "server/src/services/dashboard.service.ts": {
+      "hash": "e2e98da008fb32230907eadd03c3d3ca5e76dc4a874c6b608592910f9269ba75",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T20:49:31.497055Z",
+      "linesOfCode": 49
+    },
+    "extension/src/content/crexi-search.js": {
+      "hash": "20f8279efb4d27160432c66c2503adcfff3664f7fd4e5622e4226f42ba90a9c8",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T23:07:44.843814Z",
+      "linesOfCode": 100
+    },
+    "extension/src/content/dealeval-bridge.js": {
+      "hash": "b87aeeca1e30b3b8c96c4405cae1c3159904c1f8c75c33784e86a8a2513317f2",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-26T00:41:07.583149Z",
+      "linesOfCode": 62
+    },
+    "extension/src/content/loopnet-search.js": {
+      "hash": "59807bed69db0fa0651ef4d6d51c99f1bd797f742c167e41d188ac38bdaac2fd",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T23:07:44.880019Z",
+      "linesOfCode": 100
+    },
+    "extension/src/content/realtor-search.js": {
+      "hash": "ac034b886e52516efb2685f91b490b9e2bd18cc8ec98814705f0f25b20e2de52",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T22:56:40.123922Z",
+      "linesOfCode": 86
+    },
+    "extension/src/content/zillow-search.js": {
+      "hash": "0fe0d8c73d048c809e899a5ad65ebec06397a6e014b3417310e06abfd9ebf44e",
+      "compliance": 100,
+      "violations": [],
+      "timestamp": "2026-03-25T22:56:40.139050Z",
       "linesOfCode": 86
     }
   },
   "registered_apis": {
     "POST:/api/auth/register": {
       "filePath": "server/src/routes/auth.routes.ts",
-      "timestamp": "2026-03-14T01:30:36.414757Z"
+      "timestamp": "2026-03-25T20:49:43.382394Z"
     },
     "POST:/api/auth/login": {
       "filePath": "server/src/routes/auth.routes.ts",
-      "timestamp": "2026-03-14T01:30:36.414763Z"
+      "timestamp": "2026-03-25T20:49:43.382399Z"
     },
     "GET:/api/auth/google": {
       "filePath": "server/src/routes/auth.routes.ts",
-      "timestamp": "2026-03-14T01:30:36.414765Z"
+      "timestamp": "2026-03-25T20:49:43.382401Z"
     },
     "GET:/api/auth/google/callback": {
       "filePath": "server/src/routes/auth.routes.ts",
-      "timestamp": "2026-03-14T01:30:36.414768Z"
+      "timestamp": "2026-03-25T20:49:43.382402Z"
     },
     "GET:/api/auth/linkedin": {
       "filePath": "server/src/routes/auth.routes.ts",
-      "timestamp": "2026-03-14T01:30:36.414770Z"
+      "timestamp": "2026-03-25T20:49:43.382404Z"
     },
     "GET:/api/auth/linkedin/callback": {
       "filePath": "server/src/routes/auth.routes.ts",
-      "timestamp": "2026-03-14T01:30:36.414773Z"
+      "timestamp": "2026-03-25T20:49:43.382406Z"
     },
     "POST:/track-download": {
       "filePath": "server/src/routes/pdf.routes.ts",
@@ -1424,6 +1759,90 @@
     "GET:/:id/config": {
       "filePath": "server/src/routes/savedProperty.routes.ts",
       "timestamp": "2026-03-14T01:30:36.414786Z"
+    },
+    "GET:/api/comparisons/shared/:token": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382408Z"
+    },
+    "POST:/api/comparisons/": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382409Z"
+    },
+    "GET:/api/comparisons/": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382411Z"
+    },
+    "GET:/api/comparisons/:id": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382412Z"
+    },
+    "POST:/api/comparisons/:id/add": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382414Z"
+    },
+    "DELETE:/api/comparisons/:id/remove/:propertyId": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382415Z"
+    },
+    "DELETE:/api/comparisons/:id": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382417Z"
+    },
+    "POST:/api/comparisons/:id/share": {
+      "filePath": "server/src/routes/comparison.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382418Z"
+    },
+    "GET:/api/dashboard/summary": {
+      "filePath": "server/src/routes/dashboard.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382420Z"
+    },
+    "POST:/api/extension/ingest": {
+      "filePath": "server/src/routes/extension.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382422Z"
+    },
+    "POST:/api/listings/save": {
+      "filePath": "server/src/routes/listing.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382423Z"
+    },
+    "GET:/api/listings/my-listings": {
+      "filePath": "server/src/routes/listing.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382425Z"
+    },
+    "POST:/api/pdf/track-download": {
+      "filePath": "server/src/routes/pdf.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382427Z"
+    },
+    "GET:/api/pdf/download-count": {
+      "filePath": "server/src/routes/pdf.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382430Z"
+    },
+    "POST:/api/saved-properties/save": {
+      "filePath": "server/src/routes/savedProperty.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382431Z"
+    },
+    "GET:/api/saved-properties/my-properties": {
+      "filePath": "server/src/routes/savedProperty.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382432Z"
+    },
+    "GET:/api/saved-properties/:id/config": {
+      "filePath": "server/src/routes/savedProperty.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382434Z"
+    },
+    "GET:/api/search/": {
+      "filePath": "server/src/routes/search.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382435Z"
+    },
+    "GET:/api/search/my-searches": {
+      "filePath": "server/src/routes/search.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382436Z"
+    },
+    "GET:/api/search/:id": {
+      "filePath": "server/src/routes/search.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382438Z"
+    },
+    "POST:/api/search/save-query": {
+      "filePath": "server/src/routes/search.routes.ts",
+      "timestamp": "2026-03-25T20:49:43.382439Z"
     }
   }
 }

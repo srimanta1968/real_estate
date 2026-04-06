@@ -105,6 +105,7 @@ else
     PROJECT_PATH=$(to_unix_path "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
 fi
 
+echo -e "${BLUE}   Project path (for multi-project):${NC} ${PROJECT_PATH}"
 echo -e "${BLUE}🚀 ProjexLight Pre-Push Hook${NC}"
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "   OS Detected: ${GREEN}${OS_TYPE}${NC}"
@@ -167,9 +168,15 @@ if [ -n "$ENV_FILE" ]; then
     echo -e "   Location: ${GREEN}${ENV_FILE}${NC}"
 
     # Load ALL environment variables from .env file (make them available to subprocesses)
+    # On Windows/WSL, .env files may have CRLF line endings which cause bash to
+    # misinterpret values (e.g. triggering Windows 'AT' command). Strip \r on all
+    # platforms — it's a harmless no-op on Unix files with clean LF endings.
+    CLEAN_ENV_FILE=$(mktemp "${TMPDIR:-/tmp}/env_clean.XXXXXX")
+    sed 's/\r$//' "$ENV_FILE" > "$CLEAN_ENV_FILE"
     set -a  # Enable export for all variables
-    source "$ENV_FILE" 2>/dev/null || true
+    source "$CLEAN_ENV_FILE" 2>/dev/null || true
     set +a  # Disable export
+    rm -f "$CLEAN_ENV_FILE"
 
     # Parse PORT from .env (handle various formats: PORT=3005, PORT = 3005, PORT="3005")
     if grep -q "^PORT[[:space:]]*=" "$ENV_FILE"; then
@@ -638,7 +645,6 @@ echo -e "   ${BLUE}Starting API tests...${NC}"
 HTTP_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${MCP_SERVER_URL}/api/test/start" \
     -H "Content-Type: application/json" \
     -d "{
-        \"project_root\": \"/workspace\",
         \"projectPath\": \"${PROJECT_PATH}\",
         \"triggered_by\": \"git_push\",
         \"changed_files\": ${CHANGED_FILES_JSON},
@@ -977,7 +983,7 @@ EOF
   ],
   "commands": {
     "view_logs": "docker logs projexlight-mcp",
-    "rerun_tests": "curl -X POST http://localhost:8766/api/test -H 'Content-Type: application/json' -d '{\"project_root\": \"/workspace\", \"api_test_mode\": \"full\"}'"
+    "rerun_tests": "curl -X POST http://localhost:8766/api/test -H 'Content-Type: application/json' -d '{\"projectPath\": \"${PROJECT_PATH}\", \"api_test_mode\": \"full\"}'"
   }
 }
 EOF
@@ -1054,7 +1060,6 @@ echo -e "\n${BLUE}🔍 Scanning for duplicate components in changed files...${NC
 COMPONENT_SCAN_RESULT=$(curl -s -X POST "${MCP_SERVER_URL}/api/components/scan" \
     -H "Content-Type: application/json" \
     -d "{
-        \"project_root\": \"/workspace\",
         \"projectPath\": \"${PROJECT_PATH}\",
         \"triggered_by\": \"git_push\",
         \"changed_files\": ${CHANGED_FILES_JSON}

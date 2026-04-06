@@ -1,8 +1,13 @@
 {
   "scans": [
     {
-      "scanId": "0a21aac7-2f8a-4bcb-8062-c1080040ca16",
-      "timestamp": "2026-03-14T01:57:50.005803",
+      "scanId": "30f0b995-be0a-4d50-ad21-a2d112b3b3f9",
+      "timestamp": "2026-04-02T18:19:26.641976",
+      "duplicatesFound": 0
+    },
+    {
+      "scanId": "e943d2c4-fff9-4232-b82a-783a6e6166b5",
+      "timestamp": "2026-04-03T03:38:47.637359",
       "duplicatesFound": 0
     }
   ]

@@ -254,7 +254,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
           )}
 
           <p className="text-xs text-gray-400 text-center mt-4">
-            By signing up you agree to our Terms of Service and Privacy Policy.
+            By signing up you agree to our <a href="/terms" target="_blank" className="text-indigo-500 hover:underline">Terms of Service</a> and <a href="/privacy" target="_blank" className="text-indigo-500 hover:underline">Privacy Policy</a>.
           </p>
         </div>
       </div>

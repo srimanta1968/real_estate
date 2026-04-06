@@ -39,7 +39,7 @@ export default function UserDashboardPage() {
       try {
         const [propsRes, dlRes] = await Promise.all([
           api.get('/saved-properties/my-properties'),
-          api.get('/pdf/download-count'),
+          api.get('/subscriptions/usage').catch(() => api.get('/pdf/download-count')),
         ]);
         setProperties(propsRes.data.data.properties);
         setDownloadInfo(dlRes.data.data);
@@ -61,7 +61,7 @@ export default function UserDashboardPage() {
 
   const handleDownloadPdf = async (prop: SavedProperty) => {
     if (!downloadInfo || downloadInfo.remaining <= 0) {
-      setError('You have used all 5 free PDF downloads. Please upgrade to continue.');
+      setError('You have used all your credits this month. Visit /pricing to upgrade your plan.');
       return;
     }
 
@@ -106,7 +106,7 @@ export default function UserDashboardPage() {
           {downloadInfo && (
             <div className="bg-indigo-50 border border-indigo-200 rounded-lg px-4 py-2 text-center">
               <p className="text-sm font-medium text-indigo-700">
-                {downloadInfo.remaining}/{downloadInfo.limit} free PDFs remaining
+                {downloadInfo.remaining}/{downloadInfo.limit} credits remaining this month
               </p>
             </div>
           )}
