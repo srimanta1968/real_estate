@@ -5,6 +5,9 @@
  * so users don't need to log in separately in the extension popup.
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare const chrome: any;
+
 // Extension ID — update this after publishing to Chrome Web Store
 // For local unpacked extension, find it at chrome://extensions
 const EXTENSION_ID = import.meta.env.VITE_EXTENSION_ID || '';
