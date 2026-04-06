@@ -16,7 +16,7 @@
 [ -f "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 
 # ── Configuration ────────────────────────────────────────────────
-PROJECT_DIR="/home/ec2-user/dealeval"
+PROJECT_DIR="/home/ec2-user/real_estate"
 SERVER_DIR="$PROJECT_DIR/server"
 CLIENT_DIR="$PROJECT_DIR/client"
 SERVER_LOG="$PROJECT_DIR/dealeval-server.log"
@@ -299,19 +299,19 @@ stop_server() {
 
   # Kill all dealeval processes
   local pids
-  pids=$(pgrep -f "dealeval/" 2>/dev/null | grep -v "$$")
+  pids=$(pgrep -f "real_estate/" 2>/dev/null | grep -v "$$")
   if [ -n "$pids" ]; then
     echo "  Sending SIGTERM..."
     echo "$pids" | xargs kill -TERM 2>/dev/null
 
     local count=0
-    while pgrep -f "dealeval/" >/dev/null 2>&1 && [ $count -lt 10 ]; do
+    while pgrep -f "real_estate/" >/dev/null 2>&1 && [ $count -lt 10 ]; do
       sleep 1
       count=$((count + 1))
     done
 
     # Force kill remaining
-    pids=$(pgrep -f "dealeval/" 2>/dev/null | grep -v "$$")
+    pids=$(pgrep -f "real_estate/" 2>/dev/null | grep -v "$$")
     if [ -n "$pids" ]; then
       echo "  Force killing remaining..."
       echo "$pids" | xargs kill -9 2>/dev/null
@@ -367,7 +367,7 @@ show_status() {
 
   echo ""
   echo -e "${BLUE}--- Processes ---${NC}"
-  ps -eo pid,ppid,etime,rss,args 2>/dev/null | grep "dealeval" | grep -v grep || echo "  (none)"
+  ps -eo pid,ppid,etime,rss,args 2>/dev/null | grep "real_estate" | grep -v grep || echo "  (none)"
 }
 
 # ── Logs ─────────────────────────────────────────────────────────
