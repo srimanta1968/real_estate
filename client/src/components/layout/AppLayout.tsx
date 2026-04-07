@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { path: '/property/new', label: 'New Analysis', icon: '&#43;', requiresAuth: true },
   { path: '/compare', label: 'Compare', icon: '&#8596;', requiresAuth: true },
   { path: '/pricing', label: 'Pricing', icon: '&#9734;', requiresAuth: false },
+  { path: '/feedback', label: 'Feedback', icon: '&#9993;', requiresAuth: true },
 ];
 
 export default function AppLayout({ children }: AppLayoutProps) {

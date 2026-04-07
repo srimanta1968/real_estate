@@ -25,7 +25,18 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import FaqPage from './pages/FaqPage';
+import FeedbackPage from './pages/FeedbackPage';
 import ProtectedRoute from './components/layout/ProtectedRoute';
+
+// Admin
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
+import AdminRevenuePage from './pages/admin/AdminRevenuePage';
+import AdminFeedbackPage from './pages/admin/AdminFeedbackPage';
+import AdminEmailsPage from './pages/admin/AdminEmailsPage';
+import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
+import AdminLayout from './components/admin/AdminLayout';
 
 function App() {
   return (
@@ -42,6 +53,14 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/faq" element={<FaqPage />} />
 
+        {/* Admin pages (separate login, dark theme, hidden from customers) */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin" element={<AdminProtectedRoute><AdminLayout><AdminDashboardPage /></AdminLayout></AdminProtectedRoute>} />
+        <Route path="/admin/users" element={<AdminProtectedRoute><AdminLayout><AdminUsersPage /></AdminLayout></AdminProtectedRoute>} />
+        <Route path="/admin/revenue" element={<AdminProtectedRoute><AdminLayout><AdminRevenuePage /></AdminLayout></AdminProtectedRoute>} />
+        <Route path="/admin/feedback" element={<AdminProtectedRoute><AdminLayout><AdminFeedbackPage /></AdminLayout></AdminProtectedRoute>} />
+        <Route path="/admin/emails" element={<AdminProtectedRoute><AdminLayout><AdminEmailsPage /></AdminLayout></AdminProtectedRoute>} />
+
         {/* App pages with sidebar layout */}
         <Route element={<LayoutWrapper />}>
           {/* Public pages (no login required) */}
@@ -54,6 +73,7 @@ function App() {
           <Route path="/dashboard" element={<ProtectedRoute><EnhancedDashboardPage /></ProtectedRoute>} />
           <Route path="/listing/:id" element={<ProtectedRoute><ListingDetailPage /></ProtectedRoute>} />
           <Route path="/compare" element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
+          <Route path="/feedback" element={<ProtectedRoute><FeedbackPage /></ProtectedRoute>} />
           <Route path="/property/new" element={<ProtectedRoute><PropertyInfoPage /></ProtectedRoute>} />
           <Route path="/property/financing" element={<ProtectedRoute><FinancingPage /></ProtectedRoute>} />
           <Route path="/property/expenses" element={<ProtectedRoute><ExpensePage /></ProtectedRoute>} />

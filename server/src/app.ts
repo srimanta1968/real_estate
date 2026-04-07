@@ -22,6 +22,8 @@ import comparisonRoutes from './routes/comparison.routes';
 import dashboardRoutes from './routes/dashboard.routes';
 import subscriptionRoutes from './routes/subscription.routes';
 import webhookRoutes from './routes/webhook.routes';
+import adminRoutes from './routes/admin.routes';
+import feedbackRoutes from './routes/feedback.routes';
 
 const app = express();
 
@@ -69,6 +71,8 @@ app.use('/api/comparisons', comparisonRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
