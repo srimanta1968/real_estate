@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "DealEval - Property Data Extractor",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Extract property data from NLS/MLS listing sites and send to DealEval for instant investment analysis.",
   "permissions": [
     "activeTab",

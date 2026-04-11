@@ -6,13 +6,19 @@ const SUPPORTED_SITES = [
   'redfin.com',
 ];
 
-let apiUrl = 'http://localhost:3000';
+const DEFAULT_API_URL = 'https://dealeval.projexlight.com';
+let apiUrl = DEFAULT_API_URL;
+
+function deriveAppUrl(base) {
+  if (base.includes('localhost:3000')) return base.replace(':3000', ':5173');
+  return base;
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   const settings = await chrome.storage.sync.get(['apiUrl']);
   if (settings.apiUrl) apiUrl = settings.apiUrl;
 
-  const appUrl = apiUrl.replace(':3000', ':5173');
+  const appUrl = deriveAppUrl(apiUrl);
   document.getElementById('dashboard-link').href = `${appUrl}/dashboard`;
   const openAppLink = document.getElementById('open-app-link');
   if (openAppLink) openAppLink.href = `${appUrl}/login`;
@@ -114,7 +120,7 @@ async function handleLogin() {
       alert(data.error || 'Login failed');
     }
   } catch (err) {
-    alert('Connection failed. Is DealEval running?');
+    alert('Connection failed. Check your network or DealEval API URL in settings.');
   } finally {
     btn.disabled = false;
     btn.textContent = 'Sign In';
@@ -261,14 +267,14 @@ async function handleSend() {
       chrome.action.setBadgeBackgroundColor({ color: '#10b981' });
 
       setTimeout(() => {
-        const evalUrl = `${apiUrl.replace(':3000', ':5173')}${data.data.evaluateUrl}`;
+        const evalUrl = `${deriveAppUrl(apiUrl)}${data.data.evaluateUrl}`;
         chrome.tabs.create({ url: evalUrl });
       }, 500);
     } else {
       alert(data.error || 'Failed to send');
     }
   } catch (err) {
-    alert('Connection failed. Is DealEval running?');
+    alert('Connection failed. Check your network or DealEval API URL in settings.');
   } finally {
     btn.disabled = false;
   }

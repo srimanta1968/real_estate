@@ -6,6 +6,8 @@ const SUPPORTED_PATTERNS = [
   '*://www.redfin.com/*',
 ];
 
+const DEFAULT_API_URL = 'https://dealeval.projexlight.com';
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.action.setBadgeText({ text: '' });
 });
@@ -17,7 +19,7 @@ chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => 
   if (request.action === 'setAuthToken') {
     chrome.storage.local.set({
       token: request.token,
-      apiUrl: request.apiBase || 'http://localhost:3000',
+      apiUrl: request.apiBase || DEFAULT_API_URL,
       userEmail: request.email || '',
     }, () => {
       console.log('DealEval BG: Auth token received from web app');
@@ -47,7 +49,7 @@ async function getAuthConfig() {
     chrome.storage.local.get(['token', 'apiUrl'], (data) => {
       resolve({
         token: data.token || null,
-        apiUrl: data.apiUrl || 'http://localhost:3000',
+        apiUrl: data.apiUrl || DEFAULT_API_URL,
       });
     });
   });
@@ -275,12 +277,15 @@ function mergeAndForwardResults(results, source) {
     chrome.storage.local.set({ siteSearchResults: merged });
     chrome.action.setBadgeText({ text: String(merged.length) });
     chrome.action.setBadgeBackgroundColor({ color: '#10b981' });
-    // Forward to DealEval tabs
-    chrome.tabs.query({ url: 'http://localhost:*/*' }, (tabs) => {
-      for (const t of tabs) {
-        chrome.tabs.sendMessage(t.id, { type: 'SITE_SEARCH_RESULTS', data: merged, source }).catch(() => {});
-      }
-    });
+    // Forward to DealEval tabs (localhost + production)
+    const dealEvalPatterns = ['http://localhost:*/*', 'https://*.projexlight.com/*', 'https://*.dealeval.com/*'];
+    for (const pattern of dealEvalPatterns) {
+      chrome.tabs.query({ url: pattern }, (tabs) => {
+        for (const t of tabs) {
+          chrome.tabs.sendMessage(t.id, { type: 'SITE_SEARCH_RESULTS', data: merged, source }).catch(() => {});
+        }
+      });
+    }
   });
 }
 
@@ -360,9 +365,12 @@ async function scrapeTab(tabId, hostname) {
 }
 
 async function notifyDealEvalTabs(message) {
-  const dealEvalTabs = await chrome.tabs.query({ url: 'http://localhost:*/*' });
-  for (const tab of dealEvalTabs) {
-    chrome.tabs.sendMessage(tab.id, message).catch(() => {});
+  const patterns = ['http://localhost:*/*', 'https://*.projexlight.com/*', 'https://*.dealeval.com/*'];
+  for (const pattern of patterns) {
+    const tabs = await chrome.tabs.query({ url: pattern });
+    for (const tab of tabs) {
+      chrome.tabs.sendMessage(tab.id, message).catch(() => {});
+    }
   }
 }
 

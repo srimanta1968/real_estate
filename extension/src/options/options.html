@@ -19,8 +19,8 @@
   <h1>DealEval Extension Settings</h1>
 
   <label for="api-url">DealEval API URL</label>
-  <input type="text" id="api-url" placeholder="http://localhost:3000" />
-  <p class="info">The URL of your DealEval backend server</p>
+  <input type="text" id="api-url" placeholder="https://dealeval.projexlight.com" />
+  <p class="info">The URL of your DealEval backend server (defaults to the hosted service)</p>
 
   <label>Default Residential Sites</label>
   <div id="res-sites" style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:4px;">
@@ -43,7 +43,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const settings = await chrome.storage.sync.get(['apiUrl', 'defaultResSites', 'defaultComSites']);
-      document.getElementById('api-url').value = settings.apiUrl || 'http://localhost:3000';
+      document.getElementById('api-url').value = settings.apiUrl || 'https://dealeval.projexlight.com';
 
       if (settings.defaultResSites) {
         document.querySelectorAll('.res-site-cb').forEach(cb => {
