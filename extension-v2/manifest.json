@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "DealEval Pro - Remote Config Scraper",
+  "version": "2.0.0",
+  "description": "DealEval Pro uses a remote configuration to scrape real estate listings from any site — no per-site updates required.",
+  "permissions": ["activeTab", "tabs", "scripting", "storage"],
+  "host_permissions": [
+    "https://www.zillow.com/*",
+    "https://www.realtor.com/*",
+    "https://www.redfin.com/*",
+    "https://www.trulia.com/*",
+    "https://www.loopnet.com/*",
+    "https://www.crexi.com/*",
+    "https://crexi.com/*",
+    "https://www.commercialcafe.com/*",
+    "https://www.apartments.com/*",
+    "https://www.homes.com/*",
+    "https://www.rent.com/*",
+    "https://www.realtyhop.com/*",
+    "http://localhost/*",
+    "http://localhost:3000/*",
+    "http://localhost:5173/*",
+    "http://localhost:5174/*",
+    "https://*.projexlight.com/*",
+    "https://*.dealeval.com/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": { "service_worker": "src/background/service-worker.js" },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*", "http://localhost:3000/*", "http://localhost:5173/*", "http://localhost:5174/*", "https://*.dealeval.com/*", "https://*.projexlight.com/*"],
+      "js": ["src/content/dealeval-bridge.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost/*", "http://localhost:3000/*", "http://localhost:5173/*", "http://localhost:5174/*", "https://*.dealeval.com/*", "https://*.projexlight.com/*"]
+  }
+}

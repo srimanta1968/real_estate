@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-14",
+  "sites": {
+    "zillow.com": {
+      "displayName": "Zillow",
+      "category": "residential",
+      "match": ["https://www.zillow.com/homes/*", "https://www.zillow.com/*_rb/*"],
+      "listingCardSelector": "a[href*='/homedetails/']",
+      "containerClimb": 6,
+      "containerMaxTextLength": 1500,
+      "fields": {
+        "address": {
+          "selectors": ["address", "[data-test='property-card-addr']", "h2", "h3", "[class*='address' i]"],
+          "excludeContains": "$",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "price": {
+          "tryInOrder": [
+            { "regex": "\\$(\\d{1,3}(?:,\\d{3})+)", "group": 1, "parse": "number_strip_commas" },
+            { "regex": "\\$(\\d+(?:\\.\\d+)?)\\s*([MK])\\b", "group": 1, "multiplierGroup": 2, "parse": "abbreviated" }
+          ],
+          "min": 1000,
+          "max": 5000000000
+        },
+        "beds": { "regex": "(\\d+)\\s*(?:bd|bed|bds)", "group": 1, "parse": "int" },
+        "baths": { "regex": "(\\d+\\.?\\d*)\\s*(?:ba|bath)", "group": 1, "parse": "float" },
+        "sqft": { "regex": "([\\d,]+)\\s*(?:sqft|sq\\s*ft)", "group": 1, "parse": "number_strip_commas" }
+      },
+      "propertyType": "Residential"
+    },
+    "realtor.com": {
+      "displayName": "Realtor.com",
+      "category": "residential",
+      "match": ["https://www.realtor.com/realestateandhomes-search/*", "https://www.realtor.com/apartments/*"],
+      "listingCardSelector": "a[href*='/realestateandhomes-detail/']",
+      "containerClimb": 6,
+      "containerMaxTextLength": 1500,
+      "fields": {
+        "address": {
+          "selectors": ["[data-label='pc-address']", "address", "h2", "h3", "[class*='address' i]"],
+          "excludeContains": "$",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "price": {
+          "tryInOrder": [
+            { "regex": "\\$(\\d{1,3}(?:,\\d{3})+)", "group": 1, "parse": "number_strip_commas" },
+            { "regex": "\\$(\\d+(?:\\.\\d+)?)\\s*([MK])\\b", "group": 1, "multiplierGroup": 2, "parse": "abbreviated" }
+          ],
+          "min": 1000,
+          "max": 5000000000
+        },
+        "beds": { "regex": "(\\d+)\\s*(?:bd|bed|bds)", "group": 1, "parse": "int" },
+        "baths": { "regex": "(\\d+\\.?\\d*)\\s*(?:ba|bath)", "group": 1, "parse": "float" },
+        "sqft": { "regex": "([\\d,]+)\\s*(?:sqft|sq\\s*ft)", "group": 1, "parse": "number_strip_commas" }
+      },
+      "propertyType": "Residential"
+    },
+    "redfin.com": {
+      "displayName": "Redfin",
+      "category": "residential",
+      "match": ["https://www.redfin.com/city/*", "https://www.redfin.com/zipcode/*"],
+      "listingCardSelector": "a[href*='/home/'], a[href*='/CA/'], a[href*='/TX/'], .HomeCardContainer a",
+      "containerClimb": 6,
+      "containerMaxTextLength": 1500,
+      "fields": {
+        "address": {
+          "selectors": [".homeAddressV2", ".address", "[class*='Address' i]", "h2", "h3"],
+          "excludeContains": "$",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "price": {
+          "tryInOrder": [
+            { "regex": "\\$(\\d{1,3}(?:,\\d{3})+)", "group": 1, "parse": "number_strip_commas" },
+            { "regex": "\\$(\\d+(?:\\.\\d+)?)\\s*([MK])\\b", "group": 1, "multiplierGroup": 2, "parse": "abbreviated" }
+          ],
+          "min": 1000,
+          "max": 5000000000
+        },
+        "beds": { "regex": "(\\d+)\\s*(?:bd|bed|bds)", "group": 1, "parse": "int" },
+        "baths": { "regex": "(\\d+\\.?\\d*)\\s*(?:ba|bath)", "group": 1, "parse": "float" },
+        "sqft": { "regex": "([\\d,]+)\\s*(?:sqft|sq\\s*ft)", "group": 1, "parse": "number_strip_commas" }
+      },
+      "propertyType": "Residential"
+    },
+    "loopnet.com": {
+      "displayName": "LoopNet",
+      "category": "commercial",
+      "match": ["https://www.loopnet.com/search/*"],
+      "listingCardSelector": "article.placard",
+      "containerMode": "self",
+      "fields": {
+        "id": { "attribute": "gtm-listing-id" },
+        "city": { "attribute": "gtm-listing-city" },
+        "state": { "attribute": "gtm-listing-state" },
+        "zip": { "attribute": "gtm-listing-zip" },
+        "propertyTypeFromAttr": { "attribute": "gtm-listing-property-type-name" },
+        "address": { "selectors": ["a.left-h4", "h4 a"] },
+        "source_url": { "selectors": ["a[href*='/Listing/']"], "attribute": "href", "absolute": true },
+        "price": {
+          "within": ".placard-info",
+          "tryInOrder": [
+            { "regex": "\\$\\s*([\\d,]+(?:\\.\\d+)?)\\s*(M|K)?", "group": 1, "multiplierGroup": 2, "parse": "abbreviated_or_comma" }
+          ],
+          "min": 1000,
+          "max": 10000000000
+        },
+        "sqft": { "within": ".placard-info", "regex": "([\\d,]+)\\s*SF\\b", "group": 1, "parse": "number_strip_commas" },
+        "year_built": { "within": ".placard-info", "regex": "Built\\s+in\\s+(\\d{4})", "group": 1, "parse": "int" }
+      },
+      "propertyType": "Commercial"
+    },
+    "crexi.com": {
+      "displayName": "Crexi",
+      "category": "commercial",
+      "match": ["https://www.crexi.com/properties*", "https://crexi.com/properties*"],
+      "listingCardSelector": "crx-sales-property-tile",
+      "containerMode": "self",
+      "fields": {
+        "address": { "selectors": ["[data-cy='propertyName']", "[data-cy='propertyAddress']"] },
+        "price": {
+          "within": "[data-cy='propertyPrice']",
+          "tryInOrder": [
+            { "regex": "\\$?\\s*([\\d,]+(?:\\.\\d+)?)\\s*(M|K)?", "group": 1, "multiplierGroup": 2, "parse": "abbreviated_or_comma" }
+          ],
+          "min": 1000,
+          "max": 5000000000
+        },
+        "location": {
+          "within": "[data-cy='propertyAddress'] .cui-card-info-text-small",
+          "regex": "([A-Za-z\\s]+),\\s*([A-Z]{2})\\s*(\\d{5})?",
+          "parts": { "city": 1, "state": 2, "zip": 3 }
+        },
+        "sqft": { "within": "[data-cy='propertyDescription']", "regex": "([\\d,]+)\\s*(?:SqFt|SF)", "group": 1, "parse": "number_strip_commas" },
+        "source_url": { "selectors": ["a.cui-card-cover-link", "a[href*='/properties/']"], "attribute": "href", "absolute": "https://www.crexi.com" }
+      },
+      "propertyType": "Commercial"
+    }
+  },
+  "botChallenge": {
+    "detectors": [
+      { "type": "iframe_src_contains", "value": "recaptcha" },
+      { "type": "iframe_src_contains", "value": "hcaptcha" },
+      { "type": "iframe_src_contains", "value": "arkoselabs" },
+      { "type": "title_contains", "value": "captcha" },
+      { "type": "selector_exists", "value": "#challenge-form" },
+      { "type": "selector_exists", "value": "#challenge-running" },
+      { "type": "selector_exists", "value": ".cf-browser-verification" }
+    ]
+  },
+  "waitMs": { "initial": 10000, "retry": 8000 },
+  "urlBuilders": {
+    "zillow": {
+      "for_sale": "https://www.zillow.com/homes/{loc}_rb/",
+      "for_rent": "https://www.zillow.com/homes/for_rent/{loc}_rb/",
+      "sold": "https://www.zillow.com/homes/recently_sold/{loc}/"
+    },
+    "realtor": {
+      "for_sale": "https://www.realtor.com/realestateandhomes-search/{loc}",
+      "for_rent": "https://www.realtor.com/apartments/{loc}",
+      "sold": "https://www.realtor.com/realestateandhomes-search/{loc}/show-recently-sold"
+    },
+    "redfin": {
+      "for_sale": "https://www.redfin.com/zipcode/{zip}",
+      "for_rent": "https://www.redfin.com/zipcode/{zip}/apartments-for-rent",
+      "sold": "https://www.redfin.com/zipcode/{zip}/filter/include=sold-6mo"
+    },
+    "loopnet": {
+      "for_sale": "https://www.loopnet.com/search/commercial-real-estate/{loc}/for-sale/",
+      "for_rent": "https://www.loopnet.com/search/commercial-real-estate/{loc}/for-lease/"
+    },
+    "crexi": {
+      "for_sale": "https://www.crexi.com/properties/{STATE}/{city}",
+      "for_rent": "https://www.crexi.com/properties/{STATE}/{city}?types=lease"
+    }
+  }
+}
