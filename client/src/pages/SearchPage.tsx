@@ -62,8 +62,13 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
       supportsStatus: () => true,
       buildUrl: (p) => {
         const loc = p.zip || [p.city, p.state].filter(Boolean).join('-');
+        // For sold, use Zillow's canonical slug path; it avoids conflicting
+        // filterState flags and map-boundary empties.
+        if (p.listingStatus === 'sold') {
+          return `https://www.zillow.com/homes/recently_sold/${encodeURIComponent(loc)}_rb/`;
+        }
         const url = `https://www.zillow.com/homes/${encodeURIComponent(loc)}_rb/`;
-        const fs: Record<string, unknown> = { sortSelection: { value: 'days' }, isAllHomes: { value: true } };
+        const fs: Record<string, unknown> = { sortSelection: { value: 'days' } };
         if (p.listingStatus === 'for_rent') {
           fs.isForRent = { value: true };
           fs.isForSaleByAgent = { value: false };
@@ -71,13 +76,8 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
           fs.isNewConstruction = { value: false };
           fs.isComingSoon = { value: false };
           fs.isAuction = { value: false };
-        } else if (p.listingStatus === 'sold') {
-          fs.isRecentlySold = { value: true };
-          fs.isForSaleByAgent = { value: false };
-          fs.isForSaleByOwner = { value: false };
-          fs.isNewConstruction = { value: false };
-          fs.isComingSoon = { value: false };
-          fs.isAuction = { value: false };
+        } else {
+          fs.isAllHomes = { value: true };
         }
         const tm: Record<string, string> = { 'Single Family': 'Houses', 'Multi Family': 'Multi-family', 'Condo': 'Condos', 'Townhouse': 'Townhomes' };
         if (p.propertyType && tm[p.propertyType]) fs.homeType = { value: [tm[p.propertyType]] };
@@ -91,6 +91,11 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
       supportsStatus: () => true,
       buildUrl: (p) => {
         const loc = p.zip || [p.city ? p.city.replace(/\s+/g, '-') : '', p.state].filter(Boolean).join('_');
+        // Sold: use bare sold URL. Realtor 404s when additional type/price
+        // segments follow show-recently-sold, so keep it minimal.
+        if (p.listingStatus === 'sold') {
+          return `https://www.realtor.com/realestateandhomes-search/${loc}/show-recently-sold`;
+        }
         const base = p.listingStatus === 'for_rent'
           ? `https://www.realtor.com/apartments/${loc}`
           : `https://www.realtor.com/realestateandhomes-search/${loc}`;
@@ -98,8 +103,7 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
         const tm: Record<string, string> = { 'Single Family': 'type-single-family-home', 'Multi Family': 'type-multi-family-home', 'Condo': 'type-condo', 'Townhouse': 'type-townhome', 'Land': 'type-land' };
         if (p.propertyType && tm[p.propertyType]) url += `/${tm[p.propertyType]}`;
         if (p.minPrice || p.maxPrice) url += `/price-${p.minPrice || 'na'}-${p.maxPrice || 'na'}`;
-        if (p.listedWithin && p.listingStatus !== 'sold') url += `/age-${p.listedWithin}d`;
-        if (p.listingStatus === 'sold') url += '/show-recently-sold';
+        if (p.listedWithin) url += `/age-${p.listedWithin}d`;
         return url;
       },
     },
@@ -107,21 +111,36 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
       name: 'Redfin',
       supportsStatus: () => true,
       buildUrl: (p) => {
-        let base = p.zip ? `https://www.redfin.com/zipcode/${p.zip}` : `https://www.redfin.com/city/${p.state}/${(p.city || '').replace(/\s+/g, '-')}`;
-        if (p.listingStatus === 'for_rent') base += '/apartments-for-rent';
+        // Zip-based URL works for all three statuses with filter appended.
+        if (p.zip) {
+          let base = `https://www.redfin.com/zipcode/${p.zip}`;
+          if (p.listingStatus === 'for_rent') base += '/apartments-for-rent';
+          const f: string[] = [];
+          const tm: Record<string, string> = { 'Single Family': 'property-type=1', 'Condo': 'property-type=2', 'Townhouse': 'property-type=3', 'Multi Family': 'property-type=4', 'Land': 'property-type=6' };
+          if (p.propertyType && tm[p.propertyType]) f.push(tm[p.propertyType]);
+          if (p.minPrice) f.push(`min-price=${p.minPrice}`);
+          if (p.maxPrice) f.push(`max-price=${p.maxPrice}`);
+          if (p.listingStatus === 'sold') {
+            const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
+            f.push(`include=sold-${p.listedWithin ? (dm[p.listedWithin] || '3mo') : '3mo'}`);
+          } else if (p.listedWithin) {
+            const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
+            f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`);
+          }
+          return f.length > 0 ? `${base}/filter/${f.join(',')}` : base;
+        }
+        // City/state slug: base URL redirects cleanly, but /filter/ suffix
+        // does not survive the redirect. Skip filters for sold and rely on
+        // Redfin's default sold view.
+        const base = `https://www.redfin.com/city/${p.state}/${(p.city || '').replace(/\s+/g, '-')}`;
+        if (p.listingStatus === 'sold') return base;
+        if (p.listingStatus === 'for_rent') return `${base}/apartments-for-rent`;
         const f: string[] = [];
         const tm: Record<string, string> = { 'Single Family': 'property-type=1', 'Condo': 'property-type=2', 'Townhouse': 'property-type=3', 'Multi Family': 'property-type=4', 'Land': 'property-type=6' };
         if (p.propertyType && tm[p.propertyType]) f.push(tm[p.propertyType]);
         if (p.minPrice) f.push(`min-price=${p.minPrice}`);
         if (p.maxPrice) f.push(`max-price=${p.maxPrice}`);
-        if (p.listingStatus === 'sold') {
-          const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
-          const window = p.listedWithin ? (dm[p.listedWithin] || '3mo') : '3mo';
-          f.push(`include=sold-${window}`);
-        } else if (p.listedWithin) {
-          const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
-          f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`);
-        }
+        if (p.listedWithin) { const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' }; f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`); }
         return f.length > 0 ? `${base}/filter/${f.join(',')}` : base;
       },
     },
