@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "updatedAt": "2026-04-14",
   "sites": {
     "zillow.com": {
@@ -62,17 +62,17 @@
       "displayName": "Redfin",
       "category": "residential",
       "match": ["https://www.redfin.com/city/*", "https://www.redfin.com/zipcode/*"],
-      "listingCardSelector": "a[href*='/home/'], a[href*='/CA/'], a[href*='/TX/'], .HomeCardContainer a",
-      "containerClimb": 6,
-      "containerMaxTextLength": 1500,
+      "listingCardSelector": ".HomeCardContainer, .bp-Homecard, [class*='HomeCardContainer']",
+      "containerMode": "self",
       "fields": {
         "address": {
-          "selectors": [".homeAddressV2", ".address", "[class*='Address' i]", "h2", "h3"],
+          "selectors": [".bp-Homecard__Address", ".homeAddressV2", "[class*='Address']", "[class*='address']"],
           "excludeContains": "$",
           "minLength": 5,
           "maxLength": 200
         },
         "price": {
+          "within": ".bp-Homecard__Price, .homecardV2Price, [class*='Price']",
           "tryInOrder": [
             { "regex": "\\$(\\d{1,3}(?:,\\d{3})+)", "group": 1, "parse": "number_strip_commas" },
             { "regex": "\\$(\\d+(?:\\.\\d+)?)\\s*([MK])\\b", "group": 1, "multiplierGroup": 2, "parse": "abbreviated" }
@@ -80,9 +80,29 @@
           "min": 1000,
           "max": 5000000000
         },
-        "beds": { "regex": "(\\d+)\\s*(?:bd|bed|bds)", "group": 1, "parse": "int" },
-        "baths": { "regex": "(\\d+\\.?\\d*)\\s*(?:ba|bath)", "group": 1, "parse": "float" },
-        "sqft": { "regex": "([\\d,]+)\\s*(?:sqft|sq\\s*ft)", "group": 1, "parse": "number_strip_commas" }
+        "beds": {
+          "within": ".bp-Homecard__Stats, .stats, [class*='Stats']",
+          "regex": "(\\d+)\\s*(?:bd|bed|bds)",
+          "group": 1,
+          "parse": "int"
+        },
+        "baths": {
+          "within": ".bp-Homecard__Stats, .stats, [class*='Stats']",
+          "regex": "(\\d+\\.?\\d*)\\s*(?:ba|bath)",
+          "group": 1,
+          "parse": "float"
+        },
+        "sqft": {
+          "within": ".bp-Homecard__Stats, .stats, [class*='Stats']",
+          "regex": "([\\d,]+)\\s*(?:sqft|sq\\s*ft)",
+          "group": 1,
+          "parse": "number_strip_commas"
+        },
+        "source_url": {
+          "selectors": [".bp-Homecard__Address", "a.bp-Homecard__Photo", "a[href*='/home/']"],
+          "attribute": "href",
+          "absolute": "https://www.redfin.com"
+        }
       },
       "propertyType": "Residential"
     },
