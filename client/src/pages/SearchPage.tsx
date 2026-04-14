@@ -432,6 +432,10 @@ export default function SearchPage() {
 
     // Look up Redfin's numeric cityId when we have city+state but no zip —
     // needed so the /filter/ suffix survives Redfin's canonical redirect.
+    // Redfin blocks server-side lookups via CloudFront, so this often
+    // returns null; Redfin URL then falls back to the slug form with no
+    // filters. For Sold searches, that means Redfin shows its default
+    // sold view instead of a filtered one — surfaced to the user below.
     let redfinCityId: string | null = null;
     const needsCityId = !zip && !!city && !!state && sites.some(s => s.name === 'Redfin');
     if (needsCityId) {
@@ -439,6 +443,9 @@ export default function SearchPage() {
         const r = await api.get(`/search/redfin-city-id?city=${encodeURIComponent(city)}&state=${encodeURIComponent(state)}`);
         redfinCityId = r.data?.cityId || null;
       } catch { /* non-fatal — Redfin URL falls back to slug form */ }
+    }
+    if (listingStatus === 'sold' && !zip && !redfinCityId && sites.some(s => s.name === 'Redfin')) {
+      setSiteSearchStatus('Tip: add a zip code for filtered Redfin sold comps — without it Redfin shows its default view. Zillow and Realtor sold results still work.');
     }
 
     const urls = sites.map(site => ({
