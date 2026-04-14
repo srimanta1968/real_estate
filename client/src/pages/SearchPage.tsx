@@ -45,17 +45,40 @@ const LISTED_WITHIN_OPTIONS = [
 ];
 const US_STATES = ['','AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
 
-interface SearchFilters { city: string; state: string; zip: string; propertyType: string; minPrice: string; maxPrice: string; listedWithin: string }
-interface SiteConfig { name: string; buildUrl: (p: SearchFilters) => string }
+type ListingStatus = 'for_sale' | 'for_rent' | 'sold';
+const LISTING_STATUS_OPTIONS: { value: ListingStatus; label: string }[] = [
+  { value: 'for_sale', label: 'For Sale' },
+  { value: 'for_rent', label: 'For Rent' },
+  { value: 'sold', label: 'Sold' },
+];
+
+interface SearchFilters { city: string; state: string; zip: string; propertyType: string; minPrice: string; maxPrice: string; listedWithin: string; listingStatus: ListingStatus }
+interface SiteConfig { name: string; supportsStatus: (s: ListingStatus) => boolean; buildUrl: (p: SearchFilters) => string }
 
 const SITE_MAP: Record<string, SiteConfig[]> = {
   residential: [
     {
       name: 'Zillow',
+      supportsStatus: () => true,
       buildUrl: (p) => {
         const loc = p.zip || [p.city, p.state].filter(Boolean).join('-');
-        let url = `https://www.zillow.com/homes/${encodeURIComponent(loc)}_rb/`;
+        const url = `https://www.zillow.com/homes/${encodeURIComponent(loc)}_rb/`;
         const fs: Record<string, unknown> = { sortSelection: { value: 'days' }, isAllHomes: { value: true } };
+        if (p.listingStatus === 'for_rent') {
+          fs.isForRent = { value: true };
+          fs.isForSaleByAgent = { value: false };
+          fs.isForSaleByOwner = { value: false };
+          fs.isNewConstruction = { value: false };
+          fs.isComingSoon = { value: false };
+          fs.isAuction = { value: false };
+        } else if (p.listingStatus === 'sold') {
+          fs.isRecentlySold = { value: true };
+          fs.isForSaleByAgent = { value: false };
+          fs.isForSaleByOwner = { value: false };
+          fs.isNewConstruction = { value: false };
+          fs.isComingSoon = { value: false };
+          fs.isAuction = { value: false };
+        }
         const tm: Record<string, string> = { 'Single Family': 'Houses', 'Multi Family': 'Multi-family', 'Condo': 'Condos', 'Townhouse': 'Townhomes' };
         if (p.propertyType && tm[p.propertyType]) fs.homeType = { value: [tm[p.propertyType]] };
         if (p.minPrice || p.maxPrice) { fs.price = {}; if (p.minPrice) (fs.price as Record<string, number>).min = Number(p.minPrice); if (p.maxPrice) (fs.price as Record<string, number>).max = Number(p.maxPrice); }
@@ -65,25 +88,40 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
     },
     {
       name: 'Realtor.com',
+      supportsStatus: () => true,
       buildUrl: (p) => {
-        let url = 'https://www.realtor.com/realestateandhomes-search/' + (p.zip || [p.city ? p.city.replace(/\s+/g, '-') : '', p.state].filter(Boolean).join('_'));
+        const loc = p.zip || [p.city ? p.city.replace(/\s+/g, '-') : '', p.state].filter(Boolean).join('_');
+        const base = p.listingStatus === 'for_rent'
+          ? `https://www.realtor.com/apartments/${loc}`
+          : `https://www.realtor.com/realestateandhomes-search/${loc}`;
+        let url = base;
         const tm: Record<string, string> = { 'Single Family': 'type-single-family-home', 'Multi Family': 'type-multi-family-home', 'Condo': 'type-condo', 'Townhouse': 'type-townhome', 'Land': 'type-land' };
         if (p.propertyType && tm[p.propertyType]) url += `/${tm[p.propertyType]}`;
         if (p.minPrice || p.maxPrice) url += `/price-${p.minPrice || 'na'}-${p.maxPrice || 'na'}`;
-        if (p.listedWithin) url += `/age-${p.listedWithin}d`;
+        if (p.listedWithin && p.listingStatus !== 'sold') url += `/age-${p.listedWithin}d`;
+        if (p.listingStatus === 'sold') url += '/show-recently-sold';
         return url;
       },
     },
     {
       name: 'Redfin',
+      supportsStatus: () => true,
       buildUrl: (p) => {
-        const base = p.zip ? `https://www.redfin.com/zipcode/${p.zip}` : `https://www.redfin.com/city/${p.state}/${(p.city || '').replace(/\s+/g, '-')}`;
+        let base = p.zip ? `https://www.redfin.com/zipcode/${p.zip}` : `https://www.redfin.com/city/${p.state}/${(p.city || '').replace(/\s+/g, '-')}`;
+        if (p.listingStatus === 'for_rent') base += '/apartments-for-rent';
         const f: string[] = [];
         const tm: Record<string, string> = { 'Single Family': 'property-type=1', 'Condo': 'property-type=2', 'Townhouse': 'property-type=3', 'Multi Family': 'property-type=4', 'Land': 'property-type=6' };
         if (p.propertyType && tm[p.propertyType]) f.push(tm[p.propertyType]);
         if (p.minPrice) f.push(`min-price=${p.minPrice}`);
         if (p.maxPrice) f.push(`max-price=${p.maxPrice}`);
-        if (p.listedWithin) { const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' }; f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`); }
+        if (p.listingStatus === 'sold') {
+          const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
+          const window = p.listedWithin ? (dm[p.listedWithin] || '3mo') : '3mo';
+          f.push(`include=sold-${window}`);
+        } else if (p.listedWithin) {
+          const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
+          f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`);
+        }
         return f.length > 0 ? `${base}/filter/${f.join(',')}` : base;
       },
     },
@@ -91,13 +129,12 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
   commercial: [
     {
       name: 'LoopNet',
+      supportsStatus: (s) => s !== 'sold',
       buildUrl: (p) => {
-        // Open the base national search page — the content script will
-        // fill the location filter and submit, avoiding 404s from bad slugs.
         const tm: Record<string, string> = { 'Commercial': 'commercial-real-estate', 'Office': 'office-space', 'Retail': 'retail-space', 'Industrial': 'industrial-space', 'Multi Family': 'multifamily-housing', 'Shopping Center': 'shopping-centers', 'Hospitality': 'hotels-motels', 'Land': 'land' };
         const cat = tm[p.propertyType] || 'commercial-real-estate';
-        const url = `https://www.loopnet.com/search/${cat}/for-sale/`;
-        // Pass search criteria via hash — the content script reads it
+        const dealType = p.listingStatus === 'for_rent' ? 'for-lease' : 'for-sale';
+        const url = `https://www.loopnet.com/search/${cat}/${dealType}/`;
         const loc = p.zip || [p.city, p.state].filter(Boolean).join(', ');
         const q = new URLSearchParams();
         if (p.minPrice) q.set('PriceRangeMin', p.minPrice);
@@ -110,6 +147,7 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
     },
     {
       name: 'Crexi',
+      supportsStatus: (s) => s !== 'sold',
       buildUrl: (p) => {
         const tm: Record<string, string> = { 'Commercial': '', 'Office': 'Office', 'Retail': 'Retail', 'Industrial': 'Industrial', 'Multi Family': 'Multifamily', 'Land': 'Land' };
         const typePath = (p.propertyType && tm[p.propertyType]) || '';
@@ -120,7 +158,7 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
         }
         let url = segments.join('/');
         if (typePath) url += `/${typePath}`;
-        // Pass location via hash so the content script can fill the search input
+        if (p.listingStatus === 'for_rent') url += '?types=lease';
         const loc = p.zip || [p.city, p.state].filter(Boolean).join(', ');
         if (loc) url += `#dealeval-loc=${encodeURIComponent(loc)}`;
         return url;
@@ -129,10 +167,12 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
   ],
 };
 
-function getSitesForType(propertyType: string): SiteConfig[] {
-  if (propertyType === 'Commercial') return SITE_MAP.commercial;
-  if (['Single Family', 'Multi Family', 'Condo', 'Townhouse'].includes(propertyType)) return SITE_MAP.residential;
-  return [...SITE_MAP.residential, ...SITE_MAP.commercial];
+function getSitesForType(propertyType: string, listingStatus: ListingStatus): SiteConfig[] {
+  let sites: SiteConfig[];
+  if (propertyType === 'Commercial') sites = SITE_MAP.commercial;
+  else if (['Single Family', 'Multi Family', 'Condo', 'Townhouse'].includes(propertyType)) sites = SITE_MAP.residential;
+  else sites = [...SITE_MAP.residential, ...SITE_MAP.commercial];
+  return sites.filter(s => s.supportsStatus(listingStatus));
 }
 
 export default function SearchPage() {
@@ -147,6 +187,9 @@ export default function SearchPage() {
   const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') || '');
   const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '');
   const [listedWithin, setListedWithin] = useState(searchParams.get('listedWithin') || '');
+  const [listingStatus, setListingStatus] = useState<ListingStatus>(
+    (searchParams.get('listingStatus') as ListingStatus) || 'for_sale'
+  );
 
   const [results, setResults] = useState<SearchResponse | null>(null);
   const [siteResults, setSiteResults] = useState<SearchResult[]>([]);
@@ -253,6 +296,7 @@ export default function SearchPage() {
     if (minPrice) params.set('minPrice', minPrice);
     if (maxPrice) params.set('maxPrice', maxPrice);
     if (listedWithin) params.set('listedWithin', listedWithin);
+    params.set('listingStatus', listingStatus);
     params.set('page', String(p));
 
     setSearchParams(params);
@@ -287,9 +331,14 @@ export default function SearchPage() {
     // Tell extension bridge to clear chrome.storage
     try { window.postMessage({ type: 'DEALEVAL_CLEAR_SITE_RESULTS' }, '*'); } catch {}
 
-    const sites = getSitesForType(propertyType);
+    const sites = getSitesForType(propertyType, listingStatus);
+    if (sites.length === 0) {
+      setSiteSearching(false);
+      setSiteSearchStatus('No supported sites for this listing status. Sold comps are only available on residential sites (Zillow, Realtor.com, Redfin).');
+      return;
+    }
     const urls = sites.map(site => ({
-      url: site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin }),
+      url: site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin, listingStatus }),
       hostname: site.name.toLowerCase().replace(/[^a-z.]/g, '') + '.com',
     }));
 
@@ -407,6 +456,22 @@ export default function SearchPage() {
 
         {/* Search Filters */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <div className="mb-4 inline-flex rounded-lg border border-gray-300 overflow-hidden" role="group" aria-label="Listing status">
+            {LISTING_STATUS_OPTIONS.map((opt, idx) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => setListingStatus(opt.value)}
+                className={`px-4 py-2 text-sm font-medium transition-colors ${
+                  listingStatus === opt.value
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                } ${idx > 0 ? 'border-l border-gray-300' : ''}`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-4">
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">City</label>
@@ -511,7 +576,7 @@ export default function SearchPage() {
                     Extracting from Sites...
                   </span>
                 ) : (
-                  `Search on Sites (${getSitesForType(propertyType).map(s => s.name).join(', ')})`
+                  `Search on Sites (${getSitesForType(propertyType, listingStatus).map(s => s.name).join(', ')})`
                 )}
               </button>
             )}
@@ -590,7 +655,7 @@ export default function SearchPage() {
                         Extracting from Sites...
                       </span>
                     ) : (
-                      `Search on ${getSitesForType(propertyType).map(s => s.name).join(', ')}`
+                      `Search on ${getSitesForType(propertyType, listingStatus).map(s => s.name).join(', ')}`
                     )}
                   </button>
                 )}
