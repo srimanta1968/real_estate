@@ -17,6 +17,8 @@ interface SearchResult {
   sqft: number | null;
   property_type: string | null;
   listing_status: string | null;
+  listing_date: string | null;
+  sold_date: string | null;
   year_built: number | null;
   lot_size: number | null;
   tax_amount: number | null;
@@ -51,6 +53,32 @@ const LISTING_STATUS_OPTIONS: { value: ListingStatus; label: string }[] = [
   { value: 'for_rent', label: 'For Rent' },
   { value: 'sold', label: 'Sold' },
 ];
+const LISTING_STATUS_LABEL: Record<ListingStatus, string> = {
+  for_sale: 'For Sale',
+  for_rent: 'For Rent',
+  sold: 'Sold',
+};
+const LISTING_STATUS_BADGE: Record<ListingStatus, string> = {
+  for_sale: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+  for_rent: 'bg-blue-100 text-blue-800 border-blue-200',
+  sold: 'bg-gray-200 text-gray-700 border-gray-300',
+};
+// Map free-form backend listing_status strings into our canonical labels + colors
+function normalizeStatus(raw: string | null): { label: string; badge: string } | null {
+  if (!raw) return null;
+  const s = raw.toLowerCase();
+  if (s.includes('pending')) return { label: 'Pending Sale', badge: 'bg-amber-100 text-amber-800 border-amber-200' };
+  if (s.includes('closed') || s.includes('sold')) return { label: 'Sold', badge: LISTING_STATUS_BADGE.sold };
+  if (s.includes('rent') || s.includes('lease')) return { label: 'For Rent', badge: LISTING_STATUS_BADGE.for_rent };
+  if (s.includes('active') || s.includes('sale') || s.includes('for_sale')) return { label: 'For Sale', badge: LISTING_STATUS_BADGE.for_sale };
+  return { label: raw, badge: 'bg-gray-100 text-gray-700 border-gray-200' };
+}
+function fmtDate(d: string | null): string | null {
+  if (!d) return null;
+  const dt = new Date(d);
+  if (isNaN(dt.getTime())) return null;
+  return dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
 
 interface SearchFilters { city: string; state: string; zip: string; propertyType: string; minPrice: string; maxPrice: string; listedWithin: string; listingStatus: ListingStatus }
 interface SiteConfig { name: string; supportsStatus: (s: ListingStatus) => boolean; buildUrl: (p: SearchFilters) => string }
@@ -209,6 +237,10 @@ export default function SearchPage() {
   const [listingStatus, setListingStatus] = useState<ListingStatus>(
     (searchParams.get('listingStatus') as ListingStatus) || 'for_sale'
   );
+  // The status that was active when the currently-displayed results were produced.
+  // Separate from the control so changing the toggle after a search doesn't mislead.
+  const [appliedListingStatus, setAppliedListingStatus] = useState<ListingStatus | null>(null);
+  const [appliedQuery, setAppliedQuery] = useState<{ city: string; state: string; zip: string } | null>(null);
 
   const [results, setResults] = useState<SearchResponse | null>(null);
   const [siteResults, setSiteResults] = useState<SearchResult[]>([]);
@@ -256,10 +288,12 @@ export default function SearchPage() {
             baths: r.baths != null ? Number(r.baths) : null,
             sqft: r.sqft != null ? Number(r.sqft) : null,
             property_type: (r.property_type as string) || null,
-            listing_status: null,
+            listing_status: (r.listing_status as string) || null,
+            listing_date: (r.listing_date as string) || null,
+            sold_date: (r.sold_date as string) || null,
             year_built: r.year_built != null ? Number(r.year_built) : null,
             lot_size: null,
-            tax_amount: null,
+            tax_amount: r.tax_amount != null ? Number(r.tax_amount) : null,
             source_url: (r.source_url as string) || undefined,
             source: (r.source as string) || undefined,
           });
@@ -271,10 +305,19 @@ export default function SearchPage() {
     const loadSiteResults = () => {
       const results = parseSiteResults(localStorage.getItem('siteSearchResults'));
       if (results.length > 0) {
-        setSiteResults(results);
+        // Stamp listing_status from the status that triggered the scrape —
+        // the extension can't tell us the status today, but we know which
+        // URL we asked it to open.
+        const stampedStatus = appliedListingStatus
+          ? LISTING_STATUS_LABEL[appliedListingStatus]
+          : null;
+        const stamped = stampedStatus
+          ? results.map(r => (r.listing_status ? r : { ...r, listing_status: stampedStatus }))
+          : results;
+        setSiteResults(stamped);
         if (siteSearching) {
           setSiteSearching(false);
-          setSiteSearchStatus(`Found ${results.length} listings from external sites`);
+          setSiteSearchStatus(`Found ${stamped.length} listings from external sites`);
         }
       }
     };
@@ -295,7 +338,7 @@ export default function SearchPage() {
       window.removeEventListener('dealeval-site-blocked', blockedHandler);
       clearInterval(interval);
     };
-  }, [siteSearching]);
+  }, [siteSearching, appliedListingStatus]);
 
   const handleSearch = async (p = 1) => {
     if (!city && !state && !zip) {
@@ -319,6 +362,8 @@ export default function SearchPage() {
     params.set('page', String(p));
 
     setSearchParams(params);
+    setAppliedListingStatus(listingStatus);
+    setAppliedQuery({ city, state, zip });
 
     try {
       const res = await api.get(`/search?${params.toString()}`);
@@ -346,6 +391,8 @@ export default function SearchPage() {
     setBlockedSites([]);
     setSiteSearching(true);
     setSiteSearchStatus('Opening sites and scraping listings in background...');
+    setAppliedListingStatus(listingStatus);
+    setAppliedQuery({ city, state, zip });
 
     // Tell extension bridge to clear chrome.storage
     try { window.postMessage({ type: 'DEALEVAL_CLEAR_SITE_RESULTS' }, '*'); } catch {}
@@ -475,21 +522,36 @@ export default function SearchPage() {
 
         {/* Search Filters */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
-          <div className="mb-4 inline-flex rounded-lg border border-gray-300 overflow-hidden" role="group" aria-label="Listing status">
-            {LISTING_STATUS_OPTIONS.map((opt, idx) => (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => setListingStatus(opt.value)}
-                className={`px-4 py-2 text-sm font-medium transition-colors ${
-                  listingStatus === opt.value
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                } ${idx > 0 ? 'border-l border-gray-300' : ''}`}
-              >
-                {opt.label}
-              </button>
-            ))}
+          <div className="mb-4 flex items-center gap-3">
+            <div className="inline-flex rounded-lg bg-gray-100 p-1" role="group" aria-label="Listing status">
+              {LISTING_STATUS_OPTIONS.map(opt => {
+                const isActive = listingStatus === opt.value;
+                const isApplied = appliedListingStatus === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setListingStatus(opt.value)}
+                    className={`relative px-5 py-2 text-sm font-semibold rounded-md transition-all ${
+                      isActive
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-white/60'
+                    }`}
+                    aria-pressed={isActive}
+                  >
+                    {opt.label}
+                    {isApplied && !isActive && (
+                      <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-indigo-500" title={`Active search is ${opt.label}`} />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+            {appliedListingStatus && appliedListingStatus !== listingStatus && (
+              <span className="text-xs text-amber-700 bg-amber-50 border border-amber-200 px-2 py-1 rounded">
+                Current results are <strong>{LISTING_STATUS_LABEL[appliedListingStatus]}</strong> — click <strong>Search</strong> to apply {LISTING_STATUS_LABEL[listingStatus]}
+              </span>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-4">
             <div>
@@ -647,10 +709,22 @@ export default function SearchPage() {
         {/* Results */}
         {results && (
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-gray-500">
-                {results.total} {results.total === 1 ? 'property' : 'properties'} found
-              </p>
+            <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+              <div className="flex items-center gap-2">
+                <p className="text-sm text-gray-500">
+                  {results.total} {results.total === 1 ? 'property' : 'properties'} found
+                </p>
+                {appliedListingStatus && (
+                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${LISTING_STATUS_BADGE[appliedListingStatus]}`}>
+                    {LISTING_STATUS_LABEL[appliedListingStatus]}
+                  </span>
+                )}
+                {appliedQuery && (appliedQuery.city || appliedQuery.state || appliedQuery.zip) && (
+                  <span className="text-xs text-gray-500">
+                    in {appliedQuery.zip || [appliedQuery.city, appliedQuery.state].filter(Boolean).join(', ')}
+                  </span>
+                )}
+              </div>
             </div>
 
             {results.results.length === 0 ? (
@@ -687,11 +761,14 @@ export default function SearchPage() {
                       <h3 className="text-white font-semibold truncate text-sm" title={result.address}>
                         {result.address}
                       </h3>
-                      {result.listing_status && (
-                        <span className="text-xs bg-white/20 text-white px-2 py-0.5 rounded-full">
-                          {result.listing_status}
-                        </span>
-                      )}
+                      {(() => {
+                        const st = normalizeStatus(result.listing_status);
+                        return st ? (
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${st.badge}`}>
+                            {st.label}
+                          </span>
+                        ) : null;
+                      })()}
                     </div>
                     <div className="p-5">
                       <p className="text-2xl font-bold text-gray-900 mb-3">{fmt(result.price)}</p>
@@ -715,10 +792,17 @@ export default function SearchPage() {
                           </div>
                         )}
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-400 mb-4">
+                      <div className="flex items-center gap-2 text-xs text-gray-400 mb-2 flex-wrap">
                         <span>{result.city}, {result.state} {result.zip}</span>
                         {result.property_type && <span>| {result.property_type}</span>}
                         {result.year_built && <span>| Built {result.year_built}</span>}
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 flex-wrap">
+                        {fmtDate(result.sold_date) && <span>Sold: <span className="font-medium text-gray-700">{fmtDate(result.sold_date)}</span></span>}
+                        {!result.sold_date && fmtDate(result.listing_date) && <span>Listed: <span className="font-medium text-gray-700">{fmtDate(result.listing_date)}</span></span>}
+                        {result.tax_amount != null && result.tax_amount > 0 && (
+                          <span>Tax: <span className="font-medium text-gray-700">{fmt(result.tax_amount)}/yr</span></span>
+                        )}
                       </div>
                       <div className="flex gap-2">
                         <button
@@ -772,7 +856,14 @@ export default function SearchPage() {
           <div className="mt-8">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-lg font-bold text-gray-900">External Site Results</h2>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-lg font-bold text-gray-900">External Site Results</h2>
+                  {appliedListingStatus && (
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${LISTING_STATUS_BADGE[appliedListingStatus]}`}>
+                      {LISTING_STATUS_LABEL[appliedListingStatus]}
+                    </span>
+                  )}
+                </div>
                 <p className="text-sm text-gray-500">
                   {siteResults.length} {siteResults.length === 1 ? 'listing' : 'listings'} scraped from external sites via DealEval extension
                 </p>
@@ -792,15 +883,25 @@ export default function SearchPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {siteResults.map(result => (
                 <div key={result.id} className="bg-white rounded-xl shadow-sm border border-emerald-200 overflow-hidden hover:shadow-md transition-shadow">
-                  <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 px-5 py-3 flex items-center justify-between">
-                    <h3 className="text-white font-semibold truncate text-sm" title={result.address}>
+                  <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 px-5 py-3 flex items-center justify-between gap-2">
+                    <h3 className="text-white font-semibold truncate text-sm flex-1" title={result.address}>
                       {result.address || 'Unknown Address'}
                     </h3>
-                    {result.property_type && (
-                      <span className="text-xs bg-white/20 text-white px-2 py-0.5 rounded-full">
-                        {result.property_type}
-                      </span>
-                    )}
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                      {(() => {
+                        const st = normalizeStatus(result.listing_status);
+                        return st ? (
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${st.badge}`}>
+                            {st.label}
+                          </span>
+                        ) : null;
+                      })()}
+                      {result.property_type && (
+                        <span className="text-xs bg-white/20 text-white px-2 py-0.5 rounded-full">
+                          {result.property_type}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="p-5">
                     {result.price > 0 && (
@@ -826,8 +927,15 @@ export default function SearchPage() {
                         </div>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
+                    <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
                       {result.city && <span>{result.city}{result.state ? `, ${result.state}` : ''} {result.zip || ''}</span>}
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 flex-wrap">
+                      {fmtDate(result.sold_date) && <span>Sold: <span className="font-medium text-gray-700">{fmtDate(result.sold_date)}</span></span>}
+                      {!result.sold_date && fmtDate(result.listing_date) && <span>Listed: <span className="font-medium text-gray-700">{fmtDate(result.listing_date)}</span></span>}
+                      {result.tax_amount != null && result.tax_amount > 0 && (
+                        <span>Tax: <span className="font-medium text-gray-700">{fmt(result.tax_amount)}/yr</span></span>
+                      )}
                     </div>
                     {result.source_url && (
                       <a
