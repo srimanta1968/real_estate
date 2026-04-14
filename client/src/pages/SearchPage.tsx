@@ -446,13 +446,14 @@ export default function SearchPage() {
       } catch { /* non-fatal — handled below by skipping Redfin */ }
     }
 
-    // If Redfin is in the batch but we have neither zip nor cityId, drop it
-    // rather than sending users to a 404. The Redfin proxy is often blocked
-    // by CloudFront from datacenter IPs, so this path is common.
-    const redfinSkipped = hasRedfin && !zip && !redfinCityId;
+    // If Redfin is in the batch, open a Sold URL without zip/cityId would
+    // 404 (its slug redirect drops the /filter/ suffix). For For Sale and
+    // For Rent the slug URL usually resolves fine, so we only skip Redfin
+    // in the Sold-without-zip/cityId case.
+    const redfinSkipped = hasRedfin && !zip && !redfinCityId && listingStatus === 'sold';
     const activeSites = redfinSkipped ? sites.filter(s => s.name !== 'Redfin') : sites;
     if (redfinSkipped) {
-      setSiteSearchStatus('Redfin skipped — add a zip code to include Redfin results. Continuing with the other sites.');
+      setSiteSearchStatus('Redfin Sold skipped — add a zip code for filtered Redfin sold comps. Continuing with the other sites.');
     }
     if (activeSites.length === 0) {
       setSiteSearching(false);

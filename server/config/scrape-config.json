@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "updatedAt": "2026-04-14",
   "sites": {
     "zillow.com": {
@@ -171,7 +171,7 @@
       { "type": "selector_exists", "value": ".cf-browser-verification" }
     ]
   },
-  "waitMs": { "initial": 10000, "retry": 8000 },
+  "waitMs": { "initial": 15000, "retry": 8000 },
   "urlBuilders": {
     "zillow": {
       "for_sale": "https://www.zillow.com/homes/{loc}_rb/",
