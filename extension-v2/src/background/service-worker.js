@@ -53,19 +53,29 @@ function matchSiteConfig(config, url) {
 // ===== Bot challenge detection (config-driven) =====
 
 // Runs inside the target page (via executeScript) — must be self-contained.
+// Legitimate pages often load reCAPTCHA iframes defensively for newsletter
+// forms, login dialogs, etc. Treat iframe/body indicators as a block only
+// when the rendered body is short enough to plausibly be a challenge page.
 function detectChallenge(detectors) {
   const title = (document.title || '').toLowerCase();
   const body = (document.body ? document.body.innerText || '' : '').toLowerCase();
+  const bodyShort = body.length < 2000;
   for (const d of detectors || []) {
     try {
+      const requireShort = d.requireShortBody !== false; // default true
       if (d.type === 'iframe_src_contains') {
-        if (document.querySelector(`iframe[src*="${d.value}"]`)) return { blocked: true, reason: d.type, value: d.value };
+        if (!document.querySelector(`iframe[src*="${d.value}"]`)) continue;
+        if (requireShort && !bodyShort) continue;
+        return { blocked: true, reason: d.type, value: d.value };
       } else if (d.type === 'selector_exists') {
-        if (document.querySelector(d.value)) return { blocked: true, reason: d.type, value: d.value };
+        if (!document.querySelector(d.value)) continue;
+        // Challenge page selectors (e.g. Cloudflare #challenge-form) are
+        // specific enough to trust without a body-length guard by default.
+        return { blocked: true, reason: d.type, value: d.value };
       } else if (d.type === 'title_contains') {
         if (title.indexOf(d.value) !== -1) return { blocked: true, reason: d.type, value: d.value };
       } else if (d.type === 'body_contains') {
-        if (body.indexOf(d.value) !== -1 && body.length < 1500) return { blocked: true, reason: d.type, value: d.value };
+        if (body.indexOf(d.value) !== -1 && (!requireShort || bodyShort)) return { blocked: true, reason: d.type, value: d.value };
       }
     } catch (e) {}
   }
