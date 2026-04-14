@@ -3,6 +3,104 @@ console.log('DealEval: Crexi search scraper LOADED on', window.location.href);
 (function () {
   let alreadySent = false;
 
+  // If the URL has #dealeval-loc=..., fill Crexi's location search box and submit
+  function applyLocationFilter() {
+    const hash = window.location.hash || '';
+    const match = hash.match(/dealeval-loc=([^&]+)/);
+    if (!match) return;
+    const location = decodeURIComponent(match[1]);
+    console.log('DealEval: Filling Crexi location filter with:', location);
+
+    // Crexi search input selectors
+    const selectors = [
+      'input[data-cy="searchInput"]',
+      'input[placeholder*="Search"]',
+      'input[placeholder*="search"]',
+      'input[placeholder*="location"]',
+      'input[placeholder*="Location"]',
+      'input[placeholder*="city"]',
+      'input[placeholder*="address"]',
+      'input[placeholder*="Enter"]',
+      'input[aria-label*="Search"]',
+      'input[aria-label*="Location"]',
+      'input[type="search"]',
+      '.search-input input',
+      '[class*="search"] input[type="text"]',
+      'header input[type="text"]',
+      'input[name="search"]',
+    ];
+
+    let searchInput = null;
+    for (const sel of selectors) {
+      searchInput = document.querySelector(sel);
+      if (searchInput) {
+        console.log('DealEval: Found Crexi search input via:', sel);
+        break;
+      }
+    }
+
+    // Fallback: find any visible text input in top area
+    if (!searchInput) {
+      const inputs = document.querySelectorAll('input[type="text"], input[type="search"], input:not([type])');
+      for (const inp of inputs) {
+        if (inp.offsetParent !== null && inp.getBoundingClientRect().top < 200) {
+          searchInput = inp;
+          console.log('DealEval: Found Crexi search input via fallback');
+          break;
+        }
+      }
+    }
+
+    if (searchInput) {
+      searchInput.value = '';
+      searchInput.focus();
+      // Simulate typing so Angular/React bindings pick it up
+      const nativeSet = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+      nativeSet.call(searchInput, location);
+      searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      searchInput.dispatchEvent(new Event('change', { bubbles: true }));
+      searchInput.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true }));
+      searchInput.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+
+      // Wait for autocomplete suggestions, then click or submit
+      setTimeout(() => {
+        const suggestion = document.querySelector(
+          '[class*="suggestion"] li, [class*="Suggestion"] li, [role="option"], ' +
+          '[class*="dropdown"] li, [class*="result"] li, [class*="autocomplete"] li, ' +
+          '[class*="search-result"] button, [class*="search-result"] a'
+        );
+        if (suggestion) {
+          console.log('DealEval: Clicking Crexi autocomplete suggestion:', suggestion.textContent.trim());
+          suggestion.click();
+        } else {
+          // No suggestions — press Enter
+          searchInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
+          searchInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
+          searchInput.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
+          // Also try clicking a search/submit button
+          const submitBtn = document.querySelector(
+            'button[type="submit"], button[aria-label*="Search"], button[class*="search"], [data-cy="searchButton"]'
+          );
+          if (submitBtn) submitBtn.click();
+        }
+
+        // Clean the hash
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }, 2500);
+    } else {
+      console.warn('DealEval: Could not find Crexi search input');
+    }
+  }
+
+  // Apply location filter after page loads
+  if (window.location.hash.includes('dealeval-loc=')) {
+    if (document.readyState === 'complete') {
+      setTimeout(applyLocationFilter, 3000);
+    } else {
+      window.addEventListener('load', () => setTimeout(applyLocationFilter, 3000));
+    }
+  }
+
   function scrapeSearchResults() {
     const listings = [];
     const seen = new Set();

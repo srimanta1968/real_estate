@@ -285,6 +285,10 @@ const COMMERCIAL_SITES = {
         url += `/${typePath}`;
       }
 
+      // Pass location via hash so the content script can fill the search input
+      const loc = zip || [city, state].filter(Boolean).join(', ');
+      if (loc) url += `#dealeval-loc=${encodeURIComponent(loc)}`;
+
       return url;
     },
   },
