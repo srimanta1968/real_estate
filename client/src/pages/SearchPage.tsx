@@ -119,10 +119,11 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
       supportsStatus: () => true,
       buildUrl: (p) => {
         const loc = p.zip || [p.city ? p.city.replace(/\s+/g, '-') : '', p.state].filter(Boolean).join('_');
-        // Sold: use bare sold URL. Realtor 404s when additional type/price
-        // segments follow show-recently-sold, so keep it minimal.
+        // Sold: use Realtor's dedicated sold-prices index — more reliable
+        // than /realestateandhomes-search/{loc}/show-recently-sold, which
+        // often returns empty or 404s when combined with additional filters.
         if (p.listingStatus === 'sold') {
-          return `https://www.realtor.com/realestateandhomes-search/${loc}/show-recently-sold`;
+          return `https://www.realtor.com/soldhomeprices/${loc}`;
         }
         const base = p.listingStatus === 'for_rent'
           ? `https://www.realtor.com/apartments/${loc}`
@@ -149,8 +150,9 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
           if (p.minPrice) f.push(`min-price=${p.minPrice}`);
           if (p.maxPrice) f.push(`max-price=${p.maxPrice}`);
           if (p.listingStatus === 'sold') {
+            // Sold comps need a longer default window than active listings.
             const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
-            f.push(`include=sold-${p.listedWithin ? (dm[p.listedWithin] || '3mo') : '3mo'}`);
+            f.push(`include=sold-${p.listedWithin ? (dm[p.listedWithin] || '6mo') : '6mo'}`);
           } else if (p.listedWithin) {
             const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
             f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`);
