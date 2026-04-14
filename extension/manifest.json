@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "DealEval - Property Data Extractor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApY+fim1erjgIE8fTubHsTrm0PpykZurF6ooS6xNyMxL668gpLl+s7+bX9PIYMiP27Oc/RbAjUYYgQ5QE8hOwE0ombrscuDNpC2ON8SiGnAVFYWjG+V9kQwEv6npY1+NzUdaz2Cixyd7sNWRYmMf3IuXg1RX7uERgcz1aev36fGDncMo5fkLGnKq+dy2J55pMrMVr115aIyWfXAkXrkbUhUKh/HdtrOGj4FAJQdPRAhB9k1SU5PcMZrZpwJ4p2Uk/p/zYbeSw3DuOTKfvwehER5h9dqBBm3Fyz3i2al+5aAODs99E8pw1MTxWAaxIrrh3M08L43bPmVvGTKn8RlDfSwIDAQAB",
   "description": "Extract property data from NLS/MLS listing sites and send to DealEval for instant investment analysis.",
   "permissions": [

@@ -294,11 +294,12 @@ export default function SearchPage() {
           if (!addr || addr.length < 4) continue;
           if (seen.has(addr)) continue;
           if (/commercial real estate|for sale|properties for|auctions/i.test(addr)) continue;
-          // Quarantine garbage prices: the Zillow content-script regex captures
-          // "$1" from strings like "$1.5M" or badges. Drop anything implausibly
-          // small. Zero is allowed (price unknown); 1–999 is never a real list price.
+          // Guard: on pre-v1.0.4 extensions the Zillow regex captures "$1"
+          // from "$1.5M" on sold cards. Only zero obviously bogus values
+          // (< 10) so abbreviated prices scraped as plain numbers (e.g.
+          // "$899K" → 899) still render after the extension is updated.
           const rawPrice = Number(r.price);
-          if (rawPrice > 0 && rawPrice < 1000) {
+          if (rawPrice > 0 && rawPrice < 10) {
             (r as Record<string, unknown>).price = 0;
           }
 

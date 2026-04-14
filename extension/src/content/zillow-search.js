@@ -43,9 +43,20 @@
           }
         }
 
-        // Price — comma-separated format naturally stops at non-comma boundaries
-        const priceMatch = text.match(/\$(\d{1,3}(?:,\d{3})*)/);
-        if (priceMatch) listing.price = parseFloat(priceMatch[1].replace(/,/g, ''));
+        // Price — handle both comma form ($899,000) and abbreviated form
+        // ($1.5M / $899K / $2M) that Zillow uses on sold and Zestimate cards.
+        // Prefer comma form when both are present on the card.
+        let priceMatch = text.match(/\$(\d{1,3}(?:,\d{3})+)/);
+        if (priceMatch) {
+          listing.price = parseFloat(priceMatch[1].replace(/,/g, ''));
+        } else {
+          const abbrMatch = text.match(/\$(\d+(?:\.\d+)?)\s*([MK])\b/i);
+          if (abbrMatch) {
+            const mult = abbrMatch[2].toUpperCase() === 'M' ? 1000000 : 1000;
+            const p = parseFloat(abbrMatch[1]) * mult;
+            if (p >= 1000) listing.price = p;
+          }
+        }
 
         // Beds/baths/sqft
         const bedsMatch = text.match(/(\d+)\s*(?:bd|bed|bds)/i);

@@ -234,7 +234,9 @@ function scrapeGeneric() {
       if (!listing.address) { const lt = link.textContent.trim(); if (lt.length > 5 && lt.length < 150) listing.address = lt; }
       if (!listing.address) return;
       const ak = listing.address.toLowerCase(); if (seenAddrs.has(ak)) return; seenAddrs.add(ak);
-      const pm = text.match(/\$(\d{1,3}(?:,\d{3})*)/); if (pm) { const p = parseFloat(pm[1].replace(/,/g, '')); if (p > 1000 && p < 5e9) listing.price = p; }
+      const pmComma = text.match(/\$(\d{1,3}(?:,\d{3})+)/);
+      if (pmComma) { const p = parseFloat(pmComma[1].replace(/,/g, '')); if (p > 1000 && p < 5e9) listing.price = p; }
+      else { const pmAbbr = text.match(/\$(\d+(?:\.\d+)?)\s*([MK])\b/i); if (pmAbbr) { const mult = pmAbbr[2].toUpperCase() === 'M' ? 1e6 : 1e3; const p = parseFloat(pmAbbr[1]) * mult; if (p > 1000 && p < 5e9) listing.price = p; } }
       const sm = text.match(/([\d,]+)\s*(?:sqft|sq\s*ft|SF)/i); if (sm) listing.sqft = parseInt(sm[1].replace(/,/g, ''));
       const bm = text.match(/(\d+)\s*(?:bd|bed)/i); if (bm) listing.beds = parseInt(bm[1]);
       const btm = text.match(/(\d+\.?\d*)\s*(?:ba|bath)/i); if (btm) listing.baths = parseFloat(btm[1]);
