@@ -120,6 +120,9 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
         }
         let url = segments.join('/');
         if (typePath) url += `/${typePath}`;
+        // Pass location via hash so the content script can fill the search input
+        const loc = p.zip || [p.city, p.state].filter(Boolean).join(', ');
+        if (loc) url += `#dealeval-loc=${encodeURIComponent(loc)}`;
         return url;
       },
     },
@@ -392,7 +395,7 @@ export default function SearchPage() {
               </p>
             </div>
             <a
-              href="https://chrome.google.com/webstore"
+              href="https://chromewebstore.google.com/detail/iefdcpemagecgjkabcpibhpbgabnfdgl"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-shrink-0 bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700"

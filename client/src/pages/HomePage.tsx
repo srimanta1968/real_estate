@@ -155,7 +155,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col items-center gap-3">
               <a
-                href="https://chrome.google.com/webstore"
+                href="https://chromewebstore.google.com/detail/iefdcpemagecgjkabcpibhpbgabnfdgl"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white text-emerald-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 shadow-lg transition-all"
@@ -251,7 +251,7 @@ export default function HomePage() {
                 <li><Link to="/about" className="text-gray-400 hover:text-white text-sm">About</Link></li>
                 <li><Link to="/faq" className="text-gray-400 hover:text-white text-sm">FAQ</Link></li>
                 <li><Link to="/contact" className="text-gray-400 hover:text-white text-sm">Contact</Link></li>
-                <li><a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white text-sm">Chrome Extension</a></li>
+                <li><a href="https://chromewebstore.google.com/detail/iefdcpemagecgjkabcpibhpbgabnfdgl" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white text-sm">Chrome Extension</a></li>
               </ul>
             </div>
             <div>
