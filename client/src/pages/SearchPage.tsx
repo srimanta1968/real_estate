@@ -119,11 +119,12 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
       supportsStatus: () => true,
       buildUrl: (p) => {
         const loc = p.zip || [p.city ? p.city.replace(/\s+/g, '-') : '', p.state].filter(Boolean).join('_');
-        // Sold: use Realtor's dedicated sold-prices index — more reliable
-        // than /realestateandhomes-search/{loc}/show-recently-sold, which
-        // often returns empty or 404s when combined with additional filters.
+        // Sold: keep within /realestateandhomes-search/* so the extension's
+        // realtor-search content script auto-injects and listing cards link
+        // to /realestateandhomes-detail/ (which our scraper targets).
+        // /soldhomeprices/ is outside both match patterns → no scraper runs.
         if (p.listingStatus === 'sold') {
-          return `https://www.realtor.com/soldhomeprices/${loc}`;
+          return `https://www.realtor.com/realestateandhomes-search/${loc}/show-recently-sold`;
         }
         const base = p.listingStatus === 'for_rent'
           ? `https://www.realtor.com/apartments/${loc}`
@@ -277,6 +278,13 @@ export default function SearchPage() {
           if (!addr || addr.length < 4) continue;
           if (seen.has(addr)) continue;
           if (/commercial real estate|for sale|properties for|auctions/i.test(addr)) continue;
+          // Quarantine garbage prices: the Zillow content-script regex captures
+          // "$1" from strings like "$1.5M" or badges. Drop anything implausibly
+          // small. Zero is allowed (price unknown); 1–999 is never a real list price.
+          const rawPrice = Number(r.price);
+          if (rawPrice > 0 && rawPrice < 1000) {
+            (r as Record<string, unknown>).price = 0;
+          }
 
           seen.add(addr);
           unique.push({
