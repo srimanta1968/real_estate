@@ -431,24 +431,35 @@ export default function SearchPage() {
     }
 
     // Look up Redfin's numeric cityId when we have city+state but no zip —
-    // needed so the /filter/ suffix survives Redfin's canonical redirect.
-    // Redfin blocks server-side lookups via CloudFront, so this often
-    // returns null; Redfin URL then falls back to the slug form with no
-    // filters. For Sold searches, that means Redfin shows its default
-    // sold view instead of a filtered one — surfaced to the user below.
+    // needed because Redfin's slug URL /city/{state}/{city} 404s for cities
+    // Redfin can't resolve (e.g. Danville, CA). With cityId the canonical
+    // /city/{cityId}/{state}/{slug} form works for all cities and also
+    // preserves /filter/ suffixes across the redirect.
     let redfinCityId: string | null = null;
-    const needsCityId = !zip && !!city && !!state && sites.some(s => s.name === 'Redfin');
+    const hasRedfin = sites.some(s => s.name === 'Redfin');
+    const needsCityId = !zip && !!city && !!state && hasRedfin;
     if (needsCityId) {
       try {
         const r = await api.get(`/search/redfin-city-id?city=${encodeURIComponent(city)}&state=${encodeURIComponent(state)}`);
         redfinCityId = r.data?.cityId || null;
-      } catch { /* non-fatal — Redfin URL falls back to slug form */ }
-    }
-    if (listingStatus === 'sold' && !zip && !redfinCityId && sites.some(s => s.name === 'Redfin')) {
-      setSiteSearchStatus('Tip: add a zip code for filtered Redfin sold comps — without it Redfin shows its default view. Zillow and Realtor sold results still work.');
+      } catch { /* non-fatal — handled below by skipping Redfin */ }
     }
 
-    const urls = sites.map(site => ({
+    // If Redfin is in the batch but we have neither zip nor cityId, drop it
+    // rather than sending users to a 404. The Redfin proxy is often blocked
+    // by CloudFront from datacenter IPs, so this path is common.
+    const redfinSkipped = hasRedfin && !zip && !redfinCityId;
+    const activeSites = redfinSkipped ? sites.filter(s => s.name !== 'Redfin') : sites;
+    if (redfinSkipped) {
+      setSiteSearchStatus('Redfin skipped — add a zip code to include Redfin results. Continuing with the other sites.');
+    }
+    if (activeSites.length === 0) {
+      setSiteSearching(false);
+      setSiteSearchStatus('No sites available for this query. Add a zip code to include Redfin, or pick a different listing status.');
+      return;
+    }
+
+    const urls = activeSites.map(site => ({
       url: site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin, listingStatus, redfinCityId }),
       hostname: site.name.toLowerCase().replace(/[^a-z.]/g, '') + '.com',
     }));
@@ -473,7 +484,7 @@ export default function SearchPage() {
 
     // Update status messages over time
     setTimeout(() => {
-      if (siteSearching) setSiteSearchStatus(`Waiting for ${sites.map(s => s.name).join(', ')} to load...`);
+      if (siteSearching) setSiteSearchStatus(`Waiting for ${activeSites.map(s => s.name).join(', ')} to load...`);
     }, 3000);
 
     setTimeout(() => {
