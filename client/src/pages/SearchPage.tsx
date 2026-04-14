@@ -80,7 +80,7 @@ function fmtDate(d: string | null): string | null {
   return dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-interface SearchFilters { city: string; state: string; zip: string; propertyType: string; minPrice: string; maxPrice: string; listedWithin: string; listingStatus: ListingStatus }
+interface SearchFilters { city: string; state: string; zip: string; propertyType: string; minPrice: string; maxPrice: string; listedWithin: string; listingStatus: ListingStatus; redfinCityId?: string | null }
 interface SiteConfig { name: string; supportsStatus: (s: ListingStatus) => boolean; buildUrl: (p: SearchFilters) => string }
 
 const SITE_MAP: Record<string, SiteConfig[]> = {
@@ -90,10 +90,12 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
       supportsStatus: () => true,
       buildUrl: (p) => {
         const loc = p.zip || [p.city, p.state].filter(Boolean).join('-');
-        // For sold, use Zillow's canonical slug path; it avoids conflicting
-        // filterState flags and map-boundary empties.
+        // For sold, use Zillow's canonical sold path. Drop the _rb/ suffix —
+        // it locks the map to the region polygon and Zillow renders "no
+        // matching results" with a Remove-Boundary chip even when sold comps
+        // exist. The plain slug lets Zillow auto-fit the map to the results.
         if (p.listingStatus === 'sold') {
-          return `https://www.zillow.com/homes/recently_sold/${encodeURIComponent(loc)}_rb/`;
+          return `https://www.zillow.com/homes/recently_sold/${encodeURIComponent(loc)}/`;
         }
         const url = `https://www.zillow.com/homes/${encodeURIComponent(loc)}_rb/`;
         const fs: Record<string, unknown> = { sortSelection: { value: 'days' } };
@@ -160,18 +162,32 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
           }
           return f.length > 0 ? `${base}/filter/${f.join(',')}` : base;
         }
-        // City/state slug: base URL redirects cleanly, but /filter/ suffix
-        // does not survive the redirect. Skip filters for sold and rely on
-        // Redfin's default sold view.
-        const base = `https://www.redfin.com/city/${p.state}/${(p.city || '').replace(/\s+/g, '-')}`;
-        if (p.listingStatus === 'sold') return base;
+        // City+state: prefer canonical /city/{cityId}/{state}/{slug} when we
+        // have the numeric cityId (looked up server-side from Redfin's own
+        // autocomplete). That form preserves /filter/ suffixes across the
+        // redirect. Without cityId, the slug form redirects and loses the
+        // filter, so we omit filters for sold and fall back to the default
+        // view in that case.
+        const citySlug = (p.city || '').replace(/\s+/g, '-');
+        const base = p.redfinCityId
+          ? `https://www.redfin.com/city/${p.redfinCityId}/${p.state}/${citySlug}`
+          : `https://www.redfin.com/city/${p.state}/${citySlug}`;
         if (p.listingStatus === 'for_rent') return `${base}/apartments-for-rent`;
         const f: string[] = [];
         const tm: Record<string, string> = { 'Single Family': 'property-type=1', 'Condo': 'property-type=2', 'Townhouse': 'property-type=3', 'Multi Family': 'property-type=4', 'Land': 'property-type=6' };
         if (p.propertyType && tm[p.propertyType]) f.push(tm[p.propertyType]);
         if (p.minPrice) f.push(`min-price=${p.minPrice}`);
         if (p.maxPrice) f.push(`max-price=${p.maxPrice}`);
-        if (p.listedWithin) { const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' }; f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`); }
+        if (p.listingStatus === 'sold') {
+          // Only emit the sold filter when we have cityId — otherwise the
+          // slug→canonical redirect drops /filter/ and Redfin 404s.
+          if (!p.redfinCityId) return base;
+          const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
+          f.push(`include=sold-${p.listedWithin ? (dm[p.listedWithin] || '6mo') : '6mo'}`);
+        } else if (p.listedWithin) {
+          const dm: Record<string, string> = { '5': '1wk', '10': '2wk', '30': '1mo', '90': '3mo' };
+          f.push(`time-on-redfin-less-than=${dm[p.listedWithin] || '1mo'}`);
+        }
         return f.length > 0 ? `${base}/filter/${f.join(',')}` : base;
       },
     },
@@ -391,7 +407,7 @@ export default function SearchPage() {
     }
   }, []);
 
-  const handleSearchOnSites = () => {
+  const handleSearchOnSites = async () => {
     if (!city && !state && !zip) return;
 
     // Clear previous external results
@@ -413,8 +429,20 @@ export default function SearchPage() {
       setSiteSearchStatus('No supported sites for this listing status. Sold comps are only available on residential sites (Zillow, Realtor.com, Redfin).');
       return;
     }
+
+    // Look up Redfin's numeric cityId when we have city+state but no zip —
+    // needed so the /filter/ suffix survives Redfin's canonical redirect.
+    let redfinCityId: string | null = null;
+    const needsCityId = !zip && !!city && !!state && sites.some(s => s.name === 'Redfin');
+    if (needsCityId) {
+      try {
+        const r = await api.get(`/search/redfin-city-id?city=${encodeURIComponent(city)}&state=${encodeURIComponent(state)}`);
+        redfinCityId = r.data?.cityId || null;
+      } catch { /* non-fatal — Redfin URL falls back to slug form */ }
+    }
+
     const urls = sites.map(site => ({
-      url: site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin, listingStatus }),
+      url: site.buildUrl({ city, state, zip, propertyType, minPrice, maxPrice, listedWithin, listingStatus, redfinCityId }),
       hostname: site.name.toLowerCase().replace(/[^a-z.]/g, '') + '.com',
     }));
 
