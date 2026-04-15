@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "updatedAt": "2026-04-14",
   "sites": {
     "zillow.com": {
@@ -137,12 +137,14 @@
       "displayName": "Crexi",
       "category": "commercial",
       "match": ["https://www.crexi.com/properties*", "https://crexi.com/properties*"],
-      "listingCardSelector": "crx-sales-property-tile",
+      "listingCardSelector": "crx-sales-property-tile, crx-property-tile, crx-property-card, [data-cy='propertyTile'], [data-cy='propertyCard'], article[class*='property' i], [class*='property-tile' i], [class*='PropertyTile' i], [class*='property-card' i]",
       "containerMode": "self",
       "fields": {
-        "address": { "selectors": ["[data-cy='propertyName']", "[data-cy='propertyAddress']"] },
+        "address": {
+          "selectors": ["[data-cy='propertyName']", "[data-cy='propertyAddress']", "[class*='property-name' i]", "[class*='PropertyName' i]", "h3", "h4"]
+        },
         "price": {
-          "within": "[data-cy='propertyPrice']",
+          "within": "[data-cy='propertyPrice'], [class*='price' i], [class*='Price' i]",
           "tryInOrder": [
             { "regex": "\\$?\\s*([\\d,]+(?:\\.\\d+)?)\\s*(M|K)?", "group": 1, "multiplierGroup": 2, "parse": "abbreviated_or_comma" }
           ],
@@ -150,12 +152,37 @@
           "max": 5000000000
         },
         "location": {
-          "within": "[data-cy='propertyAddress'] .cui-card-info-text-small",
-          "regex": "([A-Za-z\\s]+),\\s*([A-Z]{2})\\s*(\\d{5})?",
+          "regex": "([A-Za-z][A-Za-z\\s]+?),\\s*([A-Z]{2})\\s*(\\d{5})?",
           "parts": { "city": 1, "state": 2, "zip": 3 }
         },
-        "sqft": { "within": "[data-cy='propertyDescription']", "regex": "([\\d,]+)\\s*(?:SqFt|SF)", "group": 1, "parse": "number_strip_commas" },
-        "source_url": { "selectors": ["a.cui-card-cover-link", "a[href*='/properties/']"], "attribute": "href", "absolute": "https://www.crexi.com" }
+        "sqft": {
+          "regex": "([\\d,]+)\\s*(?:SqFt|SF|sq\\s*ft)",
+          "group": 1,
+          "parse": "number_strip_commas"
+        },
+        "source_url": {
+          "selectors": ["a.cui-card-cover-link", "a[href*='/properties/']", "a[href*='/property/']"],
+          "attribute": "href",
+          "absolute": "https://www.crexi.com"
+        }
+      },
+      "autoFillSearch": {
+        "hashKey": "dealeval-loc",
+        "inputSelectors": [
+          "input[data-cy='searchInput']",
+          "input[placeholder*='Search' i]",
+          "input[placeholder*='location' i]",
+          "input[type='search']",
+          "header input[type='text']"
+        ],
+        "waitAfterTypeMs": 2500,
+        "suggestionSelectors": [
+          "[role='option']",
+          "[class*='suggestion' i] li",
+          "[class*='autocomplete' i] li",
+          "[class*='search-result' i] button",
+          "[class*='search-result' i] a"
+        ]
       },
       "propertyType": "Commercial"
     }

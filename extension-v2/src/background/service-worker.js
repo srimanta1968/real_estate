@@ -215,6 +215,76 @@ async function scrapeTab(tabId, siteConfig) {
   }
 }
 
+// Config-driven search-input autofill — used for sites like Crexi whose
+// search URL lands on a shell page that needs a location typed into a
+// search box to render results. Reads the location from the URL hash
+// (e.g. #dealeval-loc=Danville%2C%20CA) and dispatches framework-safe
+// events so Angular / React bindings fire.
+async function runAutoFillSearch(tabId, autoFillConfig) {
+  if (!autoFillConfig) return false;
+  try {
+    const r = await chrome.scripting.executeScript({
+      target: { tabId },
+      func: (cfg) => {
+        const hash = window.location.hash || '';
+        const re = new RegExp(cfg.hashKey + '=([^&]+)');
+        const m = hash.match(re);
+        if (!m) return { filled: false };
+        const location = decodeURIComponent(m[1]);
+
+        let input = null;
+        for (const sel of cfg.inputSelectors || []) {
+          try { input = document.querySelector(sel); } catch (e) { input = null; }
+          if (input) break;
+        }
+        if (!input) {
+          const inputs = document.querySelectorAll('input[type="text"], input[type="search"], input:not([type])');
+          for (const inp of inputs) {
+            if (inp.offsetParent !== null && inp.getBoundingClientRect().top < 200) { input = inp; break; }
+          }
+        }
+        if (!input) return { filled: false, reason: 'input_not_found' };
+
+        input.focus();
+        const nativeSet = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+        nativeSet.call(input, location);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true }));
+        input.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+
+        const waitMs = cfg.waitAfterTypeMs || 2500;
+        return new Promise(resolve => {
+          setTimeout(() => {
+            let suggestion = null;
+            for (const sel of cfg.suggestionSelectors || []) {
+              try { suggestion = document.querySelector(sel); } catch (e) {}
+              if (suggestion) break;
+            }
+            if (suggestion) {
+              suggestion.click();
+            } else {
+              const ev = (key) => new KeyboardEvent(key, { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true });
+              input.dispatchEvent(ev('keydown'));
+              input.dispatchEvent(ev('keypress'));
+              input.dispatchEvent(ev('keyup'));
+              const btn = document.querySelector("button[type='submit'], button[aria-label*='Search' i], [data-cy='searchButton']");
+              if (btn) btn.click();
+            }
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+            resolve({ filled: true, clickedSuggestion: !!suggestion });
+          }, waitMs);
+        });
+      },
+      args: [autoFillConfig],
+    });
+    return r[0]?.result?.filled === true;
+  } catch (e) {
+    console.warn('DealEval Pro: autoFillSearch failed', e.message);
+    return false;
+  }
+}
+
 // ===== Result forwarding =====
 
 async function forwardResults(results, source) {
@@ -277,13 +347,30 @@ async function runSiteSearch(urls) {
     }
   }
 
+  // Short wait so the page's initial DOM is present, then run any
+  // config-declared autoFillSearch step (e.g. Crexi types the location
+  // into its own search box to navigate to the real results URL).
+  await new Promise(r => setTimeout(r, 3000));
+  for (const t of openedTabs) {
+    const matched = matchSiteConfig(config, t.url);
+    if (matched && matched.site.autoFillSearch) {
+      const filled = await runAutoFillSearch(t.tabId, matched.site.autoFillSearch);
+      if (filled) console.log('DealEval Pro: autoFillSearch applied on', t.hostname);
+    }
+  }
+
   // Wait for pages to load, then attempt scraping. Retry once for slow SPAs.
   const waits = config.waitMs || { initial: 10000, retry: 8000 };
   for (const delay of [waits.initial, waits.retry]) {
     await new Promise(r => setTimeout(r, delay));
     const blockedSites = [];
     for (const t of openedTabs) {
-      const matched = matchSiteConfig(config, t.url);
+      // Re-match on the current tab URL — autoFillSearch may have
+      // navigated Crexi to a /properties?placeIds[]=... URL that still
+      // matches our pattern but has different contents.
+      const currentTab = await chrome.tabs.get(t.tabId).catch(() => null);
+      const currentUrl = currentTab ? currentTab.url : t.url;
+      const matched = matchSiteConfig(config, currentUrl);
       if (!matched) continue;
       const block = await checkTabBlocked(t.tabId, (config.botChallenge && config.botChallenge.detectors) || []);
       if (block.blocked) {
