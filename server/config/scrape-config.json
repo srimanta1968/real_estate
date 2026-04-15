@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "updatedAt": "2026-04-14",
   "sites": {
     "zillow.com": {
@@ -137,7 +137,7 @@
       "displayName": "Crexi",
       "category": "commercial",
       "match": ["https://www.crexi.com/properties*", "https://crexi.com/properties*"],
-      "listingCardSelector": "crx-sales-property-tile, crx-property-tile, crx-property-card, [data-cy='propertyTile'], [data-cy='propertyCard'], article[class*='property' i], [class*='property-tile' i], [class*='PropertyTile' i], [class*='property-card' i]",
+      "listingCardSelector": "crx-sales-property-tile, crx-property-tile, crx-property-card, [data-cy='propertyTile'], [data-cy='propertyCard'], article[class*='property' i], [class*='property-tile' i], [class*='PropertyTile' i], [class*='property-card' i], .cui-card, mat-card, [class*='MuiCard-root'], div[class*='PropertyCard'], li[class*='PropertyCard'], crx-property-search-result, [class*='SearchResultCard' i], [class*='search-result-card' i]",
       "containerMode": "self",
       "fields": {
         "address": {
