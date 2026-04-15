@@ -229,52 +229,73 @@ async function runAutoFillSearch(tabId, autoFillConfig) {
         const hash = window.location.hash || '';
         const re = new RegExp(cfg.hashKey + '=([^&]+)');
         const m = hash.match(re);
-        if (!m) return { filled: false };
+        if (!m) return { filled: false, reason: 'no_hash' };
         const location = decodeURIComponent(m[1]);
 
-        let input = null;
-        for (const sel of cfg.inputSelectors || []) {
-          try { input = document.querySelector(sel); } catch (e) { input = null; }
-          if (input) break;
-        }
-        if (!input) {
+        function findInput() {
+          for (const sel of cfg.inputSelectors || []) {
+            let el = null;
+            try { el = document.querySelector(sel); } catch (e) { el = null; }
+            if (el) return el;
+          }
+          // Viewport-top fallback: any visible text/search input near the top
           const inputs = document.querySelectorAll('input[type="text"], input[type="search"], input:not([type])');
           for (const inp of inputs) {
-            if (inp.offsetParent !== null && inp.getBoundingClientRect().top < 200) { input = inp; break; }
+            if (inp.offsetParent !== null && inp.getBoundingClientRect().top < 200) return inp;
           }
+          return null;
         }
-        if (!input) return { filled: false, reason: 'input_not_found' };
 
-        input.focus();
-        const nativeSet = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-        nativeSet.call(input, location);
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-        input.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true }));
-        input.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+        function waitForInput(timeoutMs) {
+          return new Promise(resolve => {
+            const deadline = Date.now() + timeoutMs;
+            (function poll() {
+              const found = findInput();
+              if (found) return resolve(found);
+              if (Date.now() >= deadline) return resolve(null);
+              setTimeout(poll, 500);
+            })();
+          });
+        }
 
-        const waitMs = cfg.waitAfterTypeMs || 2500;
-        return new Promise(resolve => {
-          setTimeout(() => {
-            let suggestion = null;
-            for (const sel of cfg.suggestionSelectors || []) {
-              try { suggestion = document.querySelector(sel); } catch (e) {}
-              if (suggestion) break;
-            }
-            if (suggestion) {
-              suggestion.click();
-            } else {
-              const ev = (key) => new KeyboardEvent(key, { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true });
-              input.dispatchEvent(ev('keydown'));
-              input.dispatchEvent(ev('keypress'));
-              input.dispatchEvent(ev('keyup'));
-              const btn = document.querySelector("button[type='submit'], button[aria-label*='Search' i], [data-cy='searchButton']");
-              if (btn) btn.click();
-            }
-            history.replaceState(null, '', window.location.pathname + window.location.search);
-            resolve({ filled: true, clickedSuggestion: !!suggestion });
-          }, waitMs);
-        });
+        return (async function run() {
+          const pollMs = cfg.inputPollMs || 12000;
+          const input = await waitForInput(pollMs);
+          if (!input) {
+            console.warn('DealEval Pro: search input not found after', pollMs, 'ms on', window.location.href);
+            return { filled: false, reason: 'input_not_found' };
+          }
+          console.log('DealEval Pro: autofilling', location, 'into', input);
+
+          input.focus();
+          const nativeSet = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+          nativeSet.call(input, location);
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+          input.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true }));
+          input.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+
+          await new Promise(r => setTimeout(r, cfg.waitAfterTypeMs || 2500));
+
+          let suggestion = null;
+          for (const sel of cfg.suggestionSelectors || []) {
+            try { suggestion = document.querySelector(sel); } catch (e) {}
+            if (suggestion) break;
+          }
+          if (suggestion) {
+            console.log('DealEval Pro: clicking suggestion', (suggestion.textContent || '').trim().slice(0, 80));
+            suggestion.click();
+          } else {
+            const ev = (key) => new KeyboardEvent(key, { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true });
+            input.dispatchEvent(ev('keydown'));
+            input.dispatchEvent(ev('keypress'));
+            input.dispatchEvent(ev('keyup'));
+            const btn = document.querySelector("button[type='submit'], button[aria-label*='Search' i], [data-cy='searchButton']");
+            if (btn) btn.click();
+          }
+          try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) {}
+          return { filled: true, clickedSuggestion: !!suggestion };
+        })();
       },
       args: [autoFillConfig],
     });
@@ -350,14 +371,20 @@ async function runSiteSearch(urls) {
   // Short wait so the page's initial DOM is present, then run any
   // config-declared autoFillSearch step (e.g. Crexi types the location
   // into its own search box to navigate to the real results URL).
-  await new Promise(r => setTimeout(r, 3000));
+  // Crexi's Angular SPA can take 5-10s to render the search input on
+  // first load, so runAutoFillSearch has its own polling loop up to 12s.
+  await new Promise(r => setTimeout(r, 6000));
+  let anyAutoFilled = false;
   for (const t of openedTabs) {
     const matched = matchSiteConfig(config, t.url);
     if (matched && matched.site.autoFillSearch) {
       const filled = await runAutoFillSearch(t.tabId, matched.site.autoFillSearch);
-      if (filled) console.log('DealEval Pro: autoFillSearch applied on', t.hostname);
+      if (filled) { console.log('DealEval Pro: autoFillSearch applied on', t.hostname); anyAutoFilled = true; }
     }
   }
+  // If any autofill ran, give the subsequent navigation + SPA render
+  // headroom before we try the first scrape pass.
+  if (anyAutoFilled) await new Promise(r => setTimeout(r, 4000));
 
   // Wait for pages to load, then attempt scraping. Retry once for slow SPAs.
   const waits = config.waitMs || { initial: 10000, retry: 8000 };
