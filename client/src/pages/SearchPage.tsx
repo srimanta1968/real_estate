@@ -217,14 +217,15 @@ const SITE_MAP: Record<string, SiteConfig[]> = {
       buildUrl: (p) => {
         const tm: Record<string, string> = { 'Commercial': '', 'Office': 'Office', 'Retail': 'Retail', 'Industrial': 'Industrial', 'Multi Family': 'Multifamily', 'Land': 'Land' };
         const typePath = (p.propertyType && tm[p.propertyType]) || '';
-        const segments = ['https://www.crexi.com/properties'];
-        if (p.state) {
-          segments.push(p.state.toUpperCase());
-          if (p.city) segments.push(p.city.replace(/\s+/g, '_'));
-        }
-        let url = segments.join('/');
+        // Crexi's /properties/{STATE}/{City} slug route spins indefinitely
+        // for many cities now — their current UI is map-based and only
+        // /properties?placeIds[]=... renders results. Open the base
+        // /properties endpoint and let the content script (v1) or the
+        // autoFillSearch step (v2) drive location resolution via Crexi's
+        // own autocomplete, which navigates to the real URL.
+        let url = 'https://www.crexi.com/properties';
         if (typePath) url += `/${typePath}`;
-        if (p.listingStatus === 'for_rent') url += '?types=lease';
+        if (p.listingStatus === 'for_rent') url += (url.includes('?') ? '&' : '?') + 'types=lease';
         const loc = p.zip || [p.city, p.state].filter(Boolean).join(', ');
         if (loc) url += `#dealeval-loc=${encodeURIComponent(loc)}`;
         return url;
