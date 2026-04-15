@@ -493,7 +493,9 @@ export default function SearchPage() {
       if (siteSearching) setSiteSearchStatus('Scraping listing data from search results...');
     }, 6000);
 
-    // Timeout after 30s - stop waiting
+    // Timeout after 60s — DealEval Pro (v2) runs autoFillSearch on sites
+    // like Crexi and waits for SPA renders before scraping, so the full
+    // cycle can take 25-45s before results land in localStorage.
     setTimeout(() => {
       setSiteSearching(prev => {
         if (prev) {
@@ -506,7 +508,7 @@ export default function SearchPage() {
         }
         return prev;
       });
-    }, 30000);
+    }, 60000);
   };
 
   const handleEvaluate = (result: SearchResult) => {

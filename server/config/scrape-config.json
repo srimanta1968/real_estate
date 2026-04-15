@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "updatedAt": "2026-04-14",
   "sites": {
     "zillow.com": {
@@ -33,13 +33,13 @@
     "realtor.com": {
       "displayName": "Realtor.com",
       "category": "residential",
-      "match": ["https://www.realtor.com/realestateandhomes-search/*", "https://www.realtor.com/apartments/*"],
-      "listingCardSelector": "a[href*='/realestateandhomes-detail/']",
+      "match": ["https://www.realtor.com/realestateandhomes-search/*", "https://www.realtor.com/apartments/*", "https://www.realtor.com/soldhomeprices/*"],
+      "listingCardSelector": "[data-testid='card-wrapper'], [data-testid='property-card'], article[data-testid*='card' i], div[data-testid*='property' i], a[href*='/realestateandhomes-detail/']",
       "containerClimb": 6,
-      "containerMaxTextLength": 1500,
+      "containerMaxTextLength": 2500,
       "fields": {
         "address": {
-          "selectors": ["[data-label='pc-address']", "address", "h2", "h3", "[class*='address' i]"],
+          "selectors": ["[data-label='pc-address']", "[data-testid='card-address']", "[data-testid='card-address-1']", "address", "h2", "h3", "[class*='address' i]"],
           "excludeContains": "$",
           "minLength": 5,
           "maxLength": 200

@@ -59,7 +59,10 @@ function matchSiteConfig(config, url) {
 function detectChallenge(detectors) {
   const title = (document.title || '').toLowerCase();
   const body = (document.body ? document.body.innerText || '' : '').toLowerCase();
-  const bodyShort = body.length < 2000;
+  // Real challenge pages are very short. 1000 is the sweet spot — any
+  // higher and partially-rendered SPAs (Realtor, Redfin) trip the iframe
+  // detector during the first-pass scrape attempt.
+  const bodyShort = body.length < 1000;
   for (const d of detectors || []) {
     try {
       const requireShort = d.requireShortBody !== false; // default true
